@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "module": "es2015",
-    "outDir": "dist"
+    "module": "commonjs",
+    "outDir": "dist",
+    "sourceMap": true
   },
   "exclude": ["node_modules"]
 }

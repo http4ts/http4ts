@@ -24,22 +24,14 @@ class NodeHttpServer implements HttpServer {
   }
 }
 
-export class Node implements ServerConfig {
-  constructor(public port: number) {}
+function streamToString(stream: Readable): Promise<string> {
+  const chunks = [];
 
-  toServer(httpHandler: HttpHandler): HttpServer {
-    const nodeServer = createServer(translateHandler(httpHandler));
-
-    return new NodeHttpServer(nodeServer, this.port);
-  }
-}
-
-function translateHandler(httpHandler: HttpHandler): RequestListener {
-  return async (req: IncomingMessage, res: ServerResponse) => {
-    const request = await translateRequest(req);
-    const response = await httpHandler(request);
-    writeResponse(response, res);
-  };
+  return new Promise((resolve, reject) => {
+    stream.on("data", chunk => chunks.push(chunk));
+    stream.on("error", reject);
+    stream.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")));
+  });
 }
 
 async function translateRequest(nodeReq: IncomingMessage) {
@@ -56,16 +48,24 @@ function writeResponse(res: HttpResponse, nodeRes: ServerResponse) {
   Object.entries(res.headers).forEach(([key, value]) => {
     nodeRes.setHeader(key, value);
   });
-  nodeRes.write(res.body); // TODO: how to hanlde errors here?
+  nodeRes.write(res.body); // TODO: how to handle errors here?
   nodeRes.end();
 }
 
-function streamToString(stream: Readable): Promise<string> {
-  const chunks = [];
+function translateHandler(httpHandler: HttpHandler): RequestListener {
+  return async (req: IncomingMessage, res: ServerResponse) => {
+    const request = await translateRequest(req);
+    const response = await httpHandler(request);
+    writeResponse(response, res);
+  };
+}
 
-  return new Promise((resolve, reject) => {
-    stream.on("data", chunk => chunks.push(chunk));
-    stream.on("error", reject);
-    stream.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")));
-  });
+export class Node implements ServerConfig {
+  constructor(public port: number) {}
+
+  toServer(httpHandler: HttpHandler): HttpServer {
+    const nodeServer = createServer(translateHandler(httpHandler));
+
+    return new NodeHttpServer(nodeServer, this.port);
+  }
 }
