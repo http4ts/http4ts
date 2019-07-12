@@ -1,0 +1,23 @@
+{
+  "name": "http4ts",
+  "version": "0.0.1",
+  "description": "Port of http4k to Typescript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/http4ts/http4ts.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/http4ts/http4ts/issues"
+  },
+  "homepage": "https://github.com/http4ts/http4ts#readme",
+  "devDependencies": {
+    "@types/node": "^12.0.4",
+    "typescript": "^3.5.1"
+  }
+}
