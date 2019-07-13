@@ -32,7 +32,7 @@ class NodeHttpServer implements HttpServer {
   constructor(private server: Server, private port: number) {}
 
   start() {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.server.listen(this.port, () => resolve());
       this.server.on("error", err => {
         reject(err);
@@ -41,7 +41,15 @@ class NodeHttpServer implements HttpServer {
   }
 
   stop() {
-    this.server.close(); // TODO: handle errors
+    return new Promise<void>((resolve, reject) => {
+      this.server.close(error => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve();
+        }
+      });
+    });
   }
 }
 
@@ -61,7 +69,7 @@ export class Node implements ServerConfig {
         const response = await httpHandler(request);
         writeResponse(response, res);
       } catch (error) {
-        console.log(error); // TODO: add proper logging or send the error to and error calback
+        console.log(error); // TODO: add proper logging or send the error to an error callback
         writeErrorResponse(res);
       }
     };

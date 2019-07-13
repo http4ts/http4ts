@@ -14,7 +14,7 @@ async function runOnTestServer(
   } catch (error) {
     console.error(error.message);
   } finally {
-    server.stop();
+    await server.stop();
   }
 }
 

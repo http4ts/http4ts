@@ -7,8 +7,8 @@ export type HttpHandler = (
 export type HttpFilter = (handler: HttpHandler) => Promise<HttpHandler>;
 
 export interface HttpServer {
-  start(): Promise<unknown>; // TODO: improve types here
-  stop(): void;
+  start(): Promise<void>;
+  stop(): Promise<void>;
 }
 
 export interface ServerConfig {
