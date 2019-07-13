@@ -1,6 +1,6 @@
-import { HttpRequest, HttpResponse } from "./http";
-import { createServer } from "./http4ts";
-import { Node } from "./node";
+import { HttpRequest, HttpResponse } from "../http";
+import { createServer } from "../http4ts";
+import { Node } from "../node/node";
 
 async function handler(req: HttpRequest): Promise<HttpResponse> {
   return {

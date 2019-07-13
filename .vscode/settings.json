@@ -10,5 +10,6 @@
 	},
 	"[typescript]": {
 		"editor.formatOnSave": false
-	}
+	},
+	"jest.runAllTestsFirst": false
 }
