@@ -8,7 +8,8 @@
     "lint-fix": "eslint --fix src/**",
     "start": "ts-node -p tsconfig.json ./src/index.ts",
     "build": "rm -rf dist && tsc -p tsconfig.json",
-    "test": "jest"
+    "test": "jest",
+    "tdd": "jest --watchAll"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@types/jest": "^24.0.15",
     "@types/node": "^12.0.4",
+    "@types/request-promise": "^4.1.44",
     "@typescript-eslint/eslint-plugin": "^1.12.0",
     "@typescript-eslint/parser": "^1.12.0",
     "eslint": "^6.0.1",
@@ -31,6 +33,7 @@
     "eslint-plugin-prettier": "^3.1.0",
     "jest": "^24.8.0",
     "prettier": "^1.18.2",
+    "request-promise": "^4.2.4",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.1"

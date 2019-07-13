@@ -1,18 +1,25 @@
 import { createServer, HttpHandler } from "../http4ts";
 import { Node } from "../node";
-import { request } from "http";
+import { get } from "request-promise";
 
-it("Node should listen on the given port", done => {
-  const handler: HttpHandler = () => ({
-    body: "http4ts",
-    headers: {},
-    status: 200
-  });
+describe("Node Server", () => {
+  it("should listen on the given port", async () => {
+    const handler: HttpHandler = () => ({
+      body: "http4ts",
+      headers: {},
+      status: 200
+    });
 
-  createServer(handler, new Node(8080)).start();
+    const server = createServer(handler, new Node(8080));
+    await server.start();
 
-  request("http://localhost:8080", res => {
+    const res = await get("http://localhost:8080/", {
+      resolveWithFullResponse: true
+    });
+
     expect(res.statusCode).toBe(200);
-    done();
+    expect(res.body).toBe("http4ts");
+
+    server.stop();
   });
 });

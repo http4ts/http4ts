@@ -10,20 +10,6 @@ import { ServerConfig, HttpHandler, HttpServer } from "./http4ts";
 import { HttpResponse } from "./http";
 import { Readable } from "stream";
 
-class NodeHttpServer implements HttpServer {
-  constructor(private server: Server, private port: number) {}
-
-  start() {
-    this.server.listen(this.port);
-
-    return this;
-  }
-
-  stop() {
-    this.server.close(); // TODO: handle errors
-  }
-}
-
 function streamToString(stream: Readable): Promise<string> {
   const chunks = [];
 
@@ -58,6 +44,23 @@ function translateHandler(httpHandler: HttpHandler): RequestListener {
     const response = await httpHandler(request);
     writeResponse(response, res);
   };
+}
+
+class NodeHttpServer implements HttpServer {
+  constructor(private server: Server, private port: number) {}
+
+  start() {
+    return new Promise((resolve, reject) => {
+      this.server.listen(this.port, () => resolve());
+      this.server.on("error", err => {
+        reject(err);
+      });
+    });
+  }
+
+  stop() {
+    this.server.close(); // TODO: handle errors
+  }
 }
 
 export class Node implements ServerConfig {
