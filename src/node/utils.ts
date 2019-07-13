@@ -1,7 +1,7 @@
 import { Readable } from "stream";
 
 export function streamToString(stream: Readable): Promise<string> {
-  const chunks = [];
+  const chunks: any[] = [];
 
   return new Promise((resolve, reject) => {
     stream.on("data", chunk => chunks.push(chunk));

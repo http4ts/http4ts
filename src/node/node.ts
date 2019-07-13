@@ -6,7 +6,7 @@ import {
 } from "http";
 
 import { ServerConfig, HttpHandler, HttpServer } from "../http4ts";
-import { HttpResponse } from "../http";
+import { HttpResponse, HttpRequest } from "../http";
 import { streamToString } from "./utils";
 import { NodeHttpServer } from "./node-http-server";
 
@@ -32,22 +32,27 @@ export class Node implements ServerConfig {
     };
   }
 
-  private async translateRequest(nodeReq: IncomingMessage) {
+  private async translateRequest(
+    nodeReq: IncomingMessage
+  ): Promise<HttpRequest> {
     return {
       body: await streamToString(nodeReq),
       headers: nodeReq.headers,
-      method: nodeReq.method,
-      url: nodeReq.url
+      method: nodeReq.method || "",
+      url: nodeReq.url || ""
     };
   }
 
-  private writeResponse(res: HttpResponse, nodeRes: ServerResponse) {
+  private writeResponse(
+    res: HttpResponse,
+    nodeRes: ServerResponse
+  ): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       nodeRes.statusCode = res.status;
       for (const key in res.headers) {
         if (res.headers.hasOwnProperty(key)) {
           const value = res.headers[key];
-          nodeRes.setHeader(key, value);
+          nodeRes.setHeader(key, value || "");
         }
       }
       nodeRes.write(res.body, reject);
@@ -56,7 +61,7 @@ export class Node implements ServerConfig {
     });
   }
 
-  private writeErrorResponse(nodeRes: ServerResponse) {
+  private writeErrorResponse(nodeRes: ServerResponse): void {
     nodeRes.statusCode = 500;
     nodeRes.end(); // TODO: what to do with the callback here?
   }

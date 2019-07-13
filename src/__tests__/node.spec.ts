@@ -50,4 +50,25 @@ describe("Node Server", () => {
       expect(res.statusCode).toBe(500);
     });
   });
+
+  // it("", async () => {
+  //   const handler: HttpHandler = req => {
+  //     if (req.method == "GET") {
+  //       return {
+  //         body: JSON.stringify({ test: "test" }),
+  //         headers: { "Content-Type": "application/json" },
+  //         status: 200
+  //       };
+  //     }
+  //   };
+
+  //   await runOnTestServer(handler, async () => {
+  //     const res = await get("http://localhost:8080/", {
+  //       simple: false,
+  //       resolveWithFullResponse: true
+  //     });
+
+  //     expect(res.statusCode).toBe(500);
+  //   });
+  // });
 });
