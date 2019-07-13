@@ -51,24 +51,32 @@ describe("Node Server", () => {
     });
   });
 
-  // it("", async () => {
-  //   const handler: HttpHandler = req => {
-  //     if (req.method == "GET") {
-  //       return {
-  //         body: JSON.stringify({ test: "test" }),
-  //         headers: { "Content-Type": "application/json" },
-  //         status: 200
-  //       };
-  //     }
-  //   };
+  it("should handle more complext handlers", async () => {
+    const handler: HttpHandler = req => {
+      if (req.method == "GET") {
+        return {
+          body: JSON.stringify({ test: "test" }),
+          headers: { "Content-Type": "application/json" },
+          status: 200
+        };
+      }
 
-  //   await runOnTestServer(handler, async () => {
-  //     const res = await get("http://localhost:8080/", {
-  //       simple: false,
-  //       resolveWithFullResponse: true
-  //     });
+      return {
+        body: "Oops!",
+        headers: {},
+        status: 500
+      };
+    };
 
-  //     expect(res.statusCode).toBe(500);
-  //   });
-  // });
+    await runOnTestServer(handler, async () => {
+      const res = await get("http://localhost:8080/", {
+        simple: false,
+        resolveWithFullResponse: true
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.headers).toHaveProperty("content-type", "application/json");
+      expect(res.body).toEqual(JSON.stringify({ test: "test" }));
+    });
+  });
 });
