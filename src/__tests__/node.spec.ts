@@ -1,6 +1,7 @@
 import { createServer, HttpHandler } from "../http4ts";
 import { Node } from "../node/node";
 import { get } from "request-promise";
+import { HttpResponse } from "../http";
 
 async function runOnTestServer(
   handler: HttpHandler,
@@ -61,11 +62,7 @@ describe("Node Server", () => {
         };
       }
 
-      return {
-        body: "Oops!",
-        headers: {},
-        status: 500
-      };
+      throw new Error("Should never happen!");
     };
 
     await runOnTestServer(handler, async () => {
@@ -77,6 +74,29 @@ describe("Node Server", () => {
       expect(res.statusCode).toBe(200);
       expect(res.headers).toHaveProperty("content-type", "application/json");
       expect(res.body).toEqual(JSON.stringify({ test: "test" }));
+    });
+  });
+
+  it("should handle handers which return promises", async () => {
+    const handler: HttpHandler = async () => {
+      return new Promise<HttpResponse>(resolve => {
+        const res = {
+          body: "1 second passed!",
+          status: 200,
+          headers: {}
+        };
+        setTimeout(() => resolve(res), 1000);
+      });
+    };
+
+    await runOnTestServer(handler, async () => {
+      const res = await get("http://localhost:8080/", {
+        simple: false,
+        resolveWithFullResponse: true
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body).toEqual("1 second passed!");
     });
   });
 });
