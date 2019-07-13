@@ -14,7 +14,7 @@ async function runOnTestServer(
   } catch (error) {
     console.error(error.message);
   } finally {
-    server.stop();
+    await server.stop();
   }
 }
 
@@ -48,6 +48,35 @@ describe("Node Server", () => {
       });
 
       expect(res.statusCode).toBe(500);
+    });
+  });
+
+  it("should handle more complext handlers", async () => {
+    const handler: HttpHandler = req => {
+      if (req.method == "GET") {
+        return {
+          body: JSON.stringify({ test: "test" }),
+          headers: { "Content-Type": "application/json" },
+          status: 200
+        };
+      }
+
+      return {
+        body: "Oops!",
+        headers: {},
+        status: 500
+      };
+    };
+
+    await runOnTestServer(handler, async () => {
+      const res = await get("http://localhost:8080/", {
+        simple: false,
+        resolveWithFullResponse: true
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.headers).toHaveProperty("content-type", "application/json");
+      expect(res.body).toEqual(JSON.stringify({ test: "test" }));
     });
   });
 });

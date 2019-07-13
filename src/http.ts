@@ -1,5 +1,5 @@
 export interface HttpRequestHeaders {
-  [header: string]: string | string[];
+  [header: string]: string | string[] | undefined;
 }
 
 export type HttpMethod = string;

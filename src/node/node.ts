@@ -1,49 +1,14 @@
 import {
   createServer,
   RequestListener,
-  Server,
   IncomingMessage,
   ServerResponse
 } from "http";
 
 import { ServerConfig, HttpHandler, HttpServer } from "../http4ts";
-import { HttpResponse } from "../http";
+import { HttpResponse, HttpRequest } from "../http";
 import { streamToString } from "./utils";
-
-function writeResponse(res: HttpResponse, nodeRes: ServerResponse) {
-  nodeRes.statusCode = res.status;
-  Object.entries(res.headers).forEach(([key, value]) => {
-    nodeRes.setHeader(key, value);
-  });
-  nodeRes.write(res.body); // TODO: how to handle errors here?
-  nodeRes.end();
-}
-
-function writeErrorResponse(nodeRes: ServerResponse) {
-  const res = {
-    status: 500,
-    body: "Oops!",
-    headers: {}
-  };
-  writeResponse(res, nodeRes);
-}
-
-class NodeHttpServer implements HttpServer {
-  constructor(private server: Server, private port: number) {}
-
-  start() {
-    return new Promise((resolve, reject) => {
-      this.server.listen(this.port, () => resolve());
-      this.server.on("error", err => {
-        reject(err);
-      });
-    });
-  }
-
-  stop() {
-    this.server.close(); // TODO: handle errors
-  }
-}
+import { NodeHttpServer } from "./node-http-server";
 
 export class Node implements ServerConfig {
   constructor(public port: number) {}
@@ -59,20 +24,45 @@ export class Node implements ServerConfig {
       try {
         const request = await this.translateRequest(req);
         const response = await httpHandler(request);
-        writeResponse(response, res);
+        await this.writeResponse(response, res);
       } catch (error) {
-        console.log(error); // TODO: add proper logging or send the error to and error calback
-        writeErrorResponse(res);
+        console.log(error); // TODO: add proper logging or send the error to an error callback
+        this.writeErrorResponse(res);
       }
     };
   }
 
-  private async translateRequest(nodeReq: IncomingMessage) {
+  private async translateRequest(
+    nodeReq: IncomingMessage
+  ): Promise<HttpRequest> {
     return {
       body: await streamToString(nodeReq),
       headers: nodeReq.headers,
-      method: nodeReq.method,
-      url: nodeReq.url
+      method: nodeReq.method || "",
+      url: nodeReq.url || ""
     };
+  }
+
+  private writeResponse(
+    res: HttpResponse,
+    nodeRes: ServerResponse
+  ): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      nodeRes.statusCode = res.status;
+      for (const key in res.headers) {
+        if (res.headers.hasOwnProperty(key)) {
+          const value = res.headers[key];
+          nodeRes.setHeader(key, value || "");
+        }
+      }
+      nodeRes.write(res.body, reject);
+      nodeRes.end();
+      resolve();
+    });
+  }
+
+  private writeErrorResponse(nodeRes: ServerResponse): void {
+    nodeRes.statusCode = 500;
+    nodeRes.end(); // TODO: what to do with the callback here?
   }
 }
