@@ -42,6 +42,7 @@
   },
   "jest": {
     "preset": "ts-jest",
+    "rootDir": "./src",
     "reporters": [
       "default",
       "jest-junit"
