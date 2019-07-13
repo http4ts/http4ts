@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="1" failures="0" time="2.388">
+  <testsuite name="Node Server" errors="0" failures="0" skipped="0" timestamp="2019-07-13T09:36:17" time="1.917" tests="1">
+    <testcase classname="Node Server should listen on the given port" name="Node Server should listen on the given port" time="0.024">
+    </testcase>
+  </testsuite>
+</testsuites>
