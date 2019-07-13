@@ -9,7 +9,8 @@
     "start": "ts-node -p tsconfig.json ./src/index.ts",
     "build": "rm -rf dist && tsc -p tsconfig.json",
     "test": "jest",
-    "tdd": "jest --watchAll"
+    "tdd": "jest --watchAll",
+    "test-ci": "jest --ci --coverage --reporters=default --reporters=jest-junit"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "eslint-plugin-jest": "^22.7.2",
     "eslint-plugin-prettier": "^3.1.0",
     "jest": "^24.8.0",
+    "jest-junit": "^6.4.0",
     "prettier": "^1.18.2",
     "request-promise": "^4.2.4",
     "ts-jest": "^24.0.2",
@@ -39,7 +41,17 @@
     "typescript": "^3.5.1"
   },
   "jest": {
-    "preset": "ts-jest"
+    "preset": "ts-jest",
+    "reporters": [
+      "default",
+      "jest-junit"
+    ],
+    "coverageReporters": [
+      "text",
+      "text-summary",
+      "html",
+      "cobertura"
+    ]
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
