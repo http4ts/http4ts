@@ -1,0 +1,61 @@
+{
+  "name": "http4ts",
+  "version": "0.0.1",
+  "description": "Port of http4k to Typescript",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint src/**",
+    "lint-fix": "eslint --fix src/**",
+    "start": "ts-node -p tsconfig.json ./src/index.ts",
+    "build": "rm -rf dist && tsc -p tsconfig.json",
+    "test": "jest",
+    "tdd": "jest --watchAll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/http4ts/http4ts.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/http4ts/http4ts/issues"
+  },
+  "homepage": "https://github.com/http4ts/http4ts#readme",
+  "devDependencies": {
+    "@types/jest": "^24.0.15",
+    "@types/node": "^12.0.4",
+    "@types/request-promise": "^4.1.44",
+    "@typescript-eslint/eslint-plugin": "^1.12.0",
+    "@typescript-eslint/parser": "^1.12.0",
+    "eslint": "^6.0.1",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-jest": "^22.7.2",
+    "eslint-plugin-prettier": "^3.1.0",
+    "jest": "^24.8.0",
+    "prettier": "^1.18.2",
+    "request-promise": "^4.2.4",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.1"
+  },
+  "jest": {
+    "preset": "ts-jest"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "plugin:@typescript-eslint/recommended",
+      "prettier/@typescript-eslint",
+      "plugin:prettier/recommended"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+    },
+    "rules": {
+      "@typescript-eslint/explicit-member-accessibility": 0,
+      "@typescript-eslint/no-parameter-properties": 0,
+      "@typescript-eslint/explicit-function-return-type": 0
+    }
+  }
+}
