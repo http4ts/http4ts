@@ -10,4 +10,8 @@ async function handler(req: HttpRequest): Promise<HttpResponse> {
   };
 }
 
-createServer(handler, new Node(8080)).start();
+async function main() {
+  await createServer(handler, new Node(8080)).start();
+}
+
+main().catch(console.error);
