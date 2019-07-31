@@ -2,7 +2,18 @@ export interface HttpRequestHeaders {
   [header: string]: string | string[] | undefined;
 }
 
-export type HttpMethod = string;
+export type HttpMethod =
+  | "GET"
+  | "POST"
+  | "PUT"
+  | "DELETE"
+  | "OPTIONS"
+  | "TRACE"
+  | "PATCH"
+  | "PURGE"
+  | "HEAD"
+  | string;
+
 export type HttpBody = string; // | stream
 
 export interface HttpMessage {
