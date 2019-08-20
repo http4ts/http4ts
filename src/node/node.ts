@@ -9,9 +9,10 @@ import { ServerConfig, HttpHandler, HttpServer } from "../http4ts";
 import { HttpResponse, HttpRequest } from "../http";
 import { streamToString } from "./utils";
 import { NodeHttpServer } from "./node-http-server";
+import { HttpRequestImpl } from "./http-request";
 
 export class Node implements ServerConfig {
-  constructor(public port: number) {}
+  constructor(public port: number) { }
 
   toServer(httpHandler: HttpHandler): HttpServer {
     const nodeServer = createServer(this.translateHandler(httpHandler));
@@ -35,12 +36,12 @@ export class Node implements ServerConfig {
   private async translateRequest(
     nodeReq: IncomingMessage
   ): Promise<HttpRequest> {
-    return {
-      body: await streamToString(nodeReq),
-      headers: nodeReq.headers,
-      method: nodeReq.method || "",
-      url: nodeReq.url || ""
-    };
+    const body = await streamToString(nodeReq)
+    const url = nodeReq.url || ""
+    const headers = nodeReq.headers
+    const method = nodeReq.method || ""
+
+    return new HttpRequestImpl(headers, body, method, url)
   }
 
   private writeResponse(

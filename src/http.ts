@@ -24,6 +24,9 @@ export interface HttpMessage {
 export interface HttpRequest extends HttpMessage {
   method: HttpMethod;
   url: string;
+  bodyToJson: <T>() => T;
+  replaceHeader: (header: string, value: string) => HttpRequest;
+  removeHeader: (header: string) => HttpRequest;
 }
 
 export type HttpStatus = number;

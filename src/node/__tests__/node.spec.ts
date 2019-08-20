@@ -1,7 +1,7 @@
-import { createServer, HttpHandler } from "../http4ts";
-import { Node } from "../node/node";
+import { createServer, HttpHandler } from "../../http4ts";
+import { Node } from "../node";
 import { get } from "request-promise";
-import { HttpResponse } from "../http";
+import { HttpResponse } from "../../http";
 
 async function runOnTestServer(
   handler: HttpHandler,
