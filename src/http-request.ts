@@ -6,7 +6,7 @@ export class HttpRequestImpl implements HttpRequest {
     public readonly headers: HttpRequestHeaders = {},
     public readonly body: HttpBody,
     public readonly method: HttpMethod
-  ) { }
+  ) {}
 
   bodyToJson() {
     return JSON.parse(this.body);
@@ -14,7 +14,7 @@ export class HttpRequestImpl implements HttpRequest {
 
   replaceHeader(header: string, value: string | string[]) {
     if (!this.headers[header]) {
-      throw `Header ${header} does not exist`
+      throw `Header ${header} does not exist`;
     }
     const newHeaders = {
       ...this.headers,
@@ -24,12 +24,15 @@ export class HttpRequestImpl implements HttpRequest {
   }
 
   removeHeader(headerToRemove: string) {
-    const newHeaders = Object.keys(this.headers).reduce((headers: HttpRequestHeaders, header) => {
-      if (header !== headerToRemove) {
-        headers[header] = this.headers[header]
-      }
-      return headers
-    }, {})
+    const newHeaders = Object.keys(this.headers).reduce(
+      (headers: HttpRequestHeaders, header) => {
+        if (header !== headerToRemove) {
+          headers[header] = this.headers[header];
+        }
+        return headers;
+      },
+      {}
+    );
     return new HttpRequestImpl(this.url, newHeaders, this.body, this.method);
   }
 }
