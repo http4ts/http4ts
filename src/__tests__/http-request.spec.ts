@@ -3,7 +3,7 @@ import { HttpRequestImpl } from "../http-request";
 describe("HttpRequestImpl", () => {
   it("should remove headers", () => {
     const body = '"{param: 1}"';
-    const url = "";
+    const url = new URL("http://localhost");
     const headers = {
       someHeader: "Some content",
       someOtherHeader: "Some other header content"
@@ -21,7 +21,7 @@ describe("HttpRequestImpl", () => {
 
   it("should replace headers", () => {
     const body = '"{param: 1}"';
-    const url = "";
+    const url = new URL("http://localhost");
     const headers = {
       someHeader: "Some content",
       someOtherHeader: "Some other header content"

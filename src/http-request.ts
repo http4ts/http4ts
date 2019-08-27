@@ -2,7 +2,7 @@ import { HttpRequest, HttpMethod, HttpBody, HttpRequestHeaders } from "./http";
 
 export class HttpRequestImpl implements HttpRequest {
   constructor(
-    public readonly url: string,
+    public readonly url: URL,
     public readonly headers: HttpRequestHeaders = {},
     public readonly body: HttpBody,
     public readonly method: HttpMethod
