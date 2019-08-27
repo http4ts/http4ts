@@ -9,7 +9,7 @@ import { ServerConfig, HttpHandler, HttpServer } from "../http4ts";
 import { HttpResponse, HttpRequest } from "../http";
 import { streamToString } from "./utils";
 import { NodeHttpServer } from "./node-http-server";
-import { HttpRequestImpl } from "./http-request";
+import { HttpRequestImpl } from "../http-request";
 
 export class Node implements ServerConfig {
   constructor(public port: number) { }
@@ -27,7 +27,6 @@ export class Node implements ServerConfig {
         const response = await httpHandler(request);
         await this.writeResponse(response, res);
       } catch (error) {
-        console.log(error); // TODO: add proper logging or send the error to an error callback
         this.writeErrorResponse(res);
       }
     };
@@ -41,7 +40,7 @@ export class Node implements ServerConfig {
     const headers = nodeReq.headers
     const method = nodeReq.method || ""
 
-    return new HttpRequestImpl(headers, body, method, url)
+    return new HttpRequestImpl(url, headers, body, method)
   }
 
   private writeResponse(

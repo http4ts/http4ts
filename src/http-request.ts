@@ -1,10 +1,12 @@
-import { HttpRequest, HttpMethod, HttpBody, HttpRequestHeaders } from "../http";
+import { HttpRequest, HttpMethod, HttpBody, HttpRequestHeaders } from "./http";
 
 export class HttpRequestImpl implements HttpRequest {
-  constructor(public readonly headers: HttpRequestHeaders,
+  constructor(
+    public readonly url: string,
+    public readonly headers: HttpRequestHeaders = {},
     public readonly body: HttpBody,
-    public readonly method: HttpMethod,
-    public readonly url: string) { }
+    public readonly method: HttpMethod
+  ) { }
 
   bodyToJson() {
     return JSON.parse(this.body);
@@ -18,7 +20,7 @@ export class HttpRequestImpl implements HttpRequest {
       ...this.headers,
       [header]: value
     };
-    return new HttpRequestImpl(newHeaders, this.body, this.method, this.url);
+    return new HttpRequestImpl(this.url, newHeaders, this.body, this.method);
   }
 
   removeHeader(headerToRemove: string) {
@@ -28,6 +30,6 @@ export class HttpRequestImpl implements HttpRequest {
       }
       return headers
     }, {})
-    return new HttpRequestImpl(newHeaders, this.body, this.method, this.url);
+    return new HttpRequestImpl(this.url, newHeaders, this.body, this.method);
   }
 }

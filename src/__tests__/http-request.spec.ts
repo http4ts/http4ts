@@ -9,8 +9,8 @@ describe("HttpRequestImpl", () => {
       someOtherHeader: 'Some other header content'
     }
     const method = "GET"
-    const request = new HttpRequestImpl(headers, body, method, url);
-    const expectedRequest = new HttpRequestImpl({ someOtherHeader: 'Some other header content' }, body, method, url);
+    const request = new HttpRequestImpl(url, headers, body, method);
+    const expectedRequest = new HttpRequestImpl(url, { someOtherHeader: 'Some other header content' }, body, method);
     expect(request.removeHeader("someHeader")).toEqual(expectedRequest);
   })
 
@@ -22,12 +22,12 @@ describe("HttpRequestImpl", () => {
       someOtherHeader: 'Some other header content'
     }
     const method = "GET"
-    const request = new HttpRequestImpl(headers, body, method, url);
+    const request = new HttpRequestImpl(url, headers, body, method);
     const expectedHeaders = {
       someHeader: 'Some new content',
       someOtherHeader: 'Some other header content'
     }
-    const expectedRequest = new HttpRequestImpl(expectedHeaders, body, method, url);
+    const expectedRequest = new HttpRequestImpl(url, expectedHeaders, body, method);
     expect(request.replaceHeader("someHeader", "Some new content")).toEqual(expectedRequest);
   })
 })
