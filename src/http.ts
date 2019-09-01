@@ -23,7 +23,7 @@ export interface HttpMessage {
 
 export interface HttpRequest extends HttpMessage {
   method: HttpMethod;
-  url: URL;
+  path: string;
   bodyToJson: <T>() => T;
   replaceHeader: (header: string, value: string) => HttpRequest;
   removeHeader: (header: string) => HttpRequest;

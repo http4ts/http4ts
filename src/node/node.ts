@@ -36,11 +36,11 @@ export class Node implements ServerConfig {
     nodeReq: IncomingMessage
   ): Promise<HttpRequest> {
     const body = await streamToString(nodeReq);
-    const url = new URL(`${nodeReq.headers.host}${nodeReq.url}`);
+    const path = nodeReq.url || "";
     const headers = nodeReq.headers;
     const method = nodeReq.method || "";
 
-    return new HttpRequestImpl(url, headers, body, method);
+    return new HttpRequestImpl(path, headers, body, method);
   }
 
   private writeResponse(

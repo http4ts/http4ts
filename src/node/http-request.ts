@@ -2,7 +2,7 @@ import { HttpRequest, HttpMethod, HttpBody, HttpRequestHeaders } from "../http";
 
 export class HttpRequestImpl implements HttpRequest {
   constructor(
-    public readonly url: URL,
+    public readonly path: string,
     public readonly headers: HttpRequestHeaders = {},
     public readonly body: HttpBody,
     public readonly method: HttpMethod
@@ -20,7 +20,7 @@ export class HttpRequestImpl implements HttpRequest {
       ...this.headers,
       [header]: value
     };
-    return new HttpRequestImpl(this.url, newHeaders, this.body, this.method);
+    return new HttpRequestImpl(this.path, newHeaders, this.body, this.method);
   }
 
   removeHeader(headerToRemove: string) {
@@ -33,6 +33,6 @@ export class HttpRequestImpl implements HttpRequest {
       },
       {}
     );
-    return new HttpRequestImpl(this.url, newHeaders, this.body, this.method);
+    return new HttpRequestImpl(this.path, newHeaders, this.body, this.method);
   }
 }
