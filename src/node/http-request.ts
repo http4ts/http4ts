@@ -1,4 +1,4 @@
-import { HttpRequest, HttpMethod, HttpBody, HttpRequestHeaders } from "./http";
+import { HttpRequest, HttpMethod, HttpBody, HttpRequestHeaders } from "../http";
 
 export class HttpRequestImpl implements HttpRequest {
   constructor(

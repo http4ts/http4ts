@@ -9,7 +9,7 @@ import { ServerConfig, HttpHandler, HttpServer } from "../http4ts";
 import { HttpResponse, HttpRequest } from "../http";
 import { streamToString } from "./utils";
 import { NodeHttpServer } from "./node-http-server";
-import { HttpRequestImpl } from "../http-request";
+import { HttpRequestImpl } from "./http-request";
 
 export class Node implements ServerConfig {
   constructor(public port: number) { }
