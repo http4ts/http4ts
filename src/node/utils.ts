@@ -9,3 +9,17 @@ export function streamToString(stream: Readable): Promise<string> {
     stream.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")));
   });
 }
+
+export function toReadableStream(stream: Readable): ReadableStream{
+  return new ReadableStream({
+    start(controller: ReadableStreamDefaultController){
+      stream.on("data", chunk => controller.enqueue(chunk));
+      stream.on("error", error => controller.error(error));
+      stream.on("end", () => controller.close());
+      stream.on("close", () => controller.close());
+    },
+    cancel(reason){
+      stream.destroy(reason)
+    }
+  })
+}
