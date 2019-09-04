@@ -14,7 +14,10 @@ export type HttpMethod =
   | "HEAD"
   | string;
 
-export type HttpBody = string; // | stream
+export interface HttpBody {
+  stream: ReadableStream;
+  toString: () => Promise<string>
+}
 
 export interface HttpMessage {
   headers: HttpRequestHeaders;

@@ -7,11 +7,11 @@ import {
 
 import { ServerConfig, HttpHandler, HttpServer } from "../http4ts";
 import { HttpResponse, HttpRequest } from "../http";
-import { streamToString } from "./utils";
+import { HttpBodyImpl } from "./HttpBodyImpl";
 import { NodeHttpServer } from "./node-http-server";
 
 export class Node implements ServerConfig {
-  constructor(public port: number) {}
+  constructor(public port: number) { }
 
   toServer(httpHandler: HttpHandler): HttpServer {
     const nodeServer = createServer(this.translateHandler(httpHandler));
@@ -36,7 +36,7 @@ export class Node implements ServerConfig {
     nodeReq: IncomingMessage
   ): Promise<HttpRequest> {
     return {
-      body: await streamToString(nodeReq),
+      body: new HttpBodyImpl(nodeReq),
       headers: nodeReq.headers,
       method: nodeReq.method || "",
       url: nodeReq.url || ""
@@ -47,7 +47,7 @@ export class Node implements ServerConfig {
     res: HttpResponse,
     nodeRes: ServerResponse
   ): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<void>(async (resolve, reject) => {
       nodeRes.statusCode = res.status;
       for (const key in res.headers) {
         if (res.headers.hasOwnProperty(key)) {
@@ -55,7 +55,8 @@ export class Node implements ServerConfig {
           nodeRes.setHeader(key, value || "");
         }
       }
-      nodeRes.write(res.body, reject);
+      const httpBodytoString = await res.body.toString()
+      nodeRes.write(httpBodytoString, reject);
       nodeRes.end();
       resolve();
     });

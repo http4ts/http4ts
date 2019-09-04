@@ -67,5 +67,8 @@
       "@typescript-eslint/explicit-function-return-type": 0,
       "@typescript-eslint/no-explicit-any": 0
     }
+  },
+  "dependencies": {
+    "web-streams-polyfill": "^2.0.4"
   }
 }

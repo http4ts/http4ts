@@ -4,7 +4,7 @@ import { Node } from "../node/node";
 
 async function handler(req: HttpRequest): Promise<HttpResponse> {
   return {
-    body: req.url,
+    body: req.body,
     headers: {},
     status: 200
   };
