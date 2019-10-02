@@ -16,7 +16,7 @@ export type HttpMethod =
 
 export interface HttpBody {
   stream: ReadableStream;
-  toString: () => Promise<string>
+  toString: () => Promise<string>;
 }
 
 export interface HttpMessage {

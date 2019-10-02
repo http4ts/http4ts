@@ -2,16 +2,17 @@ import {
   createServer,
   RequestListener,
   IncomingMessage,
-  ServerResponse
+  ServerResponse,
 } from "http";
 
 import { ServerConfig, HttpHandler, HttpServer } from "../http4ts";
 import { HttpResponse, HttpRequest } from "../http";
 import { HttpBodyImpl } from "./HttpBodyImpl";
 import { NodeHttpServer } from "./node-http-server";
+import { toReadableStream } from "./utils";
 
 export class Node implements ServerConfig {
-  constructor(public port: number) { }
+  constructor(public port: number) {}
 
   toServer(httpHandler: HttpHandler): HttpServer {
     const nodeServer = createServer(this.translateHandler(httpHandler));
@@ -26,7 +27,7 @@ export class Node implements ServerConfig {
         const response = await httpHandler(request);
         await this.writeResponse(response, res);
       } catch (error) {
-        console.log(error); // TODO: add proper logging or send the error to an error callback
+        console.log(error, "Error"); // TODO: add proper logging or send the error to an error callback
         this.writeErrorResponse(res);
       }
     };
@@ -36,10 +37,10 @@ export class Node implements ServerConfig {
     nodeReq: IncomingMessage
   ): Promise<HttpRequest> {
     return {
-      body: new HttpBodyImpl(nodeReq),
+      body: new HttpBodyImpl(toReadableStream(nodeReq)),
       headers: nodeReq.headers,
       method: nodeReq.method || "",
-      url: nodeReq.url || ""
+      url: nodeReq.url || "",
     };
   }
 
@@ -55,10 +56,22 @@ export class Node implements ServerConfig {
           nodeRes.setHeader(key, value || "");
         }
       }
-      const httpBodytoString = await res.body.toString()
-      nodeRes.write(httpBodytoString, reject);
-      nodeRes.end();
-      resolve();
+      const httpBodytoString = await res.body;
+      const streamReader = httpBodytoString.stream.getReader();
+      const readStreamToEnd = (): Promise<any> => {
+        return streamReader.read().then(({ done, value }) => {
+          if (done) {
+            nodeRes.end();
+            resolve();
+            return;
+          }
+
+          nodeRes.write(value);
+
+          return readStreamToEnd();
+        });
+      };
+      readStreamToEnd();
     });
   }
 

@@ -1,29 +1,22 @@
 import { Readable } from "stream";
-import { ReadableStream } from "web-streams-polyfill/ponyfill/es2018"
+import { ReadableStream } from "web-streams-polyfill/ponyfill/es2018";
 
 export function toReadableStream(stream: Readable): ReadableStream {
-  let streamClosedAlready = false;
   return new ReadableStream({
-    start(controller: ReadableStreamDefaultController) {
+    start(controller) {
+      stream.pause();
       stream.on("data", chunk => {
         controller.enqueue(chunk);
+        stream.pause();
       });
-      stream.on("error", error => controller.error(error));
-      stream.on("end", () => {
-        if (!streamClosedAlready) {
-          controller.close()
-          streamClosedAlready = true;
-        }
-      });
-      stream.on("close", () => {
-        if (!streamClosedAlready) {
-          controller.close()
-          streamClosedAlready = true;
-        }
-      });
+      stream.on("end", () => controller.close());
+      stream.on("error", e => controller.error(e));
     },
-    cancel(reason) {
-      stream.destroy(reason)
+    pull() {
+      stream.resume();
+    },
+    cancel() {
+      stream.pause();
     }
-  })
+  });
 }
