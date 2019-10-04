@@ -17,6 +17,15 @@ export function toReadableStream(stream: Readable): ReadableStream {
     },
     cancel() {
       stream.pause();
-    }
+    },
+  });
+}
+
+export function stringToReadableStream(content: string): ReadableStream {
+  return new ReadableStream({
+    start(controller) {
+      controller.enqueue(content);
+      controller.close();
+    },
   });
 }

@@ -1,10 +1,18 @@
 import { HttpRequest, HttpResponse } from "../http";
 import { createServer } from "../http4ts";
 import { Node } from "../node/node";
+import { HttpBodyImpl } from "../node/HttpBodyImpl";
+
+interface Person {
+  name: string;
+}
 
 async function handler(req: HttpRequest): Promise<HttpResponse> {
+  const person = await req.body.asJson<Person>();
+  person.name;
+
   return {
-    body: req.body,
+    body: HttpBodyImpl.fromString(person.name),
     headers: {},
     status: 200
   };

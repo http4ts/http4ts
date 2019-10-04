@@ -27,7 +27,7 @@ export class Node implements ServerConfig {
         const response = await httpHandler(request);
         await this.writeResponse(response, res);
       } catch (error) {
-        console.log(error, "Error"); // TODO: add proper logging or send the error to an error callback
+        console.log(error); // TODO: add proper logging or send the error to an error callback
         this.writeErrorResponse(res);
       }
     };
@@ -56,22 +56,24 @@ export class Node implements ServerConfig {
           nodeRes.setHeader(key, value || "");
         }
       }
-      const httpBodytoString = await res.body;
-      const streamReader = httpBodytoString.stream.getReader();
-      const readStreamToEnd = (): Promise<any> => {
-        return streamReader.read().then(({ done, value }) => {
-          if (done) {
-            nodeRes.end();
-            resolve();
-            return;
-          }
+      const streamReader = res.body.stream.getReader();
+      const readStreamToEnd = async (): Promise<any> => {
+        const { done, value } = await streamReader.read();
+        if (done) {
+          nodeRes.end();
+          resolve();
+          return;
+        }
 
-          nodeRes.write(value);
+        nodeRes.write(value);
 
-          return readStreamToEnd();
-        });
+        return readStreamToEnd();
       };
-      readStreamToEnd();
+      try {
+        readStreamToEnd();
+      } catch (err) {
+        reject(err);
+      }
     });
   }
 
