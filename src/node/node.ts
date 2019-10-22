@@ -2,14 +2,13 @@ import {
   createServer,
   RequestListener,
   IncomingMessage,
-  ServerResponse,
+  ServerResponse
 } from "http";
 
 import { ServerConfig, HttpHandler, HttpServer } from "../http4ts";
 import { HttpResponse, HttpRequest } from "../http";
 import { HttpBodyImpl } from "./HttpBodyImpl";
 import { NodeHttpServer } from "./node-http-server";
-import { toReadableStream } from "./utils";
 
 export class Node implements ServerConfig {
   constructor(public port: number) {}
@@ -37,10 +36,10 @@ export class Node implements ServerConfig {
     nodeReq: IncomingMessage
   ): Promise<HttpRequest> {
     return {
-      body: new HttpBodyImpl(toReadableStream(nodeReq)),
+      body: HttpBodyImpl.fromNodeRequest(nodeReq),
       headers: nodeReq.headers,
       method: nodeReq.method || "",
-      url: nodeReq.url || "",
+      url: nodeReq.url || ""
     };
   }
 
