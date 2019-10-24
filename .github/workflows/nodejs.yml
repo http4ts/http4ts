@@ -25,3 +25,7 @@ jobs:
       run: npm run lint
     - name: test
       run: npm run test-ci
+    - uses: codecov/codecov-action@v1.0.3
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: ./coverage/cobertura-coverage.xml
