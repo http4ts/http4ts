@@ -1,9 +1,7 @@
 name: Node CI
 
-on:
-  push:
-    branches:
-      - master
+on: [push]
+
 jobs:
   build:
     name: Build, Lint, and Test
