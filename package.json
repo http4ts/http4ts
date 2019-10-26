@@ -7,6 +7,7 @@
     "lint": "eslint --ext .ts src/**",
     "lint-fix": "eslint --ext .ts --fix src/**",
     "example": "ts-node --project tsconfig.json ./src/examples/simple-server.ts",
+    "example-client": "ts-node --project tsconfig.json ./src/examples/simple-client.ts",
     "build": "rm -rf dist && tsc -p tsconfig.json",
     "test": "jest",
     "tdd": "jest --watchAll",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@types/jest": "^24.0.15",
     "@types/node": "^12.0.4",
+    "@types/node-fetch": "^2.5.2",
     "@types/request-promise": "^4.1.44",
     "@typescript-eslint/eslint-plugin": "^1.12.0",
     "@typescript-eslint/parser": "^1.12.0",
@@ -39,6 +41,9 @@
     "ts-jest": "^24.0.2",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.1"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.0"
   },
   "jest": {
     "preset": "ts-jest",
@@ -61,5 +66,16 @@
       "@typescript-eslint/explicit-function-return-type": 0,
       "@typescript-eslint/no-explicit-any": 0
     }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }

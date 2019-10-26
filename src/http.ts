@@ -1,4 +1,4 @@
-export interface HttpRequestHeaders {
+export interface HttpHeaders {
   [header: string]: string | string[] | undefined;
 }
 
@@ -14,10 +14,10 @@ export type HttpMethod =
   | "HEAD"
   | string;
 
-export type HttpBody = string; // | stream
+export type HttpBody = string | null; // | stream
 
 export interface HttpMessage {
-  headers: HttpRequestHeaders;
+  headers: HttpHeaders;
   body: HttpBody;
 }
 
