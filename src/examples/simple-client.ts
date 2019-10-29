@@ -1,9 +1,9 @@
 import { HttpRequest } from "../http";
-import { send, setTheFetch } from "../send/send";
+import { createHttpClient } from "../http-client";
 import fetch from "node-fetch";
 
 async function main() {
-  setTheFetch(fetch);
+  const send = createHttpClient(fetch as any);
 
   const request: HttpRequest = {
     body: null,
