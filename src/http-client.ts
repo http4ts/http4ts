@@ -1,11 +1,12 @@
 import { HttpRequest, HttpResponse } from "./http";
+import { HttpHandler } from "./http4ts";
 
 export type Fetch = (
   url: RequestInfo,
   init?: RequestInit | undefined
 ) => Promise<Response>;
 
-export function createHttpClient(theFetch: Fetch) {
+export function createHttpClient(theFetch: Fetch): HttpHandler {
   return async (req: HttpRequest): Promise<HttpResponse> => {
     const resp = await theFetch(req.url, {
       method: req.method,
