@@ -1,12 +1,13 @@
 import { HttpRequest, HttpResponse } from "../http";
 import { createServer } from "../http4ts";
 import { Node } from "../node/node";
+import { HttpStatus } from "../http-status";
 
 async function handler(req: HttpRequest): Promise<HttpResponse> {
   return {
     body: req.url,
     headers: {},
-    status: 200
+    status: HttpStatus.OK
   };
 }
 

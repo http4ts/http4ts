@@ -9,6 +9,7 @@ import { ServerConfig, HttpHandler, HttpServer } from "../http4ts";
 import { HttpResponse, HttpRequest } from "../http";
 import { streamToString } from "./utils";
 import { NodeHttpServer } from "./node-http-server";
+import { HttpStatus } from "../http-status";
 
 export class Node implements ServerConfig {
   constructor(public port: number) {}
@@ -62,7 +63,7 @@ export class Node implements ServerConfig {
   }
 
   private writeErrorResponse(nodeRes: ServerResponse): void {
-    nodeRes.statusCode = 500;
+    nodeRes.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
     nodeRes.end(); // TODO: what to do with the callback here?
   }
 }
