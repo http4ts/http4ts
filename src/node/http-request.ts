@@ -1,10 +1,4 @@
-import {
-  HttpRequest,
-  HttpMethod,
-  HttpBody,
-  HttpRequestHeaders,
-  HttpQuery
-} from "../http";
+import { HttpRequest, HttpMethod, HttpBody, HttpRequestHeaders } from "../http";
 import { ParsedUrl, ParsedQuery, parseUrl, stringify } from "query-string";
 
 export class HttpRequestImpl implements HttpRequest {
@@ -12,9 +6,9 @@ export class HttpRequestImpl implements HttpRequest {
 
   constructor(
     public readonly url: string,
-    public readonly headers: HttpRequestHeaders = {},
     public readonly body: HttpBody,
-    public readonly method: HttpMethod
+    public readonly method: HttpMethod,
+    public readonly headers: HttpRequestHeaders = {}
   ) {
     this.parsedUrl = parseUrl(url);
   }
@@ -29,12 +23,15 @@ export class HttpRequestImpl implements HttpRequest {
     }
     const newHeaders = {
       ...this.headers,
-      [header]: value
+      [header]: value,
     };
-    return new HttpRequestImpl(this.url, newHeaders, this.body, this.method);
+    return new HttpRequestImpl(this.url, this.body, this.method, newHeaders);
   }
 
   removeHeader(headerToRemove: string) {
+    if (!this.headers[headerToRemove]) {
+      throw `Header ${headerToRemove} does not exist`;
+    }
     const newHeaders = Object.keys(this.headers).reduce(
       (headers: HttpRequestHeaders, header) => {
         if (header !== headerToRemove) {
@@ -44,7 +41,7 @@ export class HttpRequestImpl implements HttpRequest {
       },
       {}
     );
-    return new HttpRequestImpl(this.url, newHeaders, this.body, this.method);
+    return new HttpRequestImpl(this.url, this.body, this.method, newHeaders);
   }
 
   query(name: string) {
@@ -54,10 +51,10 @@ export class HttpRequestImpl implements HttpRequest {
   addQuery(name: string, value: string | string[]) {
     const newQuery = {
       ...this.query,
-      [name]: value
+      [name]: value,
     };
     const newUrl = `${this.parsedUrl.url}?${stringify(newQuery)}`;
-    return new HttpRequestImpl(newUrl, this.headers, this.body, this.method);
+    return new HttpRequestImpl(newUrl, this.body, this.method, this.headers);
   }
 
   removeQuery(queryToRemove: string) {
@@ -71,7 +68,7 @@ export class HttpRequestImpl implements HttpRequest {
       {}
     );
     const newUrl = `${this.parsedUrl.url}?${stringify(newQuery)}`;
-    return new HttpRequestImpl(newUrl, this.headers, this.body, this.method);
+    return new HttpRequestImpl(newUrl, this.body, this.method, this.headers);
   }
 
   replaceQuery(name: string, value: string | string[]) {
