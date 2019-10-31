@@ -45,9 +45,6 @@
     "ts-node": "^8.3.0",
     "typescript": "^3.5.1"
   },
-  "dependencies": {
-    "query-string": "^6.8.3"
-  },
   "jest": {
     "preset": "ts-jest",
     "rootDir": "./src"
