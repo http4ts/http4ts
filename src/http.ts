@@ -2,7 +2,7 @@ export interface HttpRequestHeaders {
   [header: string]: string | string[] | undefined;
 }
 
-export type HttpQuery = string | string[] | undefined| null;
+export type HttpQuery = string[] | undefined | null;
 
 export type HttpMethod =
   | "GET"
