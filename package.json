@@ -1,7 +1,7 @@
 {
   "name": "http4ts",
   "version": "0.0.1",
-  "description": "Port of http4k to Typescript",
+  "description": "Server as a Function http toolkit for Typescript",
   "main": "index.js",
   "scripts": {
     "lint": "eslint --ext .ts src/**",
