@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint --ext .ts src/**",
     "lint-fix": "eslint --ext .ts --fix src/**",
-    "example": "ts-node --project tsconfig.json ./src/examples/simple-server.ts",
+    "example": "nodemon",
     "build": "rm -rf dist && tsc -p tsconfig.json",
     "test": "jest",
     "tdd": "jest --watchAll",
@@ -35,6 +35,8 @@
     "eslint-plugin-prettier": "^3.1.0",
     "husky": "^3.0.9",
     "jest": "^24.8.0",
+    "jest-junit": "^6.4.0",
+    "nodemon": "^1.19.1",
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
     "request-promise": "^4.2.4",

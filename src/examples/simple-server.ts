@@ -5,7 +5,7 @@ import { toNodeRequestListener } from "../node/server";
 
 async function handler(req: HttpRequest): Promise<HttpResponse> {
   return {
-    body: req.url,
+    body: `${req.query("q")}`,
     headers: {},
     status: HttpStatus.OK
   };
