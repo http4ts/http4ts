@@ -2,7 +2,7 @@ export interface HttpRequestHeaders {
   [header: string]: string | string[] | undefined;
 }
 
-export type HttpQuery = string[] | undefined | null;
+export type HttpQuery = string | string[] | undefined | null;
 
 export type HttpMethod =
   | "GET"
@@ -27,6 +27,7 @@ export interface HttpRequest extends HttpMessage {
   method: HttpMethod;
   url: string;
   bodyToJson: <T>() => T;
+  addHeader: (header: string, value: string | string[]) => HttpRequest;
   replaceHeader: (header: string, value: string | string[]) => HttpRequest;
   removeHeader: (header: string) => HttpRequest;
   query: (name: string) => HttpQuery;

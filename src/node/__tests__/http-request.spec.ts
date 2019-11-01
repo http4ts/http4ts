@@ -1,17 +1,38 @@
 import { HttpRequestImpl } from "../http-request";
 
 describe("HttpRequestImpl", () => {
+  it("should add headers", () => {
+    const body = '"{param: 1}"';
+    const url = "http://localhost";
+    const headers = {
+      someHeader: "Some content",
+      someOtherHeader: "Some other header content",
+    };
+    const method = "GET";
+    const request = new HttpRequestImpl(url, body, method, headers);
+    const expectedRequest = new HttpRequestImpl(url, body, method, {
+      ...headers,
+      addedHeader: "A new added header",
+    });
+    expect(request.addHeader("addedHeader", "A new added header")).toEqual(
+      expectedRequest
+    );
+    expect(() => {
+      request.addHeader("someHeader", "Some value");
+    }).toThrow();
+  });
+
   it("should remove headers", () => {
     const body = '"{param: 1}"';
     const url = "http://localhost";
     const headers = {
       someHeader: "Some content",
-      someOtherHeader: "Some other header content"
+      someOtherHeader: "Some other header content",
     };
     const method = "GET";
     const request = new HttpRequestImpl(url, body, method, headers);
     const expectedRequest = new HttpRequestImpl(url, body, method, {
-      someOtherHeader: "Some other header content"
+      someOtherHeader: "Some other header content",
     });
     expect(request.removeHeader("someHeader")).toEqual(expectedRequest);
   });
@@ -21,13 +42,13 @@ describe("HttpRequestImpl", () => {
     const url = "http://localhost";
     const headers = {
       someHeader: "Some content",
-      someOtherHeader: "Some other header content"
+      someOtherHeader: "Some other header content",
     };
     const method = "GET";
     const request = new HttpRequestImpl(url, body, method, headers);
     const expectedHeaders = {
       someHeader: "Some new content",
-      someOtherHeader: "Some other header content"
+      someOtherHeader: "Some other header content",
     };
 
     expect(
@@ -48,7 +69,7 @@ describe("HttpRequestImpl", () => {
   it("should add query", () => {
     const url = "http://localhost?q=1";
     const request = new HttpRequestImpl(url, "", "GET", {});
-    expect(request.addQuery("q2", "1").query("q2")).toEqual(["1"]);
+    expect(request.addQuery("q2", "1").query("q2")).toEqual("1");
     expect(request.addQuery("q2", ["1", "2"]).query("q2")).toEqual(["1", "2"]);
   });
 
@@ -57,7 +78,7 @@ describe("HttpRequestImpl", () => {
     const request = new HttpRequestImpl(url, "", "GET", {});
     expect(request.replaceQuery("q", ["1", "2"]).query("q")).toEqual([
       "1",
-      "2"
+      "2",
     ]);
 
     expect(() => {
@@ -68,6 +89,6 @@ describe("HttpRequestImpl", () => {
   it("should remove query", () => {
     const url = "http://localhost?q=1&q2=2";
     const request = new HttpRequestImpl(url, "", "GET", {});
-    expect(request.removeQuery("q2").query("q2")).toEqual([]);
+    expect(request.removeQuery("q2").query("q2")).toEqual(undefined);
   });
 });

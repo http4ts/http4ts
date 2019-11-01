@@ -18,7 +18,7 @@ export class HttpRequestImpl implements HttpRequest {
     const queryString = url.substring(url.indexOf("?"));
     this.parsedUri = {
       queryString: new URLSearchParams(queryString),
-      path: path
+      path: path,
     };
   }
 
@@ -26,20 +26,31 @@ export class HttpRequestImpl implements HttpRequest {
     return JSON.parse(this.body);
   }
 
-  replaceHeader(header: string, value: string | string[]) {
-    if (!this.headers[header]) {
-      throw `Header ${header} does not exist`;
+  addHeader(header: string, value: string | string[]) {
+    if (this.headers[header]) {
+      throw `Trying to add an existing header with name ${header}. You can use HttpRequest.replaceHeader instead.`;
     }
     const newHeaders = {
       ...this.headers,
-      [header]: value
+      [header]: value,
+    };
+    return new HttpRequestImpl(this.url, this.body, this.method, newHeaders);
+  }
+
+  replaceHeader(header: string, value: string | string[]) {
+    if (!this.headers[header]) {
+      throw `Trying to replace a non existing header with name ${header}. You can use HttpRequest.addHeader instead.`;
+    }
+    const newHeaders = {
+      ...this.headers,
+      [header]: value,
     };
     return new HttpRequestImpl(this.url, this.body, this.method, newHeaders);
   }
 
   removeHeader(headerToRemove: string) {
     if (!this.headers[headerToRemove]) {
-      throw `Header ${headerToRemove} does not exist`;
+      throw `Trying to remove a non existing header with name ${headerToRemove}.`;
     }
     const newHeaders = Object.keys(this.headers).reduce(
       (headers: HttpRequestHeaders, header) => {
@@ -54,7 +65,14 @@ export class HttpRequestImpl implements HttpRequest {
   }
 
   query(name: string) {
-    return this.parsedUri.queryString.getAll(name);
+    const foundQuery = this.parsedUri.queryString.getAll(name);
+    if (!foundQuery.length) {
+      return undefined;
+    }
+    if (foundQuery.length === 1) {
+      return foundQuery[0];
+    }
+    return foundQuery;
   }
 
   addQuery(name: string, value: string | string[]) {
@@ -77,6 +95,9 @@ export class HttpRequestImpl implements HttpRequest {
     const queryString = new URLSearchParams(
       this.parsedUri.queryString.toString()
     );
+    if (!queryString.get(queryToRemove)) {
+      throw `Trying to remove a non existing query with name ${queryToRemove}.`;
+    }
     queryString.delete(queryToRemove);
     const newUrl = `${this.parsedUri.path}?${queryString.toString()}`;
     return new HttpRequestImpl(newUrl, this.body, this.method, this.headers);
@@ -87,7 +108,7 @@ export class HttpRequestImpl implements HttpRequest {
       this.parsedUri.queryString.toString()
     );
     if (!queryString.get(name)) {
-      throw `Query ${name} does not exist`;
+      throw `Trying to replace a non existing query with name ${name}. You can use HttpRequest.addQuery instead.`;
     }
     if (value instanceof Array) {
       queryString.delete(name);
