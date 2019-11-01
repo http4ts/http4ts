@@ -1,5 +1,6 @@
 import { HttpRequestHeaders, HttpRequest } from "../../http";
 import { routes, get, notFound, RoutedHttpRequest, post, all } from "../routes";
+import { HttpRequestImpl } from "../../node/http-request";
 
 function resp(
   status: number = 200,
@@ -35,93 +36,62 @@ describe("routes", () => {
   );
 
   test("GET / should return slash handler", () => {
-    const req: HttpRequest = {
-      body: "somebody",
-      headers: {},
-      method: "GET",
-      url: "/"
-    };
+    const req = new HttpRequestImpl("/", "somebody", "GET");
 
     expect(routingHandler(req)).toEqual(slash());
   });
 
   test("GET /home should return home handler", () => {
-    const req: HttpRequest = {
-      body: "somebody",
-      headers: {},
-      method: "GET",
-      url: "/home"
-    };
+    const req = new HttpRequestImpl("/home", "somebody", "GET");
 
     expect(routingHandler(req)).toEqual(home());
   });
 
   test("GET /articles/1 should return articles handler", () => {
-    const req: HttpRequest = {
-      body: "somebody",
-      headers: {},
-      method: "GET",
-      url: "/articles/1"
-    };
+    const req = new HttpRequestImpl("/articles/1", "somebody", "GET");
 
     expect(routingHandler(req)).toEqual(resp(200, "1"));
   });
 
   test("GET /company/carriers should return carriers handler", () => {
-    const req: HttpRequest = {
-      body: "somebody",
-      headers: {},
-      method: "GET",
-      url: "/company/carriers"
-    };
+    const req = new HttpRequestImpl("/company/carriers", "somebody", "GET");
 
     expect(routingHandler(req)).toEqual(carriers());
   });
 
   test("GET /company/contacts should return contacts handler", () => {
-    const req: HttpRequest = {
-      body: "somebody",
-      headers: {},
-      method: "GET",
-      url: "/company/contacts"
-    };
+    const req = new HttpRequestImpl("/company/contacts", "somebody", "GET");
 
     expect(routingHandler(req)).toEqual(contacts());
   });
 
   test("notFound handler should be called when there is no matched route", () => {
-    const req: HttpRequest = {
-      body: "somebody",
-      headers: {},
-      method: "GET",
-      url: "/company/about"
-    };
+    const req = new HttpRequestImpl("/company/about", "somebody", "GET");
 
     expect(routingHandler(req)).toEqual(nf());
   });
 
   test("POST /submit-contact should return submitContact", () => {
-    const req: HttpRequest = {
-      body: "some form data",
-      headers: {},
-      method: "POST",
-      url: "/submit-contact"
-    };
+    const req = new HttpRequestImpl("/submit-contact", "somebody", "POST");
 
     expect(routingHandler(req)).toEqual(submitContact());
   });
 
   test("POST and GET /all-methods should return allMethods", () => {
-    const postReq: HttpRequest = {
-      body: "some form data",
-      headers: {},
-      method: "POST",
-      url: "/all-methods"
-    };
+    const postReq = new HttpRequestImpl(
+      "/all-methods",
+      "some form data",
+      "POST"
+    );
 
     expect(routingHandler(postReq)).toEqual(allMethods(postReq));
 
-    const getReq = { ...postReq, method: "GET" };
+    const getReq = new HttpRequestImpl(
+      postReq.url,
+      postReq.body,
+      "GET",
+      postReq.headers
+    );
     expect(routingHandler(getReq)).toEqual(allMethods(getReq));
   });
 });
