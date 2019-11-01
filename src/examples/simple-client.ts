@@ -1,16 +1,15 @@
-import { HttpRequest } from "../http";
 import { createHttpClient } from "../http-client";
 import fetch from "node-fetch";
+import { HttpRequestImpl } from "../node/http-request";
 
 async function main() {
   const send = createHttpClient(fetch as any);
 
-  const request: HttpRequest = {
-    body: null,
-    headers: {},
-    method: "GET",
-    url: "https://api.github.com/users/http4ts/repos"
-  };
+  const request = new HttpRequestImpl(
+    "https://api.github.com/users/http4ts/repos",
+    null,
+    "GET"
+  );
 
   const response = await send(request);
 
