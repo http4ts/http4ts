@@ -18,7 +18,7 @@ export class HttpRequestImpl implements HttpRequest {
     const queryString = url.substring(url.indexOf("?"));
     this.parsedUri = {
       queryString: new URLSearchParams(queryString),
-      path: path,
+      path: path
     };
   }
 
@@ -32,7 +32,7 @@ export class HttpRequestImpl implements HttpRequest {
     }
     const newHeaders = {
       ...this.headers,
-      [header]: value,
+      [header]: value
     };
     return new HttpRequestImpl(this.url, this.body, this.method, newHeaders);
   }
@@ -43,7 +43,7 @@ export class HttpRequestImpl implements HttpRequest {
     }
     const newHeaders = {
       ...this.headers,
-      [header]: value,
+      [header]: value
     };
     return new HttpRequestImpl(this.url, this.body, this.method, newHeaders);
   }

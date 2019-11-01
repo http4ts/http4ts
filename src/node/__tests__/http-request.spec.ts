@@ -6,13 +6,13 @@ describe("HttpRequestImpl", () => {
     const url = "http://localhost";
     const headers = {
       someHeader: "Some content",
-      someOtherHeader: "Some other header content",
+      someOtherHeader: "Some other header content"
     };
     const method = "GET";
     const request = new HttpRequestImpl(url, body, method, headers);
     const expectedRequest = new HttpRequestImpl(url, body, method, {
       ...headers,
-      addedHeader: "A new added header",
+      addedHeader: "A new added header"
     });
     expect(request.addHeader("addedHeader", "A new added header")).toEqual(
       expectedRequest
@@ -27,12 +27,12 @@ describe("HttpRequestImpl", () => {
     const url = "http://localhost";
     const headers = {
       someHeader: "Some content",
-      someOtherHeader: "Some other header content",
+      someOtherHeader: "Some other header content"
     };
     const method = "GET";
     const request = new HttpRequestImpl(url, body, method, headers);
     const expectedRequest = new HttpRequestImpl(url, body, method, {
-      someOtherHeader: "Some other header content",
+      someOtherHeader: "Some other header content"
     });
     expect(request.removeHeader("someHeader")).toEqual(expectedRequest);
   });
@@ -42,13 +42,13 @@ describe("HttpRequestImpl", () => {
     const url = "http://localhost";
     const headers = {
       someHeader: "Some content",
-      someOtherHeader: "Some other header content",
+      someOtherHeader: "Some other header content"
     };
     const method = "GET";
     const request = new HttpRequestImpl(url, body, method, headers);
     const expectedHeaders = {
       someHeader: "Some new content",
-      someOtherHeader: "Some other header content",
+      someOtherHeader: "Some other header content"
     };
 
     expect(
@@ -78,7 +78,7 @@ describe("HttpRequestImpl", () => {
     const request = new HttpRequestImpl(url, "", "GET", {});
     expect(request.replaceQuery("q", ["1", "2"]).query("q")).toEqual([
       "1",
-      "2",
+      "2"
     ]);
 
     expect(() => {
