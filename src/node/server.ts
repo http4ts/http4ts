@@ -3,6 +3,7 @@ import { RequestListener, IncomingMessage, ServerResponse } from "http";
 import { HttpHandler } from "../http4ts";
 import { HttpRequest, HttpResponse } from "../http";
 import { streamToString } from "./utils";
+import { HttpStatus } from "../http-status";
 import { HttpRequestImpl } from "./http-request";
 
 async function translateRequest(
@@ -35,7 +36,7 @@ function writeResponse(
 }
 
 function writeErrorResponse(nodeRes: ServerResponse): void {
-  nodeRes.statusCode = 500;
+  nodeRes.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
   nodeRes.end(); // TODO: what to do with the callback here?
 }
 

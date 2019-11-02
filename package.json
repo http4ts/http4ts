@@ -51,7 +51,8 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "coverageDirectory": "../coverage"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
