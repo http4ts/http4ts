@@ -3,16 +3,18 @@ import { RequestListener, IncomingMessage, ServerResponse } from "http";
 import { HttpHandler } from "../http4ts";
 import { HttpRequest, HttpResponse } from "../http";
 import { streamToString } from "./utils";
+import { HttpStatus } from "../http-status";
+import { HttpRequestImpl } from "./http-request";
 
 async function translateRequest(
   nodeReq: IncomingMessage
 ): Promise<HttpRequest> {
-  return {
-    body: await streamToString(nodeReq),
-    headers: nodeReq.headers,
-    method: nodeReq.method || "",
-    url: nodeReq.url || ""
-  };
+  return new HttpRequestImpl(
+    nodeReq.url || "", // TODO: Maybe failing is better
+    await streamToString(nodeReq),
+    nodeReq.method || "", // TODO: Maybe failing is better
+    nodeReq.headers
+  );
 }
 
 function writeResponse(
@@ -34,7 +36,7 @@ function writeResponse(
 }
 
 function writeErrorResponse(nodeRes: ServerResponse): void {
-  nodeRes.statusCode = 500;
+  nodeRes.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
   nodeRes.end(); // TODO: what to do with the callback here?
 }
 
