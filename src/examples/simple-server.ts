@@ -1,13 +1,13 @@
 import * as http from "http";
 
-import { HttpRequest, HttpResponse } from "../http";
+import { HttpRequest, HttpResponse, HttpStatus } from "../http";
 import { toNodeRequestListener } from "../node/server";
 
 async function handler(req: HttpRequest): Promise<HttpResponse> {
   return {
     body: `${req.query("q")}`,
     headers: {},
-    status: 200
+    status: HttpStatus.OK
   };
 }
 
