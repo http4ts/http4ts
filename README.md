@@ -21,6 +21,11 @@ http4ts aims to obey the following rules as its base architectural mindset:
 * **Immutability**: Similar to http4k, all entities in the library are immutable unless naturally, it is not possible.
 * **Testability**: Since the basic building blocks of this library are functions and the main entities are abstracted from the environment, it is extremely simple to write tests for the code built by http4ts.
 * **Minimal** The request and response contain only the necessary information to represent the HTTP message. Extra information such as session and cookies are not included because they don't belong to the HTTP protocol.
+* **Composable** All the building blocks are composable which is a great adition to code reusability, organisation and extension.
+
+***Http4ts data-flows***
+
+![Https Data Flows](https://raw.githubusercontent.com/http4ts/http4ts/master/doc/asset/diagram.png)
 
 ## Binding to nodejs
 
