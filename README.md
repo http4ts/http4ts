@@ -1,9 +1,9 @@
 # http4ts
-**Server as a Function http toolkit for TypeScript**
+**Server as a Function HTTP toolkit for TypeScript**
 
 [![Actions Status](https://github.com/http4ts/http4ts/workflows/Node%20CI/badge.svg)](https://github.com/http4ts/http4ts/actions)
 
-http4ts is a minimal http library for JavaScript environments ([Node.js](https://nodejs.org), [Deno](https://Deno.land/) etc.) implementing the pattern of server as a function. In http4ts, a server is just a function with the following signature:
+http4ts is a minimal HTTP library for JavaScript environments ([Node.js](https://nodejs.org), [Deno](https://Deno.land/) etc.) implementing the pattern of server as a function. In http4ts, a server is just a function with the following signature:
 ``` ts
 type HttpHandler = (req: HttpRequest) => HttpResponse | Promise<HttpResponse>;
 ```
@@ -12,7 +12,7 @@ A simple server application can be found in the [examples directory](https://git
 ## Philosophy
 
 http4ts aims to obey the following rules as its base architectural mindset:
-* **Server as a Function**: This library is based on the Twitter paper [Your Server as a Function](https://monkey.org/~marius/funsrv.pdf) and inspired by the fantastic [http4k](https://github.com/http4k/http4k/) library. An http server application is a composition of two main types:
+* **Server as a Function**: This library is based on the Twitter paper [Your Server as a Function](https://monkey.org/~marius/funsrv.pdf) and inspired by the fantastic [http4k](https://github.com/http4k/http4k/) library. An HTTP server application is a composition of two main types:
     * `HttpHandler`: defines the functions that handle requests.
     * `HttpFilter`: a higher-order function that accepts an `HttpHandler` and returns an `HttpHandler`. It should be used to add request/response pre-/post-processing.
 * **Runtime Independence**: While the library has bindings to be used with a Node.js runtime, the core library does not have any dependency on the Node.js environment. It should be possible to use it for both Node.js and Deno.
@@ -24,9 +24,9 @@ http4ts aims to obey the following rules as its base architectural mindset:
 
 ## Binding to Node.js
 
-### Http Server
+### HTTP Server
 
-In order to use this library in Node.js, you have to bind the `HttpHandler` to the Node.js http server. http4ts supplies a [`toNodeRequestListener`](https://github.com/http4ts/http4ts/blob/master/src/node/server.ts) to bind an `HttpHandler` to the Node.js server.
+In order to use this library in Node.js, you have to bind the `HttpHandler` to the Node.js HTTP server. http4ts supplies a [`toNodeRequestListener`](https://github.com/http4ts/http4ts/blob/master/src/node/server.ts) to bind an `HttpHandler` to the Node.js server.
 
 ``` ts
 import * as http from "http";
