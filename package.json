@@ -1,16 +1,16 @@
 {
   "name": "http4ts",
   "version": "0.0.1",
-  "description": "Port of http4k to Typescript",
+  "description": "Server as a Function http toolkit for Typescript",
   "main": "index.js",
   "scripts": {
     "lint": "eslint --ext .ts src/**",
     "lint-fix": "eslint --ext .ts --fix src/**",
-    "example": "ts-node --project tsconfig.json ./src/examples/simple-server.ts",
+    "example": "nodemon",
     "build": "rm -rf dist && tsc -p tsconfig.json",
     "test": "jest",
     "tdd": "jest --watchAll",
-    "test-ci": "jest --ci --coverage --reporters=default --reporters=jest-junit"
+    "test-ci": "jest --ci --coverage && codecov"
   },
   "repository": {
     "type": "git",
@@ -22,18 +22,25 @@
     "url": "https://github.com/http4ts/http4ts/issues"
   },
   "homepage": "https://github.com/http4ts/http4ts#readme",
+  "dependencies": {
+    "web-streams-polyfill": "^2.0.4"
+  },
   "devDependencies": {
     "@types/jest": "^24.0.15",
     "@types/node": "^12.0.4",
     "@types/request-promise": "^4.1.44",
     "@typescript-eslint/eslint-plugin": "^1.12.0",
     "@typescript-eslint/parser": "^1.12.0",
+    "codecov": "^3.6.1",
     "eslint": "^6.0.1",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-jest": "^22.7.2",
     "eslint-plugin-prettier": "^3.1.0",
+    "husky": "^3.0.9",
     "jest": "^24.8.0",
     "jest-junit": "^6.4.0",
+    "nodemon": "^1.19.1",
+    "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
     "request-promise": "^4.2.4",
     "ts-jest": "^24.0.2",
@@ -43,12 +50,7 @@
   "jest": {
     "preset": "ts-jest",
     "rootDir": "./src",
-    "coverageReporters": [
-      "text",
-      "text-summary",
-      "html",
-      "cobertura"
-    ]
+    "coverageDirectory": "../coverage"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
@@ -68,7 +70,15 @@
       "@typescript-eslint/no-explicit-any": 0
     }
   },
-  "dependencies": {
-    "web-streams-polyfill": "^2.0.4"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }

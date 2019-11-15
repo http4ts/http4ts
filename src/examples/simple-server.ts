@@ -1,18 +1,21 @@
-import { HttpRequest, HttpResponse } from "../http";
-import { createServer } from "../http4ts";
-import { Node } from "../node/node";
-import { HttpBodyImpl } from "../node/HttpBodyImpl";
+import { HttpRequest, HttpResponse, HttpStatus } from "../http";
+import * as http from "http";
+
+import { toNodeRequestListener } from "../node/server";
 
 async function handler(req: HttpRequest): Promise<HttpResponse> {
   return {
-    body: HttpBodyImpl.fromString(`Hello!! ${req.url}`),
+    body: req.body,
     headers: {},
-    status: 200
+    status: HttpStatus.OK
   };
 }
 
-async function main() {
-  await createServer(handler, new Node(8080)).start();
-}
+const server = http.createServer(toNodeRequestListener(handler));
 
-main().catch(console.error);
+const hostname = "127.0.0.1";
+const port = 3000;
+
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
