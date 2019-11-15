@@ -1,5 +1,5 @@
 import { Readable } from "stream";
-import { ReadableStream } from "web-streams-polyfill/ponyfill/es2018";
+import { TheReadablStream } from "../env";
 
 export function toReadableStream(stream: Readable): ReadableStream {
   return new ReadableStream({
@@ -17,15 +17,15 @@ export function toReadableStream(stream: Readable): ReadableStream {
     },
     cancel() {
       stream.pause();
-    },
+    }
   });
 }
 
 export function stringToReadableStream(content: string): ReadableStream {
-  return new ReadableStream({
-    start(controller) {
+  return new TheReadablStream({
+    start(controller: { enqueue: (arg0: string) => void; close: () => void }) {
       controller.enqueue(content);
       controller.close();
-    },
+    }
   });
 }

@@ -1,4 +1,5 @@
 import { RequestListener, IncomingMessage, ServerResponse } from "http";
+import { ReadableStream } from "web-streams-polyfill/ponyfill/es2018";
 
 import { HttpHandler } from "../http4ts";
 import { HttpRequest, HttpResponse } from "../http";
@@ -6,6 +7,7 @@ import { HttpStatus } from "../http-status";
 import { HttpRequestImpl } from "./http-request";
 import { HttpBodyImpl } from "./HttpBodyImpl";
 import { toReadableStream } from "./utils";
+import { setupEnvironment } from "../env";
 
 async function translateRequest(
   nodeReq: IncomingMessage
@@ -57,6 +59,8 @@ function writeErrorResponse(nodeRes: ServerResponse): void {
 }
 
 export function toNodeRequestListener(handler: HttpHandler): RequestListener {
+  setupEnvironment(ReadableStream as any);
+
   return async (req, res) => {
     try {
       const http4tsResponse = await handler(await translateRequest(req));
