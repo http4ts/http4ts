@@ -1,17 +1,18 @@
-import { RequestListener, IncomingMessage, ServerResponse, Server } from "http";
+import { RequestListener, IncomingMessage, ServerResponse } from "http";
 
 import { HttpHandler } from "../http4ts";
 import { HttpRequest, HttpResponse } from "../http";
 import { HttpStatus } from "../http-status";
 import { HttpRequestImpl } from "./http-request";
 import { HttpBodyImpl } from "./HttpBodyImpl";
+import { toReadableStream } from "./utils";
 
 async function translateRequest(
   nodeReq: IncomingMessage
 ): Promise<HttpRequest> {
   return new HttpRequestImpl(
     nodeReq.url || "", // TODO: Maybe failing is better
-    HttpBodyImpl.fromNodeRequest(nodeReq),
+    new HttpBodyImpl(toReadableStream(nodeReq)),
     nodeReq.method || "", // TODO: Maybe failing is better
     nodeReq.headers
   );

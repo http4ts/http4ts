@@ -1,16 +1,11 @@
 import { HttpBody } from "../http";
-import { stringToReadableStream, toReadableStream } from "./utils";
-import { IncomingMessage } from "http";
+import { stringToReadableStream } from "./utils";
 
 export class HttpBodyImpl implements HttpBody {
   constructor(public readonly stream: ReadableStream) {}
 
   public static fromString(content: string): HttpBody {
     return new HttpBodyImpl(stringToReadableStream(content));
-  }
-
-  public static fromNodeRequest(request: IncomingMessage) {
-    return new HttpBodyImpl(toReadableStream(request));
   }
 
   async asJson<T>(): Promise<T> {

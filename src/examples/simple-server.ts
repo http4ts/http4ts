@@ -2,10 +2,11 @@ import { HttpRequest, HttpResponse, HttpStatus } from "../http";
 import * as http from "http";
 
 import { toNodeRequestListener } from "../node/server";
+import { HttpBodyImpl } from "../node/HttpBodyImpl";
 
 async function handler(req: HttpRequest): Promise<HttpResponse> {
   return {
-    body: req.body,
+    body: HttpBodyImpl.fromString(`Hi there ${req.query("some")}`),
     headers: {},
     status: HttpStatus.OK
   };
