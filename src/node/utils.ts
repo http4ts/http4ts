@@ -2,7 +2,7 @@ import { Readable } from "stream";
 import { TheReadablStream } from "../env";
 
 export function toReadableStream(stream: Readable): ReadableStream {
-  return new ReadableStream({
+  return new TheReadablStream({
     start(controller) {
       stream.pause();
       stream.on("data", chunk => {
@@ -17,7 +17,7 @@ export function toReadableStream(stream: Readable): ReadableStream {
     },
     cancel() {
       stream.pause();
-    }
+    },
   });
 }
 
