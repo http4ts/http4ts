@@ -26,6 +26,6 @@ export function stringToReadableStream(content: string): ReadableStream {
     start(controller: { enqueue: (arg0: string) => void; close: () => void }) {
       controller.enqueue(content);
       controller.close();
-    }
+    },
   });
 }

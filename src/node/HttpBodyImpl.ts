@@ -1,5 +1,6 @@
 import { HttpBody } from "../http";
 import { stringToReadableStream } from "./utils";
+import { TheTextEncoder } from "../env";
 
 export class HttpBodyImpl implements HttpBody {
   constructor(public readonly stream: ReadableStream) {}
@@ -26,7 +27,12 @@ export class HttpBodyImpl implements HttpBody {
             resolve(Buffer.concat(chunks).toString(encoding));
             break;
           }
-          chunks.push(value);
+          if (typeof value === "string") {
+            const encoder = new TheTextEncoder();
+            chunks.push(encoder.encode(value));
+          } else {
+            chunks.push(value);
+          }
         } catch (err) {
           reject(err);
           break;
