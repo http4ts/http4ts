@@ -6,6 +6,7 @@ import { HttpBodyImpl } from "../node/HttpBodyImpl";
 
 async function handler(req: HttpRequest): Promise<HttpResponse> {
   console.log(await HttpBodyImpl.fromString("This is some string").asString("utf8"));
+  console.log(await req.body.asJson())
   return {
     body: HttpBodyImpl.fromString("This is some string"),
     headers: {},

@@ -1,4 +1,4 @@
-import { HttpRequestImpl } from "../http-request";
+import { HttpRequestImpl } from "../HttpRequestImpl";
 
 describe("HttpRequestImpl", () => {
   it("should add headers", () => {

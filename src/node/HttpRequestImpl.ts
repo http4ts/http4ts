@@ -22,10 +22,6 @@ export class HttpRequestImpl implements HttpRequest {
     };
   }
 
-  async bodyToJson() {
-    return JSON.parse(await this.body.asString("UTF-8"));
-  }
-
   addHeader(header: string, value: string | string[]) {
     if (this.headers[header]) {
       throw `Trying to add an existing header with name ${header}. You can use HttpRequest.replaceHeader instead.`;
