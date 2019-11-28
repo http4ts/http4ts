@@ -1,5 +1,5 @@
 import { HttpBody } from "../http";
-import { stringToReadableStream } from "./utils";
+import { stringToReadableStream } from "./streamUtils";
 import { TheTextEncoder } from "../env";
 
 export class HttpBodyImpl implements HttpBody {

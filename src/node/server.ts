@@ -7,7 +7,7 @@ import { HttpRequest, HttpResponse } from "../http";
 import { HttpStatus } from "../http-status";
 import { HttpRequestImpl } from "./HttpRequestImpl";
 import { HttpBodyImpl } from "./HttpBodyImpl";
-import { toReadableStream } from "./utils";
+import { toReadableStream } from "./streamUtils";
 import { setupEnvironment } from "../env";
 
 async function translateRequest(

@@ -21,9 +21,9 @@ export function toReadableStream(stream: Readable): ReadableStream {
   });
 }
 
-export function stringToReadableStream(content: string): ReadableStream {
-  return new TheReadablStream({
-    start(controller: { enqueue: (arg0: string) => void; close: () => void }) {
+export function stringToReadableStream<T>(content: T): ReadableStream<T> {
+  return new TheReadablStream<T>({
+    start(controller: { enqueue: (arg0: T) => void; close: () => void }) {
       controller.enqueue(content);
       controller.close();
     },
