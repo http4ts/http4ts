@@ -3,6 +3,7 @@ import { get } from "request-promise";
 import { HttpResponse } from "../../http";
 import { toNodeRequestListener } from "../server";
 import { HttpHandler } from "../../http4ts";
+import { HttpBodyImpl } from "../HttpBodyImpl";
 
 async function runOnTestServer(
   handler: HttpHandler,
@@ -43,9 +44,9 @@ describe("node server binding", () => {
     const handler: HttpHandler = req => {
       if (req.method == "GET") {
         return {
-          body: JSON.stringify({ test: "test" }),
+          body: HttpBodyImpl.fromString(JSON.stringify({ test: "test" })),
           headers: { "Content-Type": "application/json" },
-          status: 200
+          status: 200,
         };
       }
 
@@ -68,9 +69,9 @@ describe("node server binding", () => {
     const handler: HttpHandler = async () => {
       return new Promise<HttpResponse>(resolve => {
         const res = {
-          body: "1 second passed!",
+          body: HttpBodyImpl.fromString("1 second passed!"),
           status: 200,
-          headers: {}
+          headers: {},
         };
         setTimeout(() => resolve(res), 1000);
       });
