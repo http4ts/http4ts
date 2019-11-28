@@ -46,7 +46,7 @@ describe("node server binding", () => {
         return {
           body: HttpBodyImpl.fromString(JSON.stringify({ test: "test" })),
           headers: { "Content-Type": "application/json" },
-          status: 200,
+          status: 200
         };
       }
 
@@ -71,7 +71,7 @@ describe("node server binding", () => {
         const res = {
           body: HttpBodyImpl.fromString("1 second passed!"),
           status: 200,
-          headers: {},
+          headers: {}
         };
         setTimeout(() => resolve(res), 1000);
       });

@@ -17,7 +17,7 @@ export function toReadableStream(stream: Readable): ReadableStream {
     },
     cancel() {
       stream.pause();
-    },
+    }
   });
 }
 
@@ -26,6 +26,6 @@ export function stringToReadableStream<T>(content: T): ReadableStream<T> {
     start(controller: { enqueue: (arg0: T) => void; close: () => void }) {
       controller.enqueue(content);
       controller.close();
-    },
+    }
   });
 }

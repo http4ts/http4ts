@@ -8,7 +8,7 @@ async function handler(req: HttpRequest): Promise<HttpResponse> {
   return {
     body: HttpBodyImpl.fromString("This is some string"),
     headers: {},
-    status: HttpStatus.OK,
+    status: HttpStatus.OK
   };
 }
 

@@ -12,6 +12,6 @@ export function setupEnvironment(
 export function getEnvironment() {
   return {
     ReadableStream: TheReadablStream,
-    TextEncoder: TheTextEncoder,
+    TextEncoder: TheTextEncoder
   };
 }
