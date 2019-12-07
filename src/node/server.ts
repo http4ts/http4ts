@@ -7,8 +7,8 @@ import { HttpRequest, HttpResponse } from "../http";
 import { HttpStatus } from "../http-status";
 import { HttpRequestImpl } from "./HttpRequestImpl";
 import { HttpBodyImpl } from "./HttpBodyImpl";
-import { toReadableStream } from "./streamUtils";
 import { setupEnvironment } from "../env";
+import { toReadableStream } from "./streamUtils";
 
 async function translateRequest(
   nodeReq: IncomingMessage
@@ -60,7 +60,7 @@ function writeErrorResponse(nodeRes: ServerResponse): void {
 }
 
 export function toNodeRequestListener(handler: HttpHandler): RequestListener {
-  setupEnvironment(ReadableStream as any, TextEncoder as any);
+  setupEnvironment(ReadableStream, TextEncoder);
 
   return async (req, res) => {
     try {

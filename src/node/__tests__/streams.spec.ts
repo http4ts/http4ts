@@ -1,5 +1,6 @@
 import { Readable } from "stream";
-import { toReadableStream, stringToReadableStream } from "../streamUtils";
+import { toReadableStream } from "../streamUtils";
+import { stringToReadableStream } from "../../utils/stringToReadableStream";
 
 describe("stream conversion", () => {
   it("converts a node stream to ReadableStream", async () => {

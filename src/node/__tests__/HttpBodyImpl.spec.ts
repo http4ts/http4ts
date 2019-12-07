@@ -1,6 +1,5 @@
-import { Readable } from "stream";
 import { HttpBodyImpl } from "../HttpBodyImpl";
-import { toReadableStream } from "../streamUtils";
+import { stringToReadableStream } from "../../utils/stringToReadableStream";
 
 describe("HttpBodyImpl", () => {
   it("should be return json", async () => {
@@ -21,11 +20,9 @@ describe("HttpBodyImpl", () => {
 
   it("should return string when created from a node stream", async () => {
     const content = "Some content";
-    const nodeStream = new Readable();
-    nodeStream.push(content);
-    nodeStream.push(null); //indicates the end of stream 🤷
+    const stream = stringToReadableStream(content);
 
-    const body = new HttpBodyImpl(toReadableStream(nodeStream));
+    const body = new HttpBodyImpl(stream);
 
     expect(await body.asString("utf8")).toEqual(content);
   });
