@@ -1,6 +1,6 @@
 import { HttpBody } from "../http";
 import { stringToReadableStream } from "../utils/stringToReadableStream";
-import { TheTextEncoder } from "../env";
+import { TheTextDecoder } from "../env";
 
 export class HttpBodyImpl implements HttpBody {
   constructor(public readonly stream: ReadableStream) {}
@@ -16,22 +16,22 @@ export class HttpBodyImpl implements HttpBody {
   }
 
   async asString(encoding: string = "utf8") {
-    const chunks: any[] = [];
     const reader = this.stream.getReader();
+    const decoder = new TheTextDecoder(encoding);
+    let content = "";
 
     return new Promise<string>(async (resolve, reject) => {
       while (true) {
         try {
           const { done, value } = await reader.read();
           if (done) {
-            resolve(Buffer.concat(chunks).toString(encoding));
+            resolve(content);
             break;
           }
           if (typeof value === "string") {
-            const encoder = new TheTextEncoder();
-            chunks.push(encoder.encode(value));
+            content += value;
           } else {
-            chunks.push(value);
+            content += decoder.decode(value);
           }
         } catch (err) {
           reject(err);

@@ -5,6 +5,7 @@ import { toNodeRequestListener } from "../node/server";
 import { HttpBodyImpl } from "../node/HttpBodyImpl";
 
 async function handler(req: HttpRequest): Promise<HttpResponse> {
+  await req.body.asString("UTF-8");
   return {
     body: HttpBodyImpl.fromString("This is some string"),
     headers: {},

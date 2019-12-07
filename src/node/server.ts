@@ -1,5 +1,5 @@
 import { RequestListener, IncomingMessage, ServerResponse } from "http";
-import { TextEncoder } from "util";
+import { TextDecoder } from "util";
 import { ReadableStream } from "web-streams-polyfill/ponyfill/es2018";
 
 import { HttpHandler } from "../http4ts";
@@ -60,7 +60,7 @@ function writeErrorResponse(nodeRes: ServerResponse): void {
 }
 
 export function toNodeRequestListener(handler: HttpHandler): RequestListener {
-  setupEnvironment(ReadableStream, TextEncoder);
+  setupEnvironment(ReadableStream, TextDecoder);
 
   return async (req, res) => {
     try {
