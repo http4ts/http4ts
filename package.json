@@ -26,26 +26,25 @@
     "web-streams-polyfill": "^2.0.4"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.15",
-    "@types/node": "^12.0.4",
+    "@types/jest": "^24.0.22",
+    "@types/node": "^12.12.6",
     "@types/request-promise": "^4.1.44",
     "@typescript-eslint/eslint-plugin": "^1.12.0",
     "@typescript-eslint/parser": "^1.12.0",
     "codecov": "^3.6.1",
     "eslint": "^6.0.1",
     "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-jest": "^22.7.2",
+    "eslint-plugin-jest": "^23.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "husky": "^3.0.9",
     "jest": "^24.8.0",
-    "jest-junit": "^6.4.0",
-    "nodemon": "^1.19.1",
     "lint-staged": "^9.4.2",
+    "nodemon": "^1.19.1",
     "prettier": "^1.18.2",
-    "request-promise": "^4.2.4",
+    "request-promise": "^4.2.5",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.3.0",
-    "typescript": "^3.5.1"
+    "typescript": "^3.7.2"
   },
   "jest": {
     "preset": "ts-jest",
