@@ -60,7 +60,7 @@ function writeErrorResponse(nodeRes: ServerResponse): void {
 }
 
 export function toNodeRequestListener(handler: HttpHandler): RequestListener {
-  setupEnvironment(ReadableStream, TextDecoder);
+  setupEnvironment(ReadableStream, TextDecoder as any);
 
   return async (req, res) => {
     try {

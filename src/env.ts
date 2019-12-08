@@ -3,7 +3,7 @@ export let TheTextDecoder: typeof TextDecoder;
 
 export function setupEnvironment(
   theReadableStream: typeof ReadableStream,
-  theTextDecoder: any
+  theTextDecoder: typeof TextDecoder
 ) {
   TheReadablStream = theReadableStream;
   TheTextDecoder = theTextDecoder as typeof TextDecoder;
