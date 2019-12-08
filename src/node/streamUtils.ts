@@ -17,6 +17,6 @@ export function toReadableStream(stream: Readable): ReadableStream {
     },
     cancel() {
       stream.pause();
-    }
+    },
   });
 }
