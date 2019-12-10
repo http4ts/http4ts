@@ -1,8 +1,8 @@
 import { Readable } from "stream";
-import { TheReadablStream } from "../env";
+import { TheReadableStream } from "../env";
 
 export function toReadableStream(stream: Readable): ReadableStream {
-  return new TheReadablStream({
+  return new TheReadableStream({
     start(controller) {
       stream.pause();
       stream.on("data", chunk => {
