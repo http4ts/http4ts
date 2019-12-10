@@ -22,10 +22,6 @@ export class HttpRequestImpl implements HttpRequest {
     };
   }
 
-  bodyToJson() {
-    return JSON.parse(this.body);
-  }
-
   addHeader(header: string, value: string | string[]) {
     if (this.headers[header]) {
       throw `Trying to add an existing header with name ${header}. You can use HttpRequest.replaceHeader instead.`;
