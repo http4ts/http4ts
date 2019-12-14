@@ -84,19 +84,19 @@ interface TokenInfo {
  * Parse a string for the raw tokens.
  */
 function parse(str: string, options: RegExpOptions): Token[] {
-  var tokens = [];
-  var key = 0;
-  var index = 0;
-  var path = "";
-  var defaultDelimiter = (options && options.delimiter) || DEFAULT_DELIMITER;
-  var whitelist = (options && options.whitelist) || undefined;
-  var pathEscaped = false;
-  var res;
+  const tokens = [];
+  let key = 0;
+  let index = 0;
+  let path = "";
+  const defaultDelimiter = (options && options.delimiter) || DEFAULT_DELIMITER;
+  const whitelist = (options && options.whitelist) || undefined;
+  let pathEscaped = false;
+  let res;
 
   while ((res = PATH_REGEXP.exec(str)) !== null) {
-    var m = res[0];
-    var escaped = res[1];
-    var offset = res.index;
+    const m = res[0];
+    const escaped = res[1];
+    const offset = res.index;
     path += str.slice(index, offset);
     index = offset + m.length;
 
@@ -107,16 +107,16 @@ function parse(str: string, options: RegExpOptions): Token[] {
       continue;
     }
 
-    var prev = "";
-    var name = res[2];
-    var capture = res[3];
-    var group = res[4];
-    var modifier = res[5];
+    let prev = "";
+    const name = res[2];
+    const capture = res[3];
+    const group = res[4];
+    const modifier = res[5];
 
     if (!pathEscaped && path.length) {
-      var k = path.length - 1;
-      var c = path[k];
-      var matches = whitelist ? whitelist.indexOf(c) > -1 : true;
+      const k = path.length - 1;
+      const c = path[k];
+      const matches = whitelist ? whitelist.indexOf(c) > -1 : true;
 
       if (matches) {
         prev = c;
@@ -131,10 +131,10 @@ function parse(str: string, options: RegExpOptions): Token[] {
       pathEscaped = false;
     }
 
-    var repeat = modifier === "+" || modifier === "*";
-    var optional = modifier === "?" || modifier === "*";
-    var pattern = capture || group;
-    var delimiter = prev || defaultDelimiter;
+    const repeat = modifier === "+" || modifier === "*";
+    const optional = modifier === "?" || modifier === "*";
+    const pattern = capture || group;
+    const delimiter = prev || defaultDelimiter;
 
     tokens.push({
       name: name || key++,
@@ -199,10 +199,10 @@ function regexpToRegexp(path: RegExp, keys: Key[] | undefined): RegExp {
   if (!keys) return path;
 
   // Use a negative lookahead to match only capturing groups.
-  var groups = path.source.match(/\((?!\?)/g);
+  const groups = path.source.match(/\((?!\?)/g);
 
   if (groups) {
-    for (var i = 0; i < groups.length; i++) {
+    for (let i = 0; i < groups.length; i++) {
       keys.push({
         name: i,
         prefix: null,
@@ -225,9 +225,9 @@ function arrayToRegexp(
   keys: Key[] | undefined,
   options: RegExpOptions & ParseOptions
 ): RegExp {
-  var parts = [];
+  const parts = [];
 
-  for (var i = 0; i < path.length; i++) {
+  for (let i = 0; i < path.length; i++) {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     parts.push(pathToRegexp(path[i], keys, options).source);
   }
@@ -261,25 +261,25 @@ function tokensToRegExp(
 ): RegExp {
   options = options || {};
 
-  var strict = options.strict;
-  var start = options.start !== false;
-  var end = options.end !== false;
-  var delimiter = options.delimiter || DEFAULT_DELIMITER;
-  var endsWith = ([] as string[])
+  const strict = options.strict;
+  const start = options.start !== false;
+  const end = options.end !== false;
+  const delimiter = options.delimiter || DEFAULT_DELIMITER;
+  const endsWith = ([] as string[])
     .concat(options.endsWith || [])
     .map(escapeString)
     .concat("$")
     .join("|");
-  var route = start ? "^" : "";
+  let route = start ? "^" : "";
 
   // Iterate over the tokens and create our regexp string.
-  for (var i = 0; i < tokens.length; i++) {
-    var token = tokens[i];
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i];
 
     if (typeof token === "string") {
       route += escapeString(token);
     } else {
-      var capture = token.repeat
+      const capture = token.repeat
         ? "(?:" +
           token.pattern +
           ")(?:" +
@@ -308,8 +308,8 @@ function tokensToRegExp(
 
     route += endsWith === "$" ? "$" : "(?=" + endsWith + ")";
   } else {
-    var endToken = tokens[tokens.length - 1];
-    var isEndDelimited =
+    const endToken = tokens[tokens.length - 1];
+    const isEndDelimited =
       typeof endToken === "string"
         ? endToken[endToken.length - 1] === delimiter
         : endToken === undefined;
