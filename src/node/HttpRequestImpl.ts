@@ -1,4 +1,9 @@
-import { HttpRequest, HttpMethod, HttpBody, HttpRequestHeaders } from "../http";
+import {
+  HttpRequest,
+  HttpMethod,
+  HttpBody,
+  HttpRequestHeaders
+} from "../core/http";
 import { URLSearchParams } from "url";
 
 interface URI {

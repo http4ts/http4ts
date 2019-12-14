@@ -2,12 +2,12 @@ import { RequestListener, IncomingMessage, ServerResponse } from "http";
 import { TextDecoder } from "util";
 import { ReadableStream } from "web-streams-polyfill/ponyfill/es2018";
 
-import { HttpHandler } from "../http4ts";
-import { HttpRequest, HttpResponse } from "../http";
-import { HttpStatus } from "../http-status";
+import { HttpHandler } from "../core/http4ts";
+import { HttpRequest, HttpResponse } from "../core/http";
+import { HttpStatus } from "../core/http-status";
 import { HttpRequestImpl } from "./HttpRequestImpl";
 import { HttpBodyImpl } from "./HttpBodyImpl";
-import { setupEnvironment } from "../env";
+import { setupEnvironment } from "../core/env";
 import { toReadableStream } from "./streamUtils";
 
 async function translateRequest(

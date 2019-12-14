@@ -1,6 +1,6 @@
-import { HttpBody } from "../http";
-import { stringToReadableStream } from "../utils/stringToReadableStream";
-import { TheTextDecoder } from "../env";
+import { HttpBody } from "../core/http";
+import { stringToReadableStream } from "../core/utils";
+import { TheTextDecoder } from "../core/env";
 
 export class HttpBodyImpl implements HttpBody {
   constructor(public readonly stream: ReadableStream) {}
@@ -15,7 +15,7 @@ export class HttpBodyImpl implements HttpBody {
     return JSON.parse(bodyToString);
   }
 
-  async asString(encoding: string = "utf8") {
+  async asString(encoding = "utf8") {
     const reader = this.stream.getReader();
     const decoder = new TheTextDecoder(encoding);
     let content = "";
