@@ -2,11 +2,7 @@ import { HttpRequestHeaders, HttpRequest } from "../../http";
 import { routes, get, notFound, RoutedHttpRequest, post, all } from "../routes";
 import { HttpRequestImpl } from "../../node/http-request";
 
-function resp(
-  status: number = 200,
-  body: string = "",
-  headers: HttpRequestHeaders = {}
-) {
+function resp(status = 200, body = "", headers: HttpRequestHeaders = {}) {
   return {
     status,
     body,
@@ -51,6 +47,12 @@ describe("routes", () => {
     const req = new HttpRequestImpl("/articles/1", "somebody", "GET");
 
     expect(routingHandler(req)).toEqual(resp(200, "1"));
+  });
+
+  test("GET /company should return not found", () => {
+    const req = new HttpRequestImpl("/company", "somebody", "GET");
+
+    expect(routingHandler(req)).toEqual(nf());
   });
 
   test("GET /company/carriers should return carriers handler", () => {
