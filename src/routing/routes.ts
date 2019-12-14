@@ -26,8 +26,12 @@ function defaultNotFoundHandler(): HttpResponse {
     status: 404
   };
 }
-export function routes(...routeDefinitions: RouteDefinition[]): HttpHandler {
+export function routes(
+  firstRouteDefinition: RouteDefinition,
+  ...otherRouteDefinitions: RouteDefinition[]
+): HttpHandler {
   let notFoundHandler: RoutedHttpHandler = defaultNotFoundHandler;
+  const routeDefinitions = [firstRouteDefinition, ...otherRouteDefinitions];
   const lastDefinition = routeDefinitions[routeDefinitions.length - 1];
   if (
     !lastDefinition.method &&
