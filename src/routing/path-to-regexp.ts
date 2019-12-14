@@ -1,3 +1,5 @@
+// Originally from https://github.com/pillarjs/path-to-regexp
+
 /**
  * Tokenizer results.
  */

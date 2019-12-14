@@ -1,3 +1,5 @@
+// Originally from https://github.com/pillarjs/path-to-regexp
+
 import * as util from "util";
 import * as pathToRegexp from "../path-to-regexp";
 
