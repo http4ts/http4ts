@@ -19,7 +19,11 @@ export type HttpMethod =
   | "HEAD"
   | string;
 
-export type HttpBody = string; // | stream
+export interface HttpBody {
+  stream: ReadableStream;
+  asString: (encoding: string) => Promise<string>;
+  asJson: <T>() => Promise<T>;
+}
 
 export interface HttpMessage {
   headers: HttpRequestHeaders;
@@ -29,7 +33,6 @@ export interface HttpMessage {
 export interface HttpRequest extends HttpMessage {
   method: HttpMethod;
   url: string;
-  bodyToJson: <T>() => T;
   addHeader: (header: string, value: string | string[]) => HttpRequest;
   replaceHeader: (header: string, value: string | string[]) => HttpRequest;
   removeHeader: (header: string) => HttpRequest;

@@ -1,27 +1,46 @@
 import { RequestListener, IncomingMessage, ServerResponse } from "http";
+import { TextDecoder } from "util";
+import { ReadableStream } from "web-streams-polyfill/ponyfill/es2018";
 
 import { HttpHandler } from "../http4ts";
 import { HttpRequest, HttpResponse } from "../http";
-import { streamToString } from "./utils";
 import { HttpStatus } from "../http-status";
-import { HttpRequestImpl } from "./http-request";
+import { HttpRequestImpl } from "./HttpRequestImpl";
+import { HttpBodyImpl } from "./HttpBodyImpl";
+import { setupEnvironment } from "../env";
+import { toReadableStream } from "./streamUtils";
 
 async function translateRequest(
   nodeReq: IncomingMessage
 ): Promise<HttpRequest> {
   return new HttpRequestImpl(
     nodeReq.url || "", // TODO: Maybe failing is better
-    await streamToString(nodeReq),
+    new HttpBodyImpl(toReadableStream(nodeReq)),
     nodeReq.method || "", // TODO: Maybe failing is better
     nodeReq.headers
   );
+}
+
+async function readToEnd(
+  reader: ReadableStreamDefaultReader,
+  nodeRes: ServerResponse,
+  onFail: (reason: any) => void
+) {
+  reader.read().then(({ done, value }) => {
+    if (done) {
+      nodeRes.end();
+      return;
+    }
+    nodeRes.write(value, onFail);
+    readToEnd(reader, nodeRes, onFail);
+  });
 }
 
 function writeResponse(
   res: HttpResponse,
   nodeRes: ServerResponse
 ): Promise<void> {
-  return new Promise<void>((resolve, reject) => {
+  return new Promise<void>(async (resolve, reject) => {
     nodeRes.statusCode = res.status;
     for (const key in res.headers) {
       if (res.headers.hasOwnProperty(key)) {
@@ -29,8 +48,8 @@ function writeResponse(
         nodeRes.setHeader(key, value || "");
       }
     }
-    nodeRes.write(res.body, reject);
-    nodeRes.end();
+    const reader = res.body.stream.getReader();
+    await readToEnd(reader, nodeRes, reject);
     resolve();
   });
 }
@@ -41,6 +60,8 @@ function writeErrorResponse(nodeRes: ServerResponse): void {
 }
 
 export function toNodeRequestListener(handler: HttpHandler): RequestListener {
+  setupEnvironment(ReadableStream, TextDecoder as any);
+
   return async (req, res) => {
     try {
       const http4tsResponse = await handler(await translateRequest(req));
