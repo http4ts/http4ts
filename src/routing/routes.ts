@@ -69,7 +69,7 @@ export function routes(
   };
 }
 
-export function def(
+export function route(
   method: HttpMethod,
   path: UriTemplate,
   handler: RoutedHttpHandler
@@ -101,14 +101,14 @@ export function get(
   path: UriTemplate,
   handler: RoutedHttpHandler
 ): RouteDefinition {
-  return def("GET", path, handler);
+  return route("GET", path, handler);
 }
 
 export function post(
   path: UriTemplate,
   handler: RoutedHttpHandler
 ): RouteDefinition {
-  return def("POST", path, handler);
+  return route("POST", path, handler);
 }
 
 export function notFound(handler: RoutedHttpHandler): RouteDefinition {
