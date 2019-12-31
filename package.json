@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/http4ts/http4ts#readme",
   "dependencies": {
-    "web-streams-polyfill": "^2.0.4"
+    "web-streams-polyfill": "^2.0.6"
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",

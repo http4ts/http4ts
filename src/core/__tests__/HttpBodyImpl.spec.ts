@@ -1,5 +1,5 @@
 import { HttpBodyImpl } from "../HttpBodyImpl";
-import { stringToReadableStream } from "../../utils/stringToReadableStream";
+import { stringToReadableStream } from "../utils";
 
 describe("HttpBodyImpl", () => {
   it("should be return json", async () => {

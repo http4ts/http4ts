@@ -5,8 +5,8 @@ import {
   HttpMethod
 } from "../../http";
 import { routes, get, notFound, RoutedHttpRequest, post, all } from "../routes";
-import { HttpRequestImpl } from "../../node/HttpRequestImpl";
-import { HttpBodyImpl } from "../../node/HttpBodyImpl";
+import { HttpRequestImpl } from "../../HttpRequestImpl";
+import { HttpBodyImpl } from "../../HttpBodyImpl";
 
 function resp(
   status = 200,

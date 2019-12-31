@@ -1,5 +1,5 @@
 import { Readable } from "stream";
-import { TheReadableStream } from "../env";
+import { TheReadableStream } from "../core/env";
 
 export function toReadableStream(stream: Readable): ReadableStream {
   return new TheReadableStream({

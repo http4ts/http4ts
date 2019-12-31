@@ -1,9 +1,9 @@
 import * as http from "http";
 import { get } from "request-promise";
-import { HttpResponse } from "../../http";
+import { HttpResponse } from "../../core/http";
 import { toNodeRequestListener } from "../server";
-import { HttpHandler } from "../../http4ts";
-import { HttpBodyImpl } from "../HttpBodyImpl";
+import { HttpHandler } from "../../core/http4ts";
+import { HttpBodyImpl } from "../../core/HttpBodyImpl";
 
 async function runOnTestServer(
   handler: HttpHandler,

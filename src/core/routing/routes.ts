@@ -1,7 +1,7 @@
 import { HttpMethod, HttpRequest, HttpResponse } from "../http";
 import { HttpHandler } from "../http4ts";
 import { pathToRegexp, Key } from "./path-to-regexp";
-import { HttpBodyImpl } from "../node/HttpBodyImpl";
+import { HttpBodyImpl } from "../HttpBodyImpl";
 
 export interface RoutedHttpRequest extends HttpRequest {
   routeParams: Record<string, string>;

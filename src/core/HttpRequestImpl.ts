@@ -1,5 +1,4 @@
-import { HttpRequest, HttpMethod, HttpBody, HttpRequestHeaders } from "../http";
-import { URLSearchParams } from "url";
+import { HttpRequest, HttpMethod, HttpBody, HttpRequestHeaders } from "./http";
 
 interface URI {
   queryString: URLSearchParams;

@@ -1,4 +1,4 @@
-import { TheReadableStream } from "../env";
+import { TheReadableStream } from "./env";
 
 export function stringToReadableStream(content: string): ReadableStream {
   return new TheReadableStream({
