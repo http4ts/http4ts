@@ -26,7 +26,10 @@ jobs:
       - name: test
         run: npm run test
       - name: prerelease version
-        run: npm run prerelease-version
+        run: |
+          git config user.name "Master Prerelease"
+          git config user.email "master-prelease@users.noreply.github.com"
+          npm run prerelease-version
       - name: publish prerelease
         run: npm run publish-prerelease
         env:
