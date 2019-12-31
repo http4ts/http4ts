@@ -2,8 +2,7 @@
   "name": "http4ts",
   "version": "0.0.2-1",
   "description": "Server as a Function http toolkit for Typescript",
-  "main": "dist/src/node/index.js",
-  "types": "dist/src/node/index.d.ts",
+  "main": "src/node/index",
   "scripts": {
     "lint": "eslint --ext .ts src/**",
     "lint-fix": "eslint --ext .ts --fix src/**",
