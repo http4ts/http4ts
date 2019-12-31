@@ -27,6 +27,7 @@ jobs:
         run: npm run test
       - name: prerelease version
         run: npm run prerelease-version
+      - name: publish prerelease
       - run: npm run publish-prerelease
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
