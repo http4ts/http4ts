@@ -21,7 +21,7 @@ export type HttpMethod =
 
 export interface HttpBody {
   stream: ReadableStream;
-  asString: (encoding: string) => Promise<string>;
+  asString: (encoding?: string) => Promise<string>;
   asJson: <T>() => Promise<T>;
 }
 
