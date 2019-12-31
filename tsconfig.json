@@ -3,6 +3,7 @@
     "module": "commonjs",
     "outDir": "dist",
     "sourceMap": true,
+    "declaration": true,
     "strict": true
   },
   "exclude": ["node_modules"]
