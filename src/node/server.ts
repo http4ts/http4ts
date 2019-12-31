@@ -5,8 +5,8 @@ import { ReadableStream } from "web-streams-polyfill/ponyfill/es2018";
 import { HttpHandler } from "../core/http4ts";
 import { HttpRequest, HttpResponse } from "../core/http";
 import { HttpStatus } from "../core/http-status";
-import { HttpRequestImpl } from "./HttpRequestImpl";
-import { HttpBodyImpl } from "./HttpBodyImpl";
+import { HttpRequestImpl } from "../core/HttpRequestImpl";
+import { HttpBodyImpl } from "../core/HttpBodyImpl";
 import { setupEnvironment } from "../core/env";
 import { toReadableStream } from "./streamUtils";
 

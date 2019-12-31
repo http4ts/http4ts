@@ -1,6 +1,6 @@
-import { HttpBody } from "../core/http";
-import { stringToReadableStream } from "../core/utils";
-import { TheTextDecoder } from "../core/env";
+import { HttpBody } from "./http";
+import { stringToReadableStream } from "./utils";
+import { TheTextDecoder } from "./env";
 
 export class HttpBodyImpl implements HttpBody {
   constructor(public readonly stream: ReadableStream) {}

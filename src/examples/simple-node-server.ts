@@ -2,7 +2,7 @@ import { HttpRequest, HttpResponse, HttpStatus } from "../core/http";
 import * as http from "http";
 
 import { toNodeRequestListener } from "../node/server";
-import { HttpBodyImpl } from "../node/HttpBodyImpl";
+import { HttpBodyImpl } from "../core/HttpBodyImpl";
 
 async function handler(req: HttpRequest): Promise<HttpResponse> {
   await req.body.asString("UTF-8");
