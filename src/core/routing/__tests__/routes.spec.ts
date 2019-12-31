@@ -28,8 +28,8 @@ async function assertResponseEquality(
   actual: HttpResponse,
   expected: HttpResponse
 ) {
-  const actualBody = await actual.body.asString("utf8");
-  const expectedBody = await expected.body.asString("utf8");
+  const actualBody = await actual.body.asString();
+  const expectedBody = await expected.body.asString();
 
   expect(actualBody).toEqual(expectedBody);
   expect(actual.headers).toEqual(expected.headers);
