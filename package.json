@@ -50,7 +50,9 @@
     "preset": "ts-jest",
     "rootDir": "./src",
     "coverageDirectory": "../coverage",
-    "setupFiles": ["<rootDir>../jest/setup.ts"]
+    "setupFiles": [
+      "<rootDir>../jest/setup.ts"
+    ]
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
