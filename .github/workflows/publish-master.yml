@@ -16,7 +16,7 @@ jobs:
           node-version: 10.x
           registry-url: https://registry.npmjs.org/
       - name: install
-      - run: npm ci
+        run: npm ci
         env:
           CI: true
       - name: build
@@ -28,6 +28,6 @@ jobs:
       - name: prerelease version
         run: npm run prerelease-version
       - name: publish prerelease
-      - run: npm run publish-prerelease
+        run: npm run publish-prerelease
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
