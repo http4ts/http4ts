@@ -12,7 +12,8 @@
     "tdd": "jest --watchAll",
     "test-ci": "jest --ci --coverage && codecov",
     "prerelease-version": "npm version prerelease",
-    "publish-prerelease": "npm publish --tag next"
+    "publish-prerelease": "npm publish --tag next",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
