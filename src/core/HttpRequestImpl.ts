@@ -1,4 +1,4 @@
-import { HttpRequest, HttpMethod, HttpBody, HttpRequestHeaders } from "./http";
+import { HttpRequest, HttpMethod, HttpBody, HttpHeaders } from "./http";
 
 interface URI {
   queryString: URLSearchParams;
@@ -11,7 +11,7 @@ export class HttpRequestImpl implements HttpRequest {
     public readonly url: string,
     public readonly body: HttpBody,
     public readonly method: HttpMethod,
-    public readonly headers: HttpRequestHeaders = {}
+    public readonly headers: HttpHeaders = {}
   ) {
     const path = url.substring(0, url.indexOf("?"));
     const queryString = url.substring(url.indexOf("?"));
@@ -48,7 +48,7 @@ export class HttpRequestImpl implements HttpRequest {
       throw `Trying to remove a non existing header with name ${headerToRemove}.`;
     }
     const newHeaders = Object.keys(this.headers).reduce(
-      (headers: HttpRequestHeaders, header) => {
+      (headers: HttpHeaders, header) => {
         if (header !== headerToRemove) {
           headers[header] = this.headers[header];
         }

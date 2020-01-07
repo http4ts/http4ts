@@ -1,7 +1,7 @@
 import { HttpStatus } from "./http-status";
 export { HttpStatus } from "./http-status";
 
-export interface HttpRequestHeaders {
+export interface HttpHeaders {
   [header: string]: string | string[] | undefined;
 }
 
@@ -26,7 +26,7 @@ export interface HttpBody {
 }
 
 export interface HttpMessage {
-  headers: HttpRequestHeaders;
+  headers: HttpHeaders;
   body: HttpBody;
 }
 

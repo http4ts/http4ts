@@ -1,9 +1,4 @@
-import {
-  HttpRequestHeaders,
-  HttpRequest,
-  HttpResponse,
-  HttpMethod
-} from "../../http";
+import { HttpHeaders, HttpRequest, HttpResponse, HttpMethod } from "../../http";
 import { routes, get, notFound, RoutedHttpRequest, post, all } from "../routes";
 import { HttpRequestImpl } from "../../HttpRequestImpl";
 import { HttpBodyImpl } from "../../HttpBodyImpl";
@@ -11,7 +6,7 @@ import { HttpBodyImpl } from "../../HttpBodyImpl";
 function resp(
   status = 200,
   body = "",
-  headers: HttpRequestHeaders = {}
+  headers: HttpHeaders = {}
 ): HttpResponse {
   return {
     status,
