@@ -1,5 +1,5 @@
 import { HttpRequestImpl } from "../HttpRequestImpl";
-import { HttpBodyImpl } from "../HttpBodyImpl";
+import { HttpBodyImpl } from "../../node";
 
 describe("HttpRequestImpl", () => {
   it("should add headers", () => {

@@ -1,10 +1,7 @@
-export let TheReadableStream: typeof ReadableStream;
 export let TheTextDecoder: typeof TextDecoder;
 
-export function setupEnvironment(
-  theReadableStream: typeof ReadableStream,
-  theTextDecoder: typeof TextDecoder
-) {
-  TheReadableStream = theReadableStream;
+// this technique does not work in real es6 environment because exported members are not mutable
+
+export function setupEnvironment(theTextDecoder: typeof TextDecoder) {
   TheTextDecoder = theTextDecoder as typeof TextDecoder;
 }

@@ -19,8 +19,7 @@ export type HttpMethod =
   | "HEAD"
   | string;
 
-export interface HttpBody {
-  stream: ReadableStream;
+export interface HttpBody extends AsyncIterable<Uint8Array> {
   asString: (encoding?: string) => Promise<string>;
   asJson: <T>() => Promise<T>;
 }

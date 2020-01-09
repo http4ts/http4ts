@@ -3,9 +3,9 @@ import * as http from "http";
 import {
   HttpRequest,
   HttpResponse,
-  HttpBodyImpl,
   HttpStatus,
-  toNodeRequestListener
+  toNodeRequestListener,
+  HttpBodyImpl
 } from "../node";
 
 async function handler(req: HttpRequest): Promise<HttpResponse> {
