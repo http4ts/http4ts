@@ -3,7 +3,7 @@ import { get } from "request-promise";
 import { HttpResponse } from "../../core/http";
 import { toNodeRequestListener } from "../server";
 import { HttpHandler } from "../../core/http4ts";
-import { HttpBodyImpl } from "../../core/HttpBodyImpl";
+import { HttpBodyImpl, jsonBody } from "../../core/HttpBodyImpl";
 
 async function runOnTestServer(
   handler: HttpHandler,
@@ -44,7 +44,7 @@ describe("node server binding", () => {
     const handler: HttpHandler = req => {
       if (req.method == "GET") {
         return {
-          body: HttpBodyImpl.json({ test: "test" }),
+          body: jsonBody({ test: "test" }),
           headers: { "Content-Type": "application/json" },
           status: 200
         };

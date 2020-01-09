@@ -8,12 +8,6 @@ export class HttpBodyImpl implements HttpBody {
     yield* this.it;
   }
 
-  async asJson<T>(): Promise<T> {
-    const bodyToString = await this.asString();
-
-    return JSON.parse(bodyToString);
-  }
-
   async asString(encoding = "utf8") {
     const decoder = new TheTextDecoder(encoding);
     let result = "";
@@ -34,9 +28,19 @@ export class HttpBodyImpl implements HttpBody {
 
     return new HttpBodyImpl(gen());
   }
-
-  public static json(obj: any) {
-    const objStr = JSON.stringify(obj);
-    return this.fromString(objStr);
-  }
 }
+
+export async function asJson<T>(body: HttpBody): Promise<T> {
+  const bodyToString = await body.asString();
+
+  return JSON.parse(bodyToString);
+}
+
+export function jsonBody(obj: any) {
+  const objStr = JSON.stringify(obj);
+  return HttpBodyImpl.fromString(objStr);
+}
+
+// TODO: Move static function `fromString` out of Body and create StringBody and JsonBody classes
+// This can help us to compare body objects easier. See router tests for some examples.
+// Then create helper functions for creating body

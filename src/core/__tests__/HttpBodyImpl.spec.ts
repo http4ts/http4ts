@@ -1,4 +1,4 @@
-import { HttpBodyImpl } from "../HttpBodyImpl";
+import { HttpBodyImpl, asJson } from "../HttpBodyImpl";
 
 describe("HttpBodyImpl", () => {
   it("should be return json", async () => {
@@ -7,7 +7,7 @@ describe("HttpBodyImpl", () => {
     };
     const body = HttpBodyImpl.fromString(JSON.stringify(person));
 
-    expect(await body.asJson()).toEqual(person);
+    expect(await asJson(body)).toEqual(person);
   });
 
   it("should return string when created from a string", async () => {

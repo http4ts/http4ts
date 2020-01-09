@@ -21,7 +21,6 @@ export type HttpMethod =
 
 export interface HttpBody extends AsyncIterable<Uint8Array> {
   asString: (encoding?: string) => Promise<string>;
-  asJson: <T>() => Promise<T>;
 }
 
 export interface HttpMessage {
