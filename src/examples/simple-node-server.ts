@@ -4,9 +4,9 @@ import {
   HttpRequest,
   HttpResponse,
   HttpStatus,
-  toNodeRequestListener
+  toNodeRequestListener,
+  StringBody
 } from "../node";
-import { StringBody } from "../core/http-body/string-body";
 
 async function handler(req: HttpRequest): Promise<HttpResponse> {
   await req.body.asString("UTF-8");
