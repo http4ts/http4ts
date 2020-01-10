@@ -4,14 +4,14 @@ import {
   HttpRequest,
   HttpResponse,
   HttpStatus,
-  toNodeRequestListener,
-  BufferedBody
+  toNodeRequestListener
 } from "../node";
+import { StringBody } from "../core/http-body/string-body";
 
 async function handler(req: HttpRequest): Promise<HttpResponse> {
   await req.body.asString("UTF-8");
   return {
-    body: BufferedBody.fromString("This is some string"),
+    body: new StringBody("This is some string"),
     headers: {},
     status: HttpStatus.OK
   };

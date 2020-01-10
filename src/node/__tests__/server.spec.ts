@@ -1,9 +1,10 @@
 import * as http from "http";
-import { get } from "request-promise";
+import { get, post } from "request-promise";
 import { HttpResponse } from "../../core/http";
 import { toNodeRequestListener } from "../server";
 import { HttpHandler } from "../../core/http4ts";
 import { BufferedBody, jsonBody } from "../../core/http-body/buffered-body";
+import { StringBody } from "../../core/http-body/string-body";
 
 async function runOnTestServer(
   handler: HttpHandler,
@@ -69,11 +70,11 @@ describe("node server binding", () => {
     const handler: HttpHandler = async () => {
       return new Promise<HttpResponse>(resolve => {
         const res = {
-          body: BufferedBody.fromString("1 second passed!"),
+          body: new StringBody("1 second passed!"),
           status: 200,
           headers: {}
         };
-        setTimeout(() => resolve(res), 1000);
+        setTimeout(() => resolve(res), 100);
       });
     };
 
@@ -104,7 +105,7 @@ describe("node server binding", () => {
           status: 200,
           headers: {}
         };
-        setTimeout(() => resolve(res), 1000);
+        setTimeout(() => resolve(res), 100);
       });
     };
 
@@ -140,7 +141,7 @@ describe("node server binding", () => {
           status: 200,
           headers: {}
         };
-        setTimeout(() => resolve(res), 1000);
+        setTimeout(() => resolve(res), 100);
       });
     };
 
@@ -153,6 +154,28 @@ describe("node server binding", () => {
       // Since the error happens after setting the response statusCode and headers, we don't see 500 in statusCode
       expect(res.statusCode).toBe(200);
       expect(res.body).toEqual("He");
+    });
+  });
+
+  it("should handle requests with unicode body", async () => {
+    const handler: HttpHandler = async req => {
+      expect(await req.body.asString()).toEqual("Hello 😌");
+      return {
+        body: new StringBody("Bye 😌"),
+        headers: {},
+        status: 200
+      };
+    };
+
+    await runOnTestServer(handler, async () => {
+      const res = await post("http://localhost:8080/", {
+        body: "Hello 😌",
+        simple: false,
+        resolveWithFullResponse: true
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body).toEqual("Bye 😌");
     });
   });
 });

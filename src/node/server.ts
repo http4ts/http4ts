@@ -1,5 +1,4 @@
 import { RequestListener, IncomingMessage, ServerResponse } from "http";
-import { TextDecoder } from "util";
 import { once } from "events";
 import * as util from "util";
 import * as stream from "stream";
@@ -45,7 +44,7 @@ async function writeErrorResponse(nodeRes: ServerResponse) {
 }
 
 export function toNodeRequestListener(handler: HttpHandler): RequestListener {
-  setupEnvironment(TextDecoder as any);
+  setupEnvironment(util.TextDecoder as any, util.TextEncoder as any);
 
   return async (req, res) => {
     try {

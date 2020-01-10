@@ -1,27 +1,22 @@
 import { BufferedBody, asJson } from "../buffered-body";
-
-async function* stringToIterable(content: string) {
-  const data = [...content].map(ch => ch.charCodeAt(0));
-  for (const el of data) {
-    yield new Uint8Array([el]);
-  }
-}
+import { stringToIterable } from "../string-encoding-utils";
+import { StringBody } from "../string-body";
 
 describe("HttpBodyImpl", () => {
   it("asJson should return json", async () => {
     const person = {
       name: "John"
     };
-    const body = BufferedBody.fromString(JSON.stringify(person));
+    const body = new StringBody(JSON.stringify(person));
 
     expect(await asJson(body)).toEqual(person);
   });
 
   it("should return string when created from a string", async () => {
     const content = "Some content";
-    const body = BufferedBody.fromString(content);
+    const body = new StringBody(content);
 
-    expect(await body.asString("utf8")).toEqual(content);
+    expect(await body.asString()).toEqual(content);
   });
 
   it("should correctly decode iterable contents when converting to string", async () => {

@@ -1,7 +1,7 @@
 import { HttpHeaders, HttpRequest, HttpResponse, HttpMethod } from "../../http";
 import { routes, get, notFound, RoutedHttpRequest, post, all } from "../routes";
 import { HttpRequestImpl } from "../../HttpRequestImpl";
-import { BufferedBody } from "../../http-body/buffered-body";
+import { StringBody } from "../../http-body/string-body";
 
 function resp(
   status = 200,
@@ -10,13 +10,13 @@ function resp(
 ): HttpResponse {
   return {
     status,
-    body: BufferedBody.fromString(body),
+    body: new StringBody(body),
     headers
   };
 }
 
 function request(url: string, body: string, method: HttpMethod): HttpRequest {
-  return new HttpRequestImpl(url, BufferedBody.fromString(body), method);
+  return new HttpRequestImpl(url, new StringBody(body), method);
 }
 
 async function assertResponseEquality(
