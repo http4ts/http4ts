@@ -1,6 +1,7 @@
-import { BufferedBody, asJson } from "../buffered-body";
+import { BufferedBody } from "../buffered-body";
 import { stringToIterable } from "../string-encoding-utils";
 import { StringBody } from "../string-body";
+import { asJson } from "../helpers";
 
 describe("HttpBodyImpl", () => {
   it("asJson should return json", async () => {

@@ -3,8 +3,9 @@ import { get, post } from "request-promise";
 import { HttpResponse } from "../../core/http";
 import { toNodeRequestListener } from "../server";
 import { HttpHandler } from "../../core/http4ts";
-import { BufferedBody, jsonBody } from "../../core/http-body/buffered-body";
+import { BufferedBody } from "../../core/http-body/buffered-body";
 import { StringBody } from "../../core/http-body/string-body";
+import { jsonBody } from "../../core/http-body/helpers";
 
 async function runOnTestServer(
   handler: HttpHandler,
