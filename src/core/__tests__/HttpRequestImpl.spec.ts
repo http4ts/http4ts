@@ -1,9 +1,9 @@
 import { HttpRequestImpl } from "../HttpRequestImpl";
-import { HttpBodyImpl } from "../../node";
+import { BufferedBody } from "../../node";
 
 describe("HttpRequestImpl", () => {
   it("should add headers", () => {
-    const body = HttpBodyImpl.fromString("{param: 1}");
+    const body = BufferedBody.fromString("{param: 1}");
     const url = "http://localhost";
     const headers = {
       someHeader: "Some content",
@@ -24,7 +24,7 @@ describe("HttpRequestImpl", () => {
   });
 
   it("should remove headers", () => {
-    const body = HttpBodyImpl.fromString("{param: 1}");
+    const body = BufferedBody.fromString("{param: 1}");
     const url = "http://localhost";
     const headers = {
       someHeader: "Some content",
@@ -39,7 +39,7 @@ describe("HttpRequestImpl", () => {
   });
 
   it("should replace headers", () => {
-    const body = HttpBodyImpl.fromString("{param: 1}");
+    const body = BufferedBody.fromString("{param: 1}");
     const url = "http://localhost";
     const headers = {
       someHeader: "Some content",
@@ -65,7 +65,7 @@ describe("HttpRequestImpl", () => {
     const url = "http://localhost?q=1&q=2&q=3";
     const request = new HttpRequestImpl(
       url,
-      HttpBodyImpl.fromString(""),
+      BufferedBody.fromString(""),
       "GET",
       {}
     );
@@ -76,7 +76,7 @@ describe("HttpRequestImpl", () => {
     const url = "http://localhost?q=1";
     const request = new HttpRequestImpl(
       url,
-      HttpBodyImpl.fromString(""),
+      BufferedBody.fromString(""),
       "GET",
       {}
     );
@@ -88,7 +88,7 @@ describe("HttpRequestImpl", () => {
     const url = "http://localhost?q=1";
     const request = new HttpRequestImpl(
       url,
-      HttpBodyImpl.fromString(""),
+      BufferedBody.fromString(""),
       "GET",
       {}
     );
@@ -106,7 +106,7 @@ describe("HttpRequestImpl", () => {
     const url = "http://localhost?q=1&q2=2";
     const request = new HttpRequestImpl(
       url,
-      HttpBodyImpl.fromString(""),
+      BufferedBody.fromString(""),
       "GET",
       {}
     );

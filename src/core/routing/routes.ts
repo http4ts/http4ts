@@ -1,7 +1,7 @@
 import { HttpMethod, HttpRequest, HttpResponse } from "../http";
 import { HttpHandler } from "../http4ts";
 import { pathToRegexp, Key } from "./path-to-regexp";
-import { HttpBodyImpl } from "../HttpBodyImpl";
+import { BufferedBody } from "../http-body/buffered-body";
 
 export interface RoutedHttpRequest extends HttpRequest {
   routeParams: Record<string, string>;
@@ -22,7 +22,7 @@ interface RouteDefinition {
 
 function defaultNotFoundHandler(): HttpResponse {
   return {
-    body: HttpBodyImpl.fromString("Not Found"),
+    body: BufferedBody.fromString("Not Found"),
     headers: {},
     status: 404
   };

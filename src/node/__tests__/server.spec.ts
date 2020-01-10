@@ -3,7 +3,7 @@ import { get } from "request-promise";
 import { HttpResponse } from "../../core/http";
 import { toNodeRequestListener } from "../server";
 import { HttpHandler } from "../../core/http4ts";
-import { HttpBodyImpl, jsonBody } from "../../core/HttpBodyImpl";
+import { BufferedBody, jsonBody } from "../../core/http-body/buffered-body";
 
 async function runOnTestServer(
   handler: HttpHandler,
@@ -69,7 +69,7 @@ describe("node server binding", () => {
     const handler: HttpHandler = async () => {
       return new Promise<HttpResponse>(resolve => {
         const res = {
-          body: HttpBodyImpl.fromString("1 second passed!"),
+          body: BufferedBody.fromString("1 second passed!"),
           status: 200,
           headers: {}
         };
@@ -100,7 +100,7 @@ describe("node server binding", () => {
     const handler: HttpHandler = async () => {
       return new Promise<HttpResponse>(resolve => {
         const res = {
-          body: new HttpBodyImpl(bodyGenerator()),
+          body: new BufferedBody(bodyGenerator()),
           status: 200,
           headers: {}
         };
@@ -136,7 +136,7 @@ describe("node server binding", () => {
     const handler: HttpHandler = async () => {
       return new Promise<HttpResponse>(resolve => {
         const res = {
-          body: new HttpBodyImpl(bodyGenerator()),
+          body: new BufferedBody(bodyGenerator()),
           status: 200,
           headers: {}
         };

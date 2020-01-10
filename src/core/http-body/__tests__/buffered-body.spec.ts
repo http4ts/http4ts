@@ -1,4 +1,4 @@
-import { HttpBodyImpl, asJson } from "../HttpBodyImpl";
+import { BufferedBody, asJson } from "../buffered-body";
 
 async function* stringToIterable(content: string) {
   const data = [...content].map(ch => ch.charCodeAt(0));
@@ -12,21 +12,21 @@ describe("HttpBodyImpl", () => {
     const person = {
       name: "John"
     };
-    const body = HttpBodyImpl.fromString(JSON.stringify(person));
+    const body = BufferedBody.fromString(JSON.stringify(person));
 
     expect(await asJson(body)).toEqual(person);
   });
 
   it("should return string when created from a string", async () => {
     const content = "Some content";
-    const body = HttpBodyImpl.fromString(content);
+    const body = BufferedBody.fromString(content);
 
     expect(await body.asString("utf8")).toEqual(content);
   });
 
   it("should correctly decode iterable contents when converting to string", async () => {
     const it = stringToIterable("Hello");
-    const body = new HttpBodyImpl(it);
+    const body = new BufferedBody(it);
 
     expect(await body.asString()).toEqual("Hello");
   });

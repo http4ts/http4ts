@@ -9,14 +9,14 @@ import { HttpRequest, HttpResponse } from "../core/http";
 import { HttpStatus } from "../core/http-status";
 import { HttpRequestImpl } from "../core/HttpRequestImpl";
 import { setupEnvironment } from "../core/env";
-import { HttpBodyImpl } from "../core/HttpBodyImpl";
+import { BufferedBody } from "../core/http-body/buffered-body";
 
 const finished = util.promisify(stream.finished);
 
 function toHttp4tsRequest(nodeReq: IncomingMessage): HttpRequest {
   return new HttpRequestImpl(
     nodeReq.url || "", // TODO: Maybe failing is better
-    new HttpBodyImpl(nodeReq),
+    new BufferedBody(nodeReq),
     nodeReq.method || "", // TODO: Maybe failing is better
     nodeReq.headers
   );
