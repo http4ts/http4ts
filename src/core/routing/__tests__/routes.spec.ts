@@ -19,18 +19,6 @@ function request(url: string, body: string, method: HttpMethod): HttpRequest {
   return new HttpRequestImpl(url, stringBody(body), method);
 }
 
-async function assertResponseEquality(
-  actual: HttpResponse,
-  expected: HttpResponse
-) {
-  const actualBody = await actual.body.asString();
-  const expectedBody = await expected.body.asString();
-
-  expect(actualBody).toEqual(expectedBody);
-  expect(actual.headers).toEqual(expected.headers);
-  expect(actual.status).toEqual(expected.status);
-}
-
 describe("routes", () => {
   const slash = () => resp(200, "slash");
   const home = () => resp(200, "home");
@@ -55,58 +43,55 @@ describe("routes", () => {
   test("GET / should return slash handler", async () => {
     const req = request("/", "somebody", "GET");
 
-    await assertResponseEquality(await routingHandler(req), slash());
+    expect(await routingHandler(req)).toEqual(slash());
   });
 
   test("GET /home should return home handler", async () => {
     const req = request("/home", "somebody", "GET");
 
-    await assertResponseEquality(await routingHandler(req), home());
+    expect(await routingHandler(req)).toEqual(home());
   });
 
   test("GET /articles/1 should return articles handler", async () => {
     const req = request("/articles/1", "somebody", "GET");
 
-    await assertResponseEquality(await routingHandler(req), resp(200, "1"));
+    expect(await routingHandler(req)).toEqual(resp(200, "1"));
   });
 
   test("GET /company should return not found", async () => {
     const req = request("/company", "somebody", "GET");
 
-    await assertResponseEquality(await routingHandler(req), nf());
+    expect(await routingHandler(req)).toEqual(nf());
   });
 
   test("GET /company/carriers should return carriers handler", async () => {
     const req = request("/company/carriers", "somebody", "GET");
 
-    await assertResponseEquality(await routingHandler(req), carriers());
+    expect(await routingHandler(req)).toEqual(carriers());
   });
 
   test("GET /company/contacts should return contacts handler", async () => {
     const req = request("/company/contacts", "somebody", "GET");
 
-    await assertResponseEquality(await routingHandler(req), contacts());
+    expect(await routingHandler(req)).toEqual(contacts());
   });
 
   test("notFound handler should be called when there is no matched route", async () => {
     const req = request("/company/about", "somebody", "GET");
 
-    await assertResponseEquality(await routingHandler(req), nf());
+    expect(await routingHandler(req)).toEqual(nf());
   });
 
   test("POST /submit-contact should return submitContact", async () => {
     const req = request("/submit-contact", "somebody", "POST");
 
-    await assertResponseEquality(await routingHandler(req), submitContact());
+    expect(await routingHandler(req)).toEqual(submitContact());
   });
 
   test("POST and GET /all-methods should return allMethods", async () => {
     const postReq = request("/all-methods", "some form data", "POST");
 
-    await assertResponseEquality(
-      await routingHandler(postReq),
-      allMethods(postReq)
-    );
+    expect(await routingHandler(postReq)).toEqual(allMethods(postReq));
 
     const getReq = new HttpRequestImpl(
       postReq.url,
@@ -114,9 +99,7 @@ describe("routes", () => {
       "GET",
       postReq.headers
     );
-    await assertResponseEquality(
-      await routingHandler(getReq),
-      allMethods(getReq)
-    );
+
+    expect(await routingHandler(getReq)).toEqual(allMethods(getReq));
   });
 });
