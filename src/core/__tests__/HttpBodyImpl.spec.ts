@@ -1,7 +1,14 @@
 import { HttpBodyImpl, asJson } from "../HttpBodyImpl";
 
+async function* stringToIterable(content: string) {
+  const data = [...content].map(ch => ch.charCodeAt(0));
+  for (const el of data) {
+    yield new Uint8Array([el]);
+  }
+}
+
 describe("HttpBodyImpl", () => {
-  it("should be return json", async () => {
+  it("asJson should return json", async () => {
     const person = {
       name: "John"
     };
@@ -17,12 +24,10 @@ describe("HttpBodyImpl", () => {
     expect(await body.asString("utf8")).toEqual(content);
   });
 
-  // it("should return string when created from a node stream", async () => {
-  //   const content = "Some content";
-  //   const stream = stringToReadableStream(content);
+  it("should correctly decode iterable contents when converting to string", async () => {
+    const it = stringToIterable("Hello");
+    const body = new HttpBodyImpl(it);
 
-  //   const body = new HttpBodyImpl(stream);
-
-  //   expect(await body.asString("utf8")).toEqual(content);
-  // });
+    expect(await body.asString()).toEqual("Hello");
+  });
 });
