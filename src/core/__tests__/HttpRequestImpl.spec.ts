@@ -1,9 +1,9 @@
 import { HttpRequestImpl } from "../HttpRequestImpl";
-import { StringBody } from "../http-body/string-body";
+import { stringBody } from "../http-body/helpers";
 
 describe("HttpRequestImpl", () => {
   it("should add headers", () => {
-    const body = new StringBody("{param: 1}");
+    const body = stringBody("{param: 1}");
     const url = "http://localhost";
     const headers = {
       someHeader: "Some content",
@@ -24,7 +24,7 @@ describe("HttpRequestImpl", () => {
   });
 
   it("should remove headers", () => {
-    const body = new StringBody("{param: 1}");
+    const body = stringBody("{param: 1}");
     const url = "http://localhost";
     const headers = {
       someHeader: "Some content",
@@ -39,7 +39,7 @@ describe("HttpRequestImpl", () => {
   });
 
   it("should replace headers", () => {
-    const body = new StringBody("{param: 1}");
+    const body = stringBody("{param: 1}");
     const url = "http://localhost";
     const headers = {
       someHeader: "Some content",
@@ -63,20 +63,20 @@ describe("HttpRequestImpl", () => {
 
   it("should return query by queryName", () => {
     const url = "http://localhost?q=1&q=2&q=3";
-    const request = new HttpRequestImpl(url, new StringBody(""), "GET", {});
+    const request = new HttpRequestImpl(url, stringBody(""), "GET", {});
     expect(request.query("q")).toEqual(["1", "2", "3"]);
   });
 
   it("should add query", () => {
     const url = "http://localhost?q=1";
-    const request = new HttpRequestImpl(url, new StringBody(""), "GET", {});
+    const request = new HttpRequestImpl(url, stringBody(""), "GET", {});
     expect(request.addQuery("q2", "1").query("q2")).toEqual("1");
     expect(request.addQuery("q2", ["1", "2"]).query("q2")).toEqual(["1", "2"]);
   });
 
   it("should replace query", () => {
     const url = "http://localhost?q=1";
-    const request = new HttpRequestImpl(url, new StringBody(""), "GET", {});
+    const request = new HttpRequestImpl(url, stringBody(""), "GET", {});
     expect(request.replaceQuery("q", ["1", "2"]).query("q")).toEqual([
       "1",
       "2"
@@ -89,7 +89,7 @@ describe("HttpRequestImpl", () => {
 
   it("should remove query", () => {
     const url = "http://localhost?q=1&q2=2";
-    const request = new HttpRequestImpl(url, new StringBody(""), "GET", {});
+    const request = new HttpRequestImpl(url, stringBody(""), "GET", {});
     expect(request.removeQuery("q2").query("q2")).toEqual(undefined);
   });
 });

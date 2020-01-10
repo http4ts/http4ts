@@ -1,21 +1,20 @@
 import { BufferedBody } from "../buffered-body";
 import { stringToIterable } from "../string-encoding-utils";
-import { StringBody } from "../string-body";
-import { asJson } from "../helpers";
+import { asJson, stringBody } from "../helpers";
 
 describe("HttpBodyImpl", () => {
   it("asJson should return json", async () => {
     const person = {
       name: "John"
     };
-    const body = new StringBody(JSON.stringify(person));
+    const body = stringBody(JSON.stringify(person));
 
     expect(await asJson(body)).toEqual(person);
   });
 
   it("should return string when created from a string", async () => {
     const content = "Some content";
-    const body = new StringBody(content);
+    const body = stringBody(content);
 
     expect(await body.asString()).toEqual(content);
   });

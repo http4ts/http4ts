@@ -9,5 +9,9 @@ export async function asJson<T>(body: HttpBody): Promise<T> {
 
 export function jsonBody(obj: any) {
   const objStr = JSON.stringify(obj);
-  return new StringBody(objStr);
+  return stringBody(objStr);
+}
+
+export function stringBody(content: string) {
+  return new StringBody(content);
 }
