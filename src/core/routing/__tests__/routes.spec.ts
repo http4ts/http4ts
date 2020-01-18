@@ -1,4 +1,10 @@
-import { HttpHeaders, HttpRequest, HttpResponse, HttpMethod } from "../../http";
+import {
+  HttpHeaders,
+  HttpRequest,
+  HttpResponse,
+  HttpMethod,
+  HttpMethods
+} from "../../http";
 import { routes, get, notFound, RoutedHttpRequest, post, all } from "../routes";
 import { HttpRequestImpl } from "../../HttpRequestImpl";
 import { stringBody } from "../../http-body/helpers";
@@ -83,13 +89,13 @@ describe("routes", () => {
   });
 
   test("POST /submit-contact should return submitContact", async () => {
-    const req = request("/submit-contact", "somebody", "POST");
+    const req = request("/submit-contact", "somebody", HttpMethods.POST);
 
     expect(await routingHandler(req)).toEqual(submitContact());
   });
 
   test("POST and GET /all-methods should return allMethods", async () => {
-    const postReq = request("/all-methods", "some form data", "POST");
+    const postReq = request("/all-methods", "some form data", HttpMethods.POST);
 
     expect(await routingHandler(postReq)).toEqual(allMethods(postReq));
 
