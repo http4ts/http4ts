@@ -1,7 +1,8 @@
-import { HttpMethod, HttpRequest, HttpResponse } from "../http";
+import { HttpMethod, HttpRequest, HttpResponse, HttpMethods } from "../http";
 import { HttpHandler } from "../http4ts";
 import { pathToRegexp, Key } from "./path-to-regexp";
 import { stringBody } from "../http-body/helpers";
+import { HttpStatus } from "../../node";
 
 export interface RoutedHttpRequest extends HttpRequest {
   routeParams: Record<string, string>;
@@ -24,7 +25,7 @@ function defaultNotFoundHandler(): HttpResponse {
   return {
     body: stringBody("Not Found"),
     headers: {},
-    status: 404
+    status: HttpStatus.NOT_FOUND
   };
 }
 export function routes(
@@ -109,7 +110,7 @@ export function post(
   path: UriTemplate,
   handler: RoutedHttpHandler
 ): RouteDefinition {
-  return route("POST", path, handler);
+  return route(HttpMethods.POST, path, handler);
 }
 
 export function notFound(handler: RoutedHttpHandler): RouteDefinition {
