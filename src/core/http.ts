@@ -27,7 +27,7 @@ export interface HttpBody extends AsyncIterable<Uint8Array> {
 
 export interface HttpMessage {
   headers: HttpHeaders;
-  body: HttpBody;
+  body: HttpBody; // TODO: the correct type is HttpBody | null
 }
 
 export interface HttpRequest extends HttpMessage {
