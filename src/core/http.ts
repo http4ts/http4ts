@@ -7,17 +7,19 @@ export interface HttpHeaders {
 
 export type HttpQuery = string | string[] | undefined | null;
 
-export type HttpMethod =
-  | "GET"
-  | "POST"
-  | "PUT"
-  | "DELETE"
-  | "OPTIONS"
-  | "TRACE"
-  | "PATCH"
-  | "PURGE"
-  | "HEAD"
-  | string;
+export enum HttpMethods {
+  GET = "GET",
+  POST = "POST",
+  PUT = "PUT",
+  DELETE = "DELETE",
+  OPTIONS = "OPTIONS",
+  TRACE = "TRACE",
+  PATCH = "PATCH",
+  PURGE = "PURGE",
+  HEAD = "HEAD"
+}
+
+export type HttpMethod = HttpMethods | string;
 
 export interface HttpBody extends AsyncIterable<Uint8Array> {
   asString: (encoding?: string) => Promise<string>;
