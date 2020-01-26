@@ -1,8 +1,9 @@
 {
   "name": "http4ts",
-  "version": "0.0.1",
+  "version": "0.0.2-1",
   "description": "Server as a Function http toolkit for Typescript",
-  "main": "index.js",
+  "main": "dist/src/node/index.js",
+  "types": "dist/src/node/index.d.ts",
   "scripts": {
     "lint": "eslint --ext .ts src/**",
     "lint-fix": "eslint --ext .ts --fix src/**",
@@ -11,7 +12,10 @@
     "build": "rm -rf dist && tsc -p tsconfig.json",
     "test": "jest",
     "tdd": "jest --watchAll",
-    "test-ci": "jest --ci --coverage && codecov"
+    "test-ci": "jest --ci --coverage && codecov",
+    "prerelease-version": "npm version prerelease",
+    "publish-prerelease": "npm publish --tag next",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -24,26 +28,26 @@
   },
   "homepage": "https://github.com/http4ts/http4ts#readme",
   "devDependencies": {
-    "@types/jest": "^24.0.22",
-    "@types/node": "^12.12.6",
     "@types/node-fetch": "^2.5.2",
-    "@types/request-promise": "^4.1.44",
-    "@typescript-eslint/eslint-plugin": "^1.12.0",
-    "@typescript-eslint/parser": "^1.12.0",
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.17",
+    "@types/request-promise": "^4.1.45",
+    "@typescript-eslint/eslint-plugin": "^2.11.0",
+    "@typescript-eslint/parser": "^2.11.0",
     "codecov": "^3.6.1",
-    "eslint": "^6.0.1",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-jest": "^23.0.2",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-jest": "^23.1.1",
     "eslint-plugin-prettier": "^3.1.0",
-    "husky": "^3.0.9",
+    "husky": "^3.1.0",
     "jest": "^24.8.0",
-    "lint-staged": "^9.4.2",
-    "nodemon": "^1.19.1",
-    "prettier": "^1.18.2",
+    "lint-staged": "^9.5.0",
+    "nodemon": "^2.0.2",
+    "prettier": "^1.19.1",
     "request-promise": "^4.2.5",
-    "ts-jest": "^24.0.2",
-    "ts-node": "^8.3.0",
-    "typescript": "^3.7.2"
+    "ts-jest": "^24.2.0",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.3"
   },
   "dependencies": {
     "node-fetch": "^2.6.0"
@@ -51,7 +55,10 @@
   "jest": {
     "preset": "ts-jest",
     "rootDir": "./src",
-    "coverageDirectory": "../coverage"
+    "coverageDirectory": "../coverage",
+    "setupFiles": [
+      "<rootDir>../jest/setup.ts"
+    ]
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
@@ -68,7 +75,9 @@
       "@typescript-eslint/explicit-member-accessibility": 0,
       "@typescript-eslint/no-parameter-properties": 0,
       "@typescript-eslint/explicit-function-return-type": 0,
-      "@typescript-eslint/no-explicit-any": 0
+      "@typescript-eslint/no-explicit-any": 0,
+      "@typescript-eslint/no-use-before-define": 0,
+      "@typescript-eslint/no-inferrable-types": 0
     }
   },
   "husky": {

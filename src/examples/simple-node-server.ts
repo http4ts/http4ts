@@ -1,11 +1,17 @@
 import * as http from "http";
 
-import { HttpRequest, HttpResponse, HttpStatus } from "../http";
-import { toNodeRequestListener } from "../node/server";
+import {
+  HttpRequest,
+  HttpResponse,
+  HttpStatus,
+  toNodeRequestListener,
+  stringBody
+} from "../node";
 
 async function handler(req: HttpRequest): Promise<HttpResponse> {
+  await req.body.asString("UTF-8");
   return {
-    body: `${req.query("q")}`,
+    body: stringBody("This is some string"),
     headers: {},
     status: HttpStatus.OK
   };

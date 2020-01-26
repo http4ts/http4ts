@@ -1,5 +1,4 @@
-import { HttpRequest, HttpMethod, HttpBody, HttpHeaders } from "../http";
-import { URLSearchParams } from "url";
+import { HttpRequest, HttpMethod, HttpBody, HttpHeaders } from "./http";
 
 interface URI {
   queryString: URLSearchParams;
@@ -20,13 +19,6 @@ export class HttpRequestImpl implements HttpRequest {
       queryString: new URLSearchParams(queryString),
       path: path
     };
-  }
-
-  bodyToJson() {
-    if (this.body === null) {
-      return null;
-    }
-    return JSON.parse(this.body);
   }
 
   addHeader(header: string, value: string | string[]) {

@@ -1,8 +1,10 @@
 import * as http from "http";
-import { get } from "request-promise";
-import { HttpResponse } from "../../http";
+import { get, post } from "request-promise";
+import { HttpResponse } from "../../core/http";
 import { toNodeRequestListener } from "../server";
-import { HttpHandler } from "../../http4ts";
+import { HttpHandler } from "../../core/http4ts";
+import { BufferedBody } from "../../core/http-body/buffered-body";
+import { jsonBody, stringBody } from "../../core/http-body/helpers";
 
 async function runOnTestServer(
   handler: HttpHandler,
@@ -43,7 +45,7 @@ describe("node server binding", () => {
     const handler: HttpHandler = req => {
       if (req.method == "GET") {
         return {
-          body: JSON.stringify({ test: "test" }),
+          body: jsonBody({ test: "test" }),
           headers: { "Content-Type": "application/json" },
           status: 200
         };
@@ -68,11 +70,11 @@ describe("node server binding", () => {
     const handler: HttpHandler = async () => {
       return new Promise<HttpResponse>(resolve => {
         const res = {
-          body: "1 second passed!",
+          body: stringBody("1 second passed!"),
           status: 200,
           headers: {}
         };
-        setTimeout(() => resolve(res), 1000);
+        setTimeout(() => resolve(res), 100);
       });
     };
 
@@ -84,6 +86,96 @@ describe("node server binding", () => {
 
       expect(res.statusCode).toBe(200);
       expect(res.body).toEqual("1 second passed!");
+    });
+  });
+
+  it("should handle bodies as async iterator", async () => {
+    async function* bodyGenerator() {
+      const data = Array.from(Array(5)).map((v, i) => "Hello".charCodeAt(i));
+
+      for (const el of data) {
+        yield new Uint8Array([el]);
+      }
+    }
+
+    const handler: HttpHandler = async () => {
+      return new Promise<HttpResponse>(resolve => {
+        const res = {
+          body: new BufferedBody(bodyGenerator()),
+          status: 200,
+          headers: {}
+        };
+        setTimeout(() => resolve(res), 100);
+      });
+    };
+
+    await runOnTestServer(handler, async () => {
+      const res = await get("http://localhost:8080/", {
+        simple: false,
+        resolveWithFullResponse: true
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body).toEqual("Hello");
+    });
+  });
+
+  it("should handle iterator errors correctly", async () => {
+    async function* bodyGenerator() {
+      const data = Array.from(Array(5)).map((v, i) => "Hello".charCodeAt(i));
+
+      for (const el of data) {
+        if (el === 108) {
+          throw new Error(
+            "Failed to continue sending data to iterator. (this is expected)."
+          );
+        }
+        yield new Uint8Array([el]);
+      }
+    }
+
+    const handler: HttpHandler = async () => {
+      return new Promise<HttpResponse>(resolve => {
+        const res = {
+          body: new BufferedBody(bodyGenerator()),
+          status: 200,
+          headers: {}
+        };
+        setTimeout(() => resolve(res), 100);
+      });
+    };
+
+    await runOnTestServer(handler, async () => {
+      const res = await get("http://localhost:8080/", {
+        simple: false,
+        resolveWithFullResponse: true
+      });
+
+      // Since the error happens after setting the response statusCode and headers, we don't see 500 in statusCode
+      expect(res.statusCode).toBe(200);
+      expect(res.body).toEqual("He");
+    });
+  });
+
+  it("should handle requests with unicode body", async () => {
+    const handler: HttpHandler = async req => {
+      expect(await req.body.asString()).toEqual("Hello 😌");
+      return {
+        body: stringBody("Bye 😌"),
+        headers: {},
+        status: 200
+      };
+    };
+
+    await runOnTestServer(handler, async () => {
+      const res = await post("http://localhost:8080/", {
+        body: "Hello 😌",
+        simple: false,
+        resolveWithFullResponse: true
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body).toEqual("Bye 😌");
     });
   });
 });

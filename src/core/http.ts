@@ -19,7 +19,9 @@ export type HttpMethod =
   | "HEAD"
   | string;
 
-export type HttpBody = string | null; // | stream
+export interface HttpBody extends AsyncIterable<Uint8Array> {
+  asString: (encoding?: string) => Promise<string>;
+}
 
 export interface HttpMessage {
   headers: HttpHeaders;
@@ -29,7 +31,6 @@ export interface HttpMessage {
 export interface HttpRequest extends HttpMessage {
   method: HttpMethod;
   url: string;
-  bodyToJson: <T>() => T;
   addHeader: (header: string, value: string | string[]) => HttpRequest;
   replaceHeader: (header: string, value: string | string[]) => HttpRequest;
   removeHeader: (header: string) => HttpRequest;
