@@ -26,9 +26,7 @@
     "url": "https://github.com/http4ts/http4ts/issues"
   },
   "homepage": "https://github.com/http4ts/http4ts#readme",
-  "dependencies": {
-    "web-streams-polyfill": "^2.0.6"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/jest": "^24.0.23",
     "@types/node": "^12.12.17",
