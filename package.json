@@ -28,9 +28,9 @@
   },
   "homepage": "https://github.com/http4ts/http4ts#readme",
   "devDependencies": {
-    "@types/node-fetch": "^2.5.2",
     "@types/jest": "^24.0.23",
     "@types/node": "^12.12.17",
+    "@types/node-fetch": "^2.5.4",
     "@types/request-promise": "^4.1.45",
     "@typescript-eslint/eslint-plugin": "^2.11.0",
     "@typescript-eslint/parser": "^2.11.0",

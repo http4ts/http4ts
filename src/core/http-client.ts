@@ -1,5 +1,6 @@
 import { HttpRequest, HttpResponse } from "./http";
 import { HttpHandler } from "./http4ts";
+import { stringBody } from "../node";
 
 export type Fetch = (
   url: RequestInfo,
@@ -10,7 +11,7 @@ export function createHttpClient(theFetch: Fetch): HttpHandler {
   return async (req: HttpRequest): Promise<HttpResponse> => {
     const resp = await theFetch(req.url, {
       method: req.method,
-      body: req.body
+      body: (await req.body.asString()) || null
     });
 
     let headers = {};
@@ -19,7 +20,7 @@ export function createHttpClient(theFetch: Fetch): HttpHandler {
     );
 
     return {
-      body: await resp.text(),
+      body: stringBody(await resp.text()),
       headers,
       status: resp.status
     };
