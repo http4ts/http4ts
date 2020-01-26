@@ -1,4 +1,4 @@
 import { setupEnvironment } from "../src/core/env";
-import { TextDecoder } from "util";
+import { TextDecoder, TextEncoder } from "util";
 
-setupEnvironment(TextDecoder as any);
+setupEnvironment(TextDecoder as any, TextEncoder as any);
