@@ -6,7 +6,7 @@ import * as stream from "stream";
 import { HttpHandler } from "../core/http4ts";
 import { HttpRequest, HttpResponse } from "../core/http";
 import { HttpStatus } from "../core/http-status";
-import { HttpRequestImpl } from "../core/HttpRequestImpl";
+import { HttpRequestImpl } from "../core/http-request/http-request-impl";
 import { setupEnvironment } from "../core/env";
 import { BufferedBody } from "../core/http-body/buffered-body";
 

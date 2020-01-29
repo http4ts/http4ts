@@ -1,4 +1,4 @@
-import { HttpRequest, HttpMethod, HttpBody, HttpHeaders } from "./http";
+import { HttpRequest, HttpMethod, HttpBody, HttpHeaders } from "../http";
 
 interface URI {
   queryString: URLSearchParams;
@@ -11,7 +11,7 @@ export class HttpRequestImpl implements HttpRequest {
     public readonly url: string,
     public readonly method: HttpMethod,
     public readonly body: HttpBody,
-    public readonly headers: HttpHeaders = {}
+    public readonly headers: HttpHeaders
   ) {
     const path = url.substring(0, url.indexOf("?"));
     const queryString = url.substring(url.indexOf("?"));

@@ -6,8 +6,8 @@ import {
   HttpMethods
 } from "../../http";
 import { routes, get, notFound, RoutedHttpRequest, post, all } from "../routes";
-import { HttpRequestImpl } from "../../HttpRequestImpl";
 import { stringBody } from "../../http-body/helpers";
+import { req } from "../../http-request/helpers";
 
 function resp(
   status = 200,
@@ -22,7 +22,7 @@ function resp(
 }
 
 function request(url: string, body: string, method: HttpMethod): HttpRequest {
-  return new HttpRequestImpl(url, method, stringBody(body));
+  return req({ url, method, body: stringBody(body) });
 }
 
 describe("routes", () => {
@@ -99,12 +99,10 @@ describe("routes", () => {
 
     expect(await routingHandler(postReq)).toEqual(allMethods(postReq));
 
-    const getReq = new HttpRequestImpl(
-      postReq.url,
-      "GET",
-      postReq.body,
-      postReq.headers
-    );
+    const getReq = req({
+      ...postReq,
+      method: "GET"
+    });
 
     expect(await routingHandler(getReq)).toEqual(allMethods(getReq));
   });

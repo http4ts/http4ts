@@ -5,5 +5,6 @@ export * from "./http4ts";
 export * from "./http-body/buffered-body";
 export * from "./http-body/string-body";
 export * from "./http-body/helpers";
-export * from "./HttpRequestImpl";
+export * from "./http-request/http-request-impl";
+export * from "./http-request/helpers";
 export * from "./routing/routes";
