@@ -15,8 +15,8 @@ const finished = util.promisify(stream.finished);
 function toHttp4tsRequest(nodeReq: IncomingMessage): HttpRequest {
   return new HttpRequestImpl(
     nodeReq.url || "", // TODO: Maybe failing is better
-    new BufferedBody(nodeReq),
     nodeReq.method || "", // TODO: Maybe failing is better
+    new BufferedBody(nodeReq),
     nodeReq.headers
   );
 }

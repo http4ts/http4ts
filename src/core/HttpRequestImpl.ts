@@ -9,8 +9,8 @@ export class HttpRequestImpl implements HttpRequest {
 
   constructor(
     public readonly url: string,
-    public readonly body: HttpBody,
     public readonly method: HttpMethod,
+    public readonly body: HttpBody,
     public readonly headers: HttpHeaders = {}
   ) {
     const path = url.substring(0, url.indexOf("?"));
@@ -29,7 +29,7 @@ export class HttpRequestImpl implements HttpRequest {
       ...this.headers,
       [header]: value
     };
-    return new HttpRequestImpl(this.url, this.body, this.method, newHeaders);
+    return new HttpRequestImpl(this.url, this.method, this.body, newHeaders);
   }
 
   replaceHeader(header: string, value: string | string[]) {
@@ -40,7 +40,7 @@ export class HttpRequestImpl implements HttpRequest {
       ...this.headers,
       [header]: value
     };
-    return new HttpRequestImpl(this.url, this.body, this.method, newHeaders);
+    return new HttpRequestImpl(this.url, this.method, this.body, newHeaders);
   }
 
   removeHeader(headerToRemove: string) {
@@ -56,7 +56,7 @@ export class HttpRequestImpl implements HttpRequest {
       },
       {}
     );
-    return new HttpRequestImpl(this.url, this.body, this.method, newHeaders);
+    return new HttpRequestImpl(this.url, this.method, this.body, newHeaders);
   }
 
   query(name: string) {
@@ -83,7 +83,7 @@ export class HttpRequestImpl implements HttpRequest {
       queryString.append(name, value);
     }
     const newUrl = `${this.parsedUri.path}?${queryString.toString()}`;
-    return new HttpRequestImpl(newUrl, this.body, this.method, this.headers);
+    return new HttpRequestImpl(newUrl, this.method, this.body, this.headers);
   }
 
   removeQuery(queryToRemove: string) {
@@ -95,7 +95,7 @@ export class HttpRequestImpl implements HttpRequest {
     }
     queryString.delete(queryToRemove);
     const newUrl = `${this.parsedUri.path}?${queryString.toString()}`;
-    return new HttpRequestImpl(newUrl, this.body, this.method, this.headers);
+    return new HttpRequestImpl(newUrl, this.method, this.body, this.headers);
   }
 
   replaceQuery(name: string, value: string | string[]) {
@@ -112,7 +112,7 @@ export class HttpRequestImpl implements HttpRequest {
       queryString.set(name, value);
     }
     const newUrl = `${this.parsedUri.path}?${queryString.toString()}`;
-    return new HttpRequestImpl(newUrl, this.body, this.method, this.headers);
+    return new HttpRequestImpl(newUrl, this.method, this.body, this.headers);
   }
 
   path() {

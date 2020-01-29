@@ -22,7 +22,7 @@ function resp(
 }
 
 function request(url: string, body: string, method: HttpMethod): HttpRequest {
-  return new HttpRequestImpl(url, stringBody(body), method);
+  return new HttpRequestImpl(url, method, stringBody(body));
 }
 
 describe("routes", () => {
@@ -101,8 +101,8 @@ describe("routes", () => {
 
     const getReq = new HttpRequestImpl(
       postReq.url,
-      postReq.body,
       "GET",
+      postReq.body,
       postReq.headers
     );
 
