@@ -1,4 +1,3 @@
-import { HttpMethods } from "../../http";
 import { stringBody } from "../../http-body/helpers";
 import { res } from "../helpers";
 import { HttpStatus } from "../../../node";
