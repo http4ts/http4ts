@@ -1,7 +1,19 @@
 import { stringBody } from "../../http-body/helpers";
 import { req } from "../helpers";
+import { HttpMethods } from "../../http";
 
 describe("HttpRequestImpl", () => {
+  it("should setHeaders", () => {
+    const request = req({ url: "/", headers: { Auth: "Basic" } });
+    const newHeaders = { Auth: "Complex", Content: "html" };
+    const expectedRequest = req({
+      url: "/",
+      headers: newHeaders
+    });
+
+    expect(request.setHeaders(newHeaders)).toEqual(expectedRequest);
+  });
+
   it("should add headers", () => {
     const body = stringBody("{param: 1}");
     const url = "http://localhost";
@@ -42,6 +54,13 @@ describe("HttpRequestImpl", () => {
       }
     });
     expect(request.removeHeader("someHeader")).toEqual(expectedRequest);
+  });
+
+  it("should setUrl", () => {
+    const request = req({ url: "/" });
+    const expectedRequest = req({ url: "/home" });
+
+    expect(request.setUrl("/home")).toEqual(expectedRequest);
   });
 
   it("should replace headers", () => {
@@ -96,5 +115,19 @@ describe("HttpRequestImpl", () => {
     const url = "http://localhost?q=1&q2=2";
     const request = req({ url });
     expect(request.removeQuery("q2").query("q2")).toEqual(undefined);
+  });
+
+  it("should setBody", () => {
+    const request = req({ url: "/", body: stringBody("body-1") });
+    const expectedRequest = req({ url: "/", body: stringBody("body-2") });
+
+    expect(request.setBody(stringBody("body-2"))).toEqual(expectedRequest);
+  });
+
+  it("should setMethod", () => {
+    const request = req({ url: "/" });
+    const expectedRequest = req({ url: "/", method: HttpMethods.DELETE });
+
+    expect(request.setMethod(HttpMethods.DELETE)).toEqual(expectedRequest);
   });
 });

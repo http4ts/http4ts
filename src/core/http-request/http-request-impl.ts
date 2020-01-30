@@ -21,6 +21,10 @@ export class HttpRequestImpl implements HttpRequest {
     };
   }
 
+  setHeaders(headers: HttpHeaders) {
+    return new HttpRequestImpl(this.url, this.method, this.body, headers);
+  }
+
   addHeader(header: string, value: string | string[]) {
     if (this.headers[header]) {
       throw `Trying to add an existing header with name ${header}. You can use HttpRequest.replaceHeader instead.`;
@@ -57,6 +61,10 @@ export class HttpRequestImpl implements HttpRequest {
       {}
     );
     return new HttpRequestImpl(this.url, this.method, this.body, newHeaders);
+  }
+
+  setUrl(url: string) {
+    return new HttpRequestImpl(url, this.method, this.body, this.headers);
   }
 
   query(name: string) {
@@ -117,5 +125,13 @@ export class HttpRequestImpl implements HttpRequest {
 
   path() {
     return this.parsedUri.path;
+  }
+
+  setBody(body: HttpBody) {
+    return new HttpRequestImpl(this.url, this.method, body, this.headers);
+  }
+
+  setMethod(method: HttpMethod) {
+    return new HttpRequestImpl(this.url, method, this.body, this.headers);
   }
 }
