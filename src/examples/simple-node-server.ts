@@ -5,16 +5,17 @@ import {
   HttpResponse,
   HttpStatus,
   toNodeRequestListener,
-  stringBody
+  stringBody,
+  res
 } from "../node";
 
 async function handler(req: HttpRequest): Promise<HttpResponse> {
   await req.body.asString("UTF-8");
-  return {
+  return res({
     body: stringBody("This is some string"),
     headers: {},
     status: HttpStatus.OK
-  };
+  });
 }
 
 const server = http.createServer(toNodeRequestListener(handler));
