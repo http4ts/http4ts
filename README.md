@@ -2,6 +2,7 @@
 **Server as a Function HTTP toolkit for TypeScript**
 
 [![Actions Status](https://github.com/http4ts/http4ts/workflows/Node%20CI/badge.svg)](https://github.com/http4ts/http4ts/actions)
+[![codecov](https://codecov.io/gh/http4ts/http4ts/branch/master/graph/badge.svg)](https://codecov.io/gh/http4ts/http4ts)
 
 http4ts is a minimal HTTP library for JavaScript environments ([Node.js](https://nodejs.org), [Deno](https://Deno.land/) etc.) implementing the pattern of server as a function. In http4ts, a server is just a function with the following signature:
 ``` ts
