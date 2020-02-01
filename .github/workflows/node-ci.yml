@@ -24,4 +24,7 @@ jobs:
       - name: lint
         run: npm run lint
       - name: test
-        run: npm run test-ci -- -t ${{secrets.CODECOV_TOKEN}}
+        run: npm run test-ci && bash <(curl -s https://codecov.io/bash)
+        env:
+          CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
+          
