@@ -15,7 +15,7 @@ describe("HttpRequestImpl", () => {
   });
 
   it("should add headers", () => {
-    const body = stringBody("{param: 1}");
+    const body = "{param: 1}";
     const url = "http://localhost";
     const headers = {
       someHeader: "Some content",
@@ -39,7 +39,7 @@ describe("HttpRequestImpl", () => {
   });
 
   it("should remove headers", () => {
-    const body = stringBody("{param: 1}");
+    const body = "{param: 1}";
     const url = "http://localhost";
     const headers = {
       someHeader: "Some content",
@@ -64,7 +64,7 @@ describe("HttpRequestImpl", () => {
   });
 
   it("should replace headers", () => {
-    const body = stringBody("{param: 1}");
+    const body = "{param: 1}";
     const url = "http://localhost";
     const headers = {
       someHeader: "Some content",
@@ -118,8 +118,8 @@ describe("HttpRequestImpl", () => {
   });
 
   it("should setBody", () => {
-    const request = req({ url: "/", body: stringBody("body-1") });
-    const expectedRequest = req({ url: "/", body: stringBody("body-2") });
+    const request = req({ url: "/", body: "body-1" });
+    const expectedRequest = req({ url: "/", body: "body-2" });
 
     expect(request.setBody(stringBody("body-2"))).toEqual(expectedRequest);
   });

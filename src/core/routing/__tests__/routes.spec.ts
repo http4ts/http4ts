@@ -22,7 +22,7 @@ function resp(
 }
 
 function request(url: string, body: string, method: HttpMethod): HttpRequest {
-  return req({ url, method, body: stringBody(body) });
+  return req({ url, method, body });
 }
 
 describe("routes", () => {

@@ -3,7 +3,7 @@ import { stringBody } from "../../http-body/helpers";
 import { req } from "../helpers";
 
 describe("HttpRequestImpl helpers", () => {
-  it("should retun an HttpRequestImpl with povided parameters", () => {
+  test("req should retun an HttpRequestImpl with povided parameters", () => {
     const params = {
       url: "/",
       method: HttpMethods.DELETE,
@@ -18,12 +18,22 @@ describe("HttpRequestImpl helpers", () => {
     expect(request.method).toEqual(params.method);
   });
 
-  it("should properly set default parameters", () => {
+  test("req should properly set default parameters", () => {
     const request = req({ url: "/index.html" });
 
     expect(request.body).toEqual(stringBody(""));
     expect(request.url).toEqual("/index.html");
     expect(request.headers).toEqual({});
     expect(request.method).toEqual(HttpMethods.GET);
+  });
+
+  test("req should instantiate a StringBody when a string is passed as body", () => {
+    const expectedBody = stringBody("some-body");
+
+    const request1 = req({ url: "/", body: "some-body" });
+    const request2 = req({ url: "/", body: stringBody("some-body") });
+
+    expect(request1.body).toEqual(expectedBody);
+    expect(request2.body).toEqual(expectedBody);
   });
 });
