@@ -28,6 +28,12 @@ function defaultNotFoundHandler(): HttpResponse {
     status: HttpStatus.NOT_FOUND
   };
 }
+
+/**
+ * Creates an HttpHandler based of the defined routes. You can use this function to define the application router.
+ * @param firstRouteDefinition Use one of the route definition creators like `get`, `post`, `notFound`, `all` and `route`
+ * @param otherRouteDefinitions Use one of the route definition creators like `get`, `post`, `notFound`, `all` and `route`. This is the rest parameter; Can be added indefinitely.
+ */
 export function routes(
   firstRouteDefinition: RouteDefinition,
   ...otherRouteDefinitions: RouteDefinition[]
@@ -71,6 +77,12 @@ export function routes(
   };
 }
 
+/**
+ * Defines a route for the provided request path and method
+ * @param method HttpMethod for the route to be matched
+ * @param path Uri template to define the path for this route handler
+ * @param handler HttpHandler to be called when the request matches this route
+ */
 export function route(
   method: HttpMethod,
   path: UriTemplate,
@@ -86,6 +98,11 @@ export function route(
   };
 }
 
+/**
+ * Defines a route for the specified uri template no matter what http method used for the request
+ * @param path Uri template to define the path for this route handler
+ * @param handler HttpHandler to be called when the request matches this route
+ */
 export function all(
   path: UriTemplate,
   handler: RoutedHttpHandler
@@ -99,6 +116,11 @@ export function all(
   };
 }
 
+/**
+ * Defines a route for a GET request
+ * @param path Uri template to define the path for this route handler
+ * @param handler HttpHandler to be called when the request matches this route
+ */
 export function get(
   path: UriTemplate,
   handler: RoutedHttpHandler
@@ -106,6 +128,11 @@ export function get(
   return route("GET", path, handler);
 }
 
+/**
+ * Defines a route for a POST request
+ * @param path Uri template to define the path for this route handler
+ * @param handler HttpHandler to be called when the request matches this route
+ */
 export function post(
   path: UriTemplate,
   handler: RoutedHttpHandler
@@ -113,6 +140,10 @@ export function post(
   return route(HttpMethods.POST, path, handler);
 }
 
+/**
+ * Defines a fallback route when the request path does not match any routes
+ * @param handler HttpHandler to be called when the request matches this route
+ */
 export function notFound(handler: RoutedHttpHandler): RouteDefinition {
   return {
     handler

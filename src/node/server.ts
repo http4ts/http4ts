@@ -43,6 +43,10 @@ async function writeErrorResponse(nodeRes: ServerResponse) {
   await finished(nodeRes);
 }
 
+/**
+ * Binds http4ts application to Node.js server request listener
+ * @param handler Root HttpHandler of the server application
+ */
 export function toNodeRequestListener(handler: HttpHandler): RequestListener {
   setupEnvironment(util.TextDecoder as any, util.TextEncoder as any);
 
