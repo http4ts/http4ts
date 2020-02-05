@@ -124,6 +124,13 @@ describe("HttpRequestImpl", () => {
     expect(request.setBody(stringBody("body-2"))).toEqual(expectedRequest);
   });
 
+  it("setBody should accept string", () => {
+    const request = req({ url: "/", body: "body-1" });
+    const expectedRequest = req({ url: "/", body: "body-2" });
+
+    expect(request.setBody("body-2")).toEqual(expectedRequest);
+  });
+
   it("should setMethod", () => {
     const request = req({ url: "/" });
     const expectedRequest = req({ url: "/", method: HttpMethods.DELETE });

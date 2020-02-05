@@ -46,7 +46,7 @@ export interface HttpRequest extends HttpMessage {
   replaceQuery: (name: string, value: string | string[]) => HttpRequest;
   path: () => string;
 
-  setBody: (body: HttpBody) => HttpRequest; // TODO: should this accept a string as well?
+  setBody: (body: HttpBody | string) => HttpRequest;
 
   setMethod: (method: HttpMethod) => HttpRequest;
 }

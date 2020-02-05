@@ -1,4 +1,5 @@
 import { HttpRequest, HttpMethod, HttpBody, HttpHeaders } from "../http";
+import { stringBody } from "../http-body/helpers";
 
 interface URI {
   queryString: URLSearchParams;
@@ -127,8 +128,10 @@ export class HttpRequestImpl implements HttpRequest {
     return this.parsedUri.path;
   }
 
-  setBody(body: HttpBody) {
-    return new HttpRequestImpl(this.url, this.method, body, this.headers);
+  setBody(body: HttpBody | string) {
+    const theBody = typeof body === "string" ? stringBody(body) : body;
+
+    return new HttpRequestImpl(this.url, this.method, theBody, this.headers);
   }
 
   setMethod(method: HttpMethod) {
