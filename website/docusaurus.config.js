@@ -34,8 +34,8 @@ module.exports = {
               to: "docs/getting-started"
             },
             {
-              label: "Second Doc",
-              to: "docs/doc2"
+              label: "Philosophy",
+              to: "docs/philosophy"
             }
           ]
         },
