@@ -8,32 +8,67 @@ import styles from "./styles.module.css";
 
 const features = [
   {
-    title: <>Easy to Use</>,
+    title: <>Server as a Function</>,
     imageUrl: "img/undraw_docusaurus_mountain.svg",
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Model your server application as a single function; Based on the Twitter
+        paper{" "}
+        <a href="https://monkey.org/~marius/funsrv.pdf">
+          Your Server as a Function
+        </a>{" "}
+        and inspired by the fantastic{" "}
+        <a href="https://github.com/http4k/http4k/">http4k</a> library.
       </>
     )
   },
   {
-    title: <>Focus on What Matters</>,
+    title: <>Runtime Independence</>,
     imageUrl: "img/undraw_docusaurus_tree.svg",
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        The core library does not have any dependency on the Node.js
+        environment. It should be possible to use it for both Node.js and Deno.
+        Node.js bindings are available out of the box.
       </>
     )
   },
   {
-    title: <>Powered by React</>,
+    title: <>Symmetric</>,
     imageUrl: "img/undraw_docusaurus_react.svg",
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Symmetric interfaces for the HTTP client and HTTP server. It is possible
+        to reuse the same <code>HttpHandler</code> interface and all the filters
+        on both server- and client-side. There is an <code>HttpClient</code>{" "}
+        functionality available in the library which follows the{" "}
+        <code>fetch</code> interface and is independent of any runtime.
+      </>
+    )
+  },
+  {
+    title: <>Type Safety</>,
+    imageUrl: "img/undraw_docusaurus_react.svg",
+    description: <>built using the maximum type safety power of TypeScript</>
+  },
+  {
+    title: <>Immutability</>,
+    imageUrl: "img/undraw_docusaurus_react.svg",
+    description: (
+      <>
+        all entities in the library are immutable unless, naturally, it is not
+        possible.
+      </>
+    )
+  },
+  {
+    title: <>Testability</>,
+    imageUrl: "img/undraw_docusaurus_react.svg",
+    description: (
+      <>
+        The basic building blocks of this library are functions and the main
+        entities are abstracted from the environment, it is extremely simple to
+        write tests for the code built by http4ts.
       </>
     )
   }
