@@ -9,6 +9,10 @@ type ResponeParams = {
   headers?: HttpHeaders;
 };
 
+/**
+ * Instantiates an HttpResponse object based on the provided status, body and headers
+ * @param obj The response representative object. Only status is mandatory.
+ */
 export function res({
   status,
   body = stringBody(""),
