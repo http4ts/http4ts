@@ -8,6 +8,10 @@ export type RequestParams = {
   headers?: HttpHeaders;
 };
 
+/**
+ * Instantiates an HttpResponse based on the provided data
+ * @param obj Request representative object. Only url is mandatory. The default HttpMethod is GET.
+ */
 export function req({
   url,
   method = HttpMethods.GET,
