@@ -9,7 +9,7 @@ import styles from "./styles.module.css";
 const features = [
   {
     title: <>Server as a Function</>,
-    imageUrl: "img/undraw_docusaurus_mountain.svg",
+    imageUrl: "img/battle-net-brands.svg",
     description: (
       <>
         Model your server application as a single function; Based on the Twitter
@@ -24,7 +24,7 @@ const features = [
   },
   {
     title: <>Runtime Independence</>,
-    imageUrl: "img/undraw_docusaurus_tree.svg",
+    imageUrl: "img/caravan-solid.svg",
     description: (
       <>
         The core library does not have any dependency on the Node.js
@@ -35,7 +35,7 @@ const features = [
   },
   {
     title: <>Symmetric</>,
-    imageUrl: "img/undraw_docusaurus_react.svg",
+    imageUrl: "img/align-justify-solid.svg",
     description: (
       <>
         Symmetric interfaces for the HTTP client and HTTP server. It is possible
@@ -48,12 +48,12 @@ const features = [
   },
   {
     title: <>Type Safety</>,
-    imageUrl: "img/undraw_docusaurus_react.svg",
+    imageUrl: "img/bullhorn-solid.svg",
     description: <>built using the maximum type safety power of TypeScript</>
   },
   {
     title: <>Immutability</>,
-    imageUrl: "img/undraw_docusaurus_react.svg",
+    imageUrl: "img/check-double-solid.svg",
     description: (
       <>
         all entities in the library are immutable unless, naturally, it is not
@@ -63,7 +63,7 @@ const features = [
   },
   {
     title: <>Testability</>,
-    imageUrl: "img/undraw_docusaurus_react.svg",
+    imageUrl: "img/cogs-solid.svg",
     description: (
       <>
         The basic building blocks of this library are functions and the main

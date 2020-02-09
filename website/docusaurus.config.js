@@ -40,19 +40,6 @@ module.exports = {
           ]
         },
         {
-          title: "Community",
-          items: [
-            {
-              label: "Stack Overflow",
-              href: "https://stackoverflow.com/questions/tagged/docusaurus"
-            },
-            {
-              label: "Discord",
-              href: "https://discordapp.com/invite/docusaurus"
-            }
-          ]
-        },
-        {
           title: "Social",
           items: [
             {
@@ -66,6 +53,15 @@ module.exports = {
             {
               label: "Twitter",
               href: "https://twitter.com/docusaurus"
+            }
+          ]
+        },
+        {
+          title: "Copyright",
+          items: [
+            {
+              label: "This site uses FontAwesome",
+              href: "https://fontawesome.com/license"
             }
           ]
         }
