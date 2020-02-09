@@ -139,4 +139,13 @@ export interface HttpRequest extends HttpMessage {
 export interface HttpResponse extends HttpMessage {
   headers: ResponseHttpHeaders;
   status: HttpStatus;
+
+  setHeaders: (headers: HttpHeaders) => HttpResponse;
+  addHeader: (header: string, value: string | string[]) => HttpResponse;
+  replaceHeader: (header: string, value: string | string[]) => HttpResponse;
+  removeHeader: (header: string) => HttpResponse;
+
+  setBody: (bod: HttpBody) => HttpResponse;
+
+  setStatus: (status: HttpStatus) => HttpResponse;
 }
