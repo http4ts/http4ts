@@ -7,4 +7,6 @@ export * from "./http-body/string-body";
 export * from "./http-body/helpers";
 export * from "./http-request/http-request-impl";
 export * from "./http-request/helpers";
+export * from "./http-response/http-response-impl";
+export * from "./http-response/helpers";
 export * from "./routing/routes";
