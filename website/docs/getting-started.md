@@ -37,7 +37,7 @@ import {
   res
 } from "http4ts";
 
-async function handler(req: HttpRequest) {
+async function handler(req: HttpRequest) {  // 1. Write the hanlder as a function that returns response
   await req.body.asString("UTF-8");
   return res({
     body: stringBody("Hello world!"),
@@ -45,12 +45,18 @@ async function handler(req: HttpRequest) {
   });
 }
 
-const server = http.createServer(toNodeRequestListener(handler));
+const server = http.createServer(
+  toNodeRequestListener(handler)            // 2. Connect the handler to the node.js server
+);
 
 const hostname = "127.0.0.1";
 const port = 3000;
 
-server.listen(port, hostname, () => {
+server.listen(port, hostname, () => {       // 3. Start your node server as you were before
   console.log(`Server running at http://${hostname}:${port}/`);
 });
 ```
+
+## Example Project
+
+We have implemented the [famous realworld backend](https://github.com/gothinkster/realworld) for you to compare the code with other http libraries in node.js. You can find this example [here](https://github.com/http4ts/http4ts-realworld-example-app).

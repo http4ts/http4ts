@@ -24,7 +24,7 @@ In http4ts, all of the above examples are just functions with the same signature
 
 ## HttpFilter
 
-A HttpFilter is a higer order function which accepts a `HttpHandler` and returns another `HttpHandler`:
+A HttpFilter is a higer-order function which accepts a `HttpHandler` and returns another `HttpHandler`:
 
 ```ts
 type HttpFilter = (handler: HttpHandler) => HttpHandler | Promise<HttpHandler>;
@@ -38,6 +38,6 @@ HttpFilter is a powerful concept that helps you to add features to already defin
 
 ---
 
-using `HttpHandler`s and `HttpFilter`s, you can simply implement reusable building blocks for different use cases. The following illustration visualizes the concept of filters and handlers:
+Using handlers and filters, you can simply implement reusable building blocks for different use cases. The following illustration visualizes the concept of filters and handlers:
 
 ![Https Data Flows](https://raw.githubusercontent.com/http4ts/http4ts/master/doc/asset/diagram.png)
