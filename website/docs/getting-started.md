@@ -24,20 +24,25 @@ npm install http4ts
 
 ## Binding to Node.js
 
-In order to use this library in Node.js, you have to bind the `HttpHandler` to the Node.js HTTP server. http4ts supplies a [`toNodeRequestListener`](https://github.com/http4ts/http4ts/blob/master/src/node/server.ts) to bind an `HttpHandler` to the Node.js server.
+In order to use this library in Node.js, you have to bind the `HttpHandler` to the Node.js HTTP server. http4ts supplies a function called [`toNodeRequestListener`](https://github.com/http4ts/http4ts/blob/master/src/node/server.ts) to bind an `HttpHandler` to the Node.js server.
 
 ```ts
 import * as http from "http";
 
-import { HttpRequest, HttpResponse, HttpStatus } from "../http";
-import { toNodeRequestListener } from "../node/server";
+import {
+  HttpRequest,
+  HttpStatus,
+  toNodeRequestListener,
+  stringBody,
+  res
+} from "http4ts";
 
-async function handler(req: HttpRequest): Promise<HttpResponse> {
-  return {
-    body: req.url,
-    headers: {},
+async function handler(req: HttpRequest) {
+  await req.body.asString("UTF-8");
+  return res({
+    body: stringBody("Hello world!"),
     status: HttpStatus.OK
-  };
+  });
 }
 
 const server = http.createServer(toNodeRequestListener(handler));

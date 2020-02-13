@@ -5,7 +5,7 @@ sidebar_label: Philosophy
 ---
 
 http4ts aims to obey the following rules as its base architectural mindset:
-* **Server as a Function**: This library is based on the Twitter paper [Your Server as a Function](https://monkey.org/~marius/funsrv.pdf) and inspired by the fantastic [http4k](https://github.com/http4k/http4k/) library. An HTTP server application is a composition of two main types:
+* **Server as a Function**: This library is based on the Twitter paper [Your Server as a Function](https://monkey.org/~marius/funsrv.pdf) and inspired by the fantastic [http4k](https://github.com/http4k/http4k/) library. An HTTP server application is a composition of two main types (Look at [Core Concepts](core-concepts) for more info):
     * `HttpHandler`: defines the functions that handle requests.
     * `HttpFilter`: a higher-order function that accepts an `HttpHandler` and returns an `HttpHandler`. It should be used to add request/response pre-/post-processing.
 * **Runtime Independence**: While the library has bindings to be used with a Node.js runtime, the core library does not have any dependency on the Node.js environment. It should be possible to use it for both Node.js and Deno.
@@ -15,7 +15,3 @@ http4ts aims to obey the following rules as its base architectural mindset:
 * **Testability**: Since the basic building blocks of this library are functions and the main entities are abstracted from the environment, it is extremely simple to write tests for the code built by http4ts.
 * **Minimal** The request and response contain only the necessary information to represent the HTTP message. Extra information such as session and cookies are not included because they don't belong to the HTTP protocol.
 * **Composable** All the building blocks are composable which is a great addition to code reusability, organisation and extension.
-
-***Http4ts data-flows***
-
-![Https Data Flows](https://raw.githubusercontent.com/http4ts/http4ts/master/doc/asset/diagram.png)
