@@ -16,6 +16,7 @@ module.exports = {
       "unit-tests",
       "request-and-response"
     ],
-    "API Reference": ["http", "body", "router", "node-js"]
+    "API Reference": ["http", "body", "router", "node-js"],
+    Contributing: ["we-need-help", "project-structure"]
   }
 };
