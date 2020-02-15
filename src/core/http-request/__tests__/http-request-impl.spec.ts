@@ -4,12 +4,9 @@ import { HttpMethods } from "../../http";
 
 describe("HttpRequestImpl", () => {
   it("should setHeaders", () => {
-    const request = req({ url: "/", headers: { Auth: "Basic" } });
+    const request = req("/", HttpMethods.GET, "", { Auth: "Basic" });
     const newHeaders = { Auth: "Complex", Content: "html" };
-    const expectedRequest = req({
-      url: "/",
-      headers: newHeaders
-    });
+    const expectedRequest = req("/", HttpMethods.GET, "", newHeaders);
 
     expect(request.setHeaders(newHeaders)).toEqual(expectedRequest);
   });
@@ -21,14 +18,10 @@ describe("HttpRequestImpl", () => {
       someHeader: "Some content",
       someOtherHeader: "Some other header content"
     };
-    const request = req({ url, body, headers });
-    const expectedRequest = req({
-      url,
-      body,
-      headers: {
-        ...headers,
-        addedHeader: "A new added header"
-      }
+    const request = req(url, HttpMethods.GET, body, headers);
+    const expectedRequest = req(url, HttpMethods.GET, body, {
+      ...headers,
+      addedHeader: "A new added header"
     });
     expect(request.addHeader("addedHeader", "A new added header")).toEqual(
       expectedRequest
@@ -45,20 +38,16 @@ describe("HttpRequestImpl", () => {
       someHeader: "Some content",
       someOtherHeader: "Some other header content"
     };
-    const request = req({ url, body, headers });
-    const expectedRequest = req({
-      url,
-      body,
-      headers: {
-        someOtherHeader: "Some other header content"
-      }
+    const request = req(url, HttpMethods.GET, body, headers);
+    const expectedRequest = req(url, HttpMethods.GET, body, {
+      someOtherHeader: "Some other header content"
     });
     expect(request.removeHeader("someHeader")).toEqual(expectedRequest);
   });
 
   it("should setUrl", () => {
-    const request = req({ url: "/" });
-    const expectedRequest = req({ url: "/home" });
+    const request = req("/");
+    const expectedRequest = req("/home");
 
     expect(request.setUrl("/home")).toEqual(expectedRequest);
   });
@@ -70,7 +59,7 @@ describe("HttpRequestImpl", () => {
       someHeader: "Some content",
       someOtherHeader: "Some other header content"
     };
-    const request = req({ url, body, headers });
+    const request = req(url, HttpMethods.GET, body, headers);
     const expectedHeaders = {
       someHeader: "Some new content",
       someOtherHeader: "Some other header content"
@@ -87,20 +76,20 @@ describe("HttpRequestImpl", () => {
 
   it("should return query by queryName", () => {
     const url = "http://localhost?q=1&q=2&q=3";
-    const request = req({ url });
+    const request = req(url);
     expect(request.query("q")).toEqual(["1", "2", "3"]);
   });
 
   it("should add query", () => {
     const url = "http://localhost?q=1";
-    const request = req({ url });
+    const request = req(url);
     expect(request.addQuery("q2", "1").query("q2")).toEqual("1");
     expect(request.addQuery("q2", ["1", "2"]).query("q2")).toEqual(["1", "2"]);
   });
 
   it("should replace query", () => {
     const url = "http://localhost?q=1";
-    const request = req({ url });
+    const request = req(url);
     expect(request.replaceQuery("q", ["1", "2"]).query("q")).toEqual([
       "1",
       "2"
@@ -113,27 +102,27 @@ describe("HttpRequestImpl", () => {
 
   it("should remove query", () => {
     const url = "http://localhost?q=1&q2=2";
-    const request = req({ url });
+    const request = req(url);
     expect(request.removeQuery("q2").query("q2")).toEqual(undefined);
   });
 
   it("should setBody", () => {
-    const request = req({ url: "/", body: "body-1" });
-    const expectedRequest = req({ url: "/", body: "body-2" });
+    const request = req("/", HttpMethods.GET, "body-1");
+    const expectedRequest = req("/", HttpMethods.GET, "body-2");
 
     expect(request.setBody(stringBody("body-2"))).toEqual(expectedRequest);
   });
 
   it("setBody should accept string", () => {
-    const request = req({ url: "/", body: "body-1" });
-    const expectedRequest = req({ url: "/", body: "body-2" });
+    const request = req("/", HttpMethods.GET, "body-1");
+    const expectedRequest = req("/", HttpMethods.GET, "body-2");
 
     expect(request.setBody("body-2")).toEqual(expectedRequest);
   });
 
   it("should setMethod", () => {
-    const request = req({ url: "/" });
-    const expectedRequest = req({ url: "/", method: HttpMethods.DELETE });
+    const request = req("/");
+    const expectedRequest = req("/", HttpMethods.DELETE);
 
     expect(request.setMethod(HttpMethods.DELETE)).toEqual(expectedRequest);
   });

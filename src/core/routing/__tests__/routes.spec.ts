@@ -13,7 +13,7 @@ function resp(status = 200, body = ""): HttpResponse {
 }
 
 function request(url: string, body: string, method: HttpMethod): HttpRequest {
-  return req({ url, method, body });
+  return req(url, method, body);
 }
 
 describe("routes", () => {
@@ -90,10 +90,7 @@ describe("routes", () => {
 
     expect(await routingHandler(postReq)).toEqual(allMethods(postReq));
 
-    const getReq = req({
-      ...postReq,
-      method: "GET"
-    });
+    const getReq = req(postReq.url, "GET", postReq.body, postReq.headers);
 
     expect(await routingHandler(getReq)).toEqual(allMethods(getReq));
   });

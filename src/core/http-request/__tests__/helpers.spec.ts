@@ -10,7 +10,7 @@ describe("HttpRequestImpl helpers", () => {
       body: stringBody("sample body"),
       headers: { Authorizarion: "Bypass" }
     };
-    const request = req(params);
+    const request = req(params.url, params.method, params.body, params.headers);
 
     expect(request.body).toEqual(params.body);
     expect(request.url).toEqual(params.url);
@@ -19,7 +19,7 @@ describe("HttpRequestImpl helpers", () => {
   });
 
   test("req should properly set default parameters", () => {
-    const request = req({ url: "/index.html" });
+    const request = req("/index.html");
 
     expect(request.body).toEqual(stringBody(""));
     expect(request.url).toEqual("/index.html");
@@ -30,8 +30,8 @@ describe("HttpRequestImpl helpers", () => {
   test("req should instantiate a StringBody when a string is passed as body", () => {
     const expectedBody = stringBody("some-body");
 
-    const request1 = req({ url: "/", body: "some-body" });
-    const request2 = req({ url: "/", body: stringBody("some-body") });
+    const request1 = req("/", HttpMethods.GET, "some-body");
+    const request2 = req("/", HttpMethods.GET, stringBody("some-body"));
 
     expect(request1.body).toEqual(expectedBody);
     expect(request2.body).toEqual(expectedBody);

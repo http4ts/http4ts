@@ -12,12 +12,12 @@ export type RequestParams = {
  * Instantiates an HttpResponse based on the provided data
  * @param obj Request representative object. Only url is mandatory. The default HttpMethod is GET.
  */
-export function req({
-  url,
-  method = HttpMethods.GET,
-  body = stringBody(""),
-  headers = {}
-}: RequestParams) {
+export function req(
+  url: string,
+  method: HttpMethod = HttpMethods.GET,
+  body: string | HttpBody = stringBody(""),
+  headers: HttpHeaders = {}
+) {
   const theBody = typeof body === "string" ? stringBody(body) : body;
 
   return new HttpRequestImpl(url, method, theBody, headers);
