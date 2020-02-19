@@ -1,6 +1,7 @@
 import { HttpRequest, HttpResponse } from "./http";
 import { HttpHandler } from "./http4ts";
-import { stringBody } from "../node";
+import { res } from "./http-response/helpers";
+import { stringBody } from "./http-body/helpers";
 
 type Headers = {
   forEach: (cb: (value: string, key: string) => void) => void;
@@ -27,10 +28,10 @@ export function createHttpClient(theFetch: Fetch): HttpHandler {
       (value, key) => (headers = { ...headers, [key]: value })
     );
 
-    return {
+    return res({
       body: stringBody(await resp.text()),
       headers,
       status: resp.status
-    };
+    });
   };
 }

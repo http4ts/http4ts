@@ -33,16 +33,33 @@ export interface HttpMessage {
 export interface HttpRequest extends HttpMessage {
   method: HttpMethod;
   url: string;
+
+  setHeaders: (headers: HttpHeaders) => HttpRequest;
   addHeader: (header: string, value: string | string[]) => HttpRequest;
   replaceHeader: (header: string, value: string | string[]) => HttpRequest;
   removeHeader: (header: string) => HttpRequest;
+
+  setUrl: (url: string) => HttpRequest;
   query: (name: string) => HttpQuery;
   removeQuery: (name: string) => HttpRequest;
   addQuery: (name: string, value: string | string[]) => HttpRequest;
   replaceQuery: (name: string, value: string | string[]) => HttpRequest;
   path: () => string;
+
+  setBody: (body: HttpBody | string) => HttpRequest;
+
+  setMethod: (method: HttpMethod) => HttpRequest;
 }
 
 export interface HttpResponse extends HttpMessage {
   status: HttpStatus;
+
+  setHeaders: (headers: HttpHeaders) => HttpResponse;
+  addHeader: (header: string, value: string | string[]) => HttpResponse;
+  replaceHeader: (header: string, value: string | string[]) => HttpResponse;
+  removeHeader: (header: string) => HttpResponse;
+
+  setBody: (bod: HttpBody) => HttpResponse;
+
+  setStatus: (status: HttpStatus) => HttpResponse;
 }
