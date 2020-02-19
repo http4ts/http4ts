@@ -14,7 +14,7 @@ module.exports = {
         src: "img/logo.svg"
       },
       links: [
-        { to: "docs/getting-started", label: "Docs", position: "left" },
+        { to: "docs/welcome/getting-started", label: "Docs", position: "left" },
         { to: "blog", label: "Blog", position: "left" },
         {
           href: "https://github.com/http4ts/http4ts",

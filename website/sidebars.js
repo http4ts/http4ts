@@ -1,22 +1,30 @@
 module.exports = {
   someSidebar: {
     Welcome: [
-      "getting-started",
-      "philosophy",
-      "core-concepts",
-      "testability",
-      "runtime-independence",
-      "symmetry"
+      "welcome/getting-started",
+      "welcome/philosophy",
+      "welcome/core-concepts",
+      "welcome/testability",
+      "welcome/runtime-independence",
+      "welcome/symmetry"
     ],
     Guides: [
-      "your-first-handler",
-      "binding-to-node-js-server",
-      "routing",
-      "filters",
-      "unit-tests",
-      "request-and-response"
+      "guides/your-first-handler",
+      "guides/binding-to-node-js-server",
+      "guides/routing",
+      "guides/filters",
+      "guides/unit-tests",
+      "guides/request-and-response"
     ],
-    "API Reference": ["http", "body", "router", "node-js"],
-    Contributing: ["we-need-help", "project-structure"]
+    "API Reference": [
+      "reference/http",
+      "reference/body",
+      "reference/router",
+      "reference/node-js"
+    ],
+    Contributing: [
+      "contributing/we-need-help",
+      "contributing/project-structure"
+    ]
   }
 };
