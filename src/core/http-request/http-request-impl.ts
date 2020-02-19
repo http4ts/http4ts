@@ -1,4 +1,5 @@
-import { HttpRequest, HttpMethod, HttpBody, HttpHeaders } from "./http";
+import { HttpRequest, HttpMethod, HttpBody, HttpHeaders } from "../http";
+import { stringBody } from "../http-body/helpers";
 
 interface URI {
   queryString: URLSearchParams;
@@ -9,9 +10,9 @@ export class HttpRequestImpl implements HttpRequest {
 
   constructor(
     public readonly url: string,
-    public readonly body: HttpBody,
     public readonly method: HttpMethod,
-    public readonly headers: HttpHeaders = {}
+    public readonly body: HttpBody,
+    public readonly headers: HttpHeaders
   ) {
     const path = url.substring(0, url.indexOf("?"));
     const queryString = url.substring(url.indexOf("?"));
@@ -19,6 +20,10 @@ export class HttpRequestImpl implements HttpRequest {
       queryString: new URLSearchParams(queryString),
       path: path
     };
+  }
+
+  setHeaders(headers: HttpHeaders) {
+    return new HttpRequestImpl(this.url, this.method, this.body, headers);
   }
 
   addHeader(header: string, value: string | string[]) {
@@ -29,7 +34,7 @@ export class HttpRequestImpl implements HttpRequest {
       ...this.headers,
       [header]: value
     };
-    return new HttpRequestImpl(this.url, this.body, this.method, newHeaders);
+    return new HttpRequestImpl(this.url, this.method, this.body, newHeaders);
   }
 
   replaceHeader(header: string, value: string | string[]) {
@@ -40,7 +45,7 @@ export class HttpRequestImpl implements HttpRequest {
       ...this.headers,
       [header]: value
     };
-    return new HttpRequestImpl(this.url, this.body, this.method, newHeaders);
+    return new HttpRequestImpl(this.url, this.method, this.body, newHeaders);
   }
 
   removeHeader(headerToRemove: string) {
@@ -56,7 +61,11 @@ export class HttpRequestImpl implements HttpRequest {
       },
       {}
     );
-    return new HttpRequestImpl(this.url, this.body, this.method, newHeaders);
+    return new HttpRequestImpl(this.url, this.method, this.body, newHeaders);
+  }
+
+  setUrl(url: string) {
+    return new HttpRequestImpl(url, this.method, this.body, this.headers);
   }
 
   query(name: string) {
@@ -83,7 +92,7 @@ export class HttpRequestImpl implements HttpRequest {
       queryString.append(name, value);
     }
     const newUrl = `${this.parsedUri.path}?${queryString.toString()}`;
-    return new HttpRequestImpl(newUrl, this.body, this.method, this.headers);
+    return new HttpRequestImpl(newUrl, this.method, this.body, this.headers);
   }
 
   removeQuery(queryToRemove: string) {
@@ -95,7 +104,7 @@ export class HttpRequestImpl implements HttpRequest {
     }
     queryString.delete(queryToRemove);
     const newUrl = `${this.parsedUri.path}?${queryString.toString()}`;
-    return new HttpRequestImpl(newUrl, this.body, this.method, this.headers);
+    return new HttpRequestImpl(newUrl, this.method, this.body, this.headers);
   }
 
   replaceQuery(name: string, value: string | string[]) {
@@ -112,10 +121,20 @@ export class HttpRequestImpl implements HttpRequest {
       queryString.set(name, value);
     }
     const newUrl = `${this.parsedUri.path}?${queryString.toString()}`;
-    return new HttpRequestImpl(newUrl, this.body, this.method, this.headers);
+    return new HttpRequestImpl(newUrl, this.method, this.body, this.headers);
   }
 
   path() {
     return this.parsedUri.path;
+  }
+
+  setBody(body: HttpBody | string) {
+    const theBody = typeof body === "string" ? stringBody(body) : body;
+
+    return new HttpRequestImpl(this.url, this.method, theBody, this.headers);
+  }
+
+  setMethod(method: HttpMethod) {
+    return new HttpRequestImpl(this.url, method, this.body, this.headers);
   }
 }
