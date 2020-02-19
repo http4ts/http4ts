@@ -1,17 +1,18 @@
-import { HttpResponse, HttpBody, HttpHeaders, HttpStatus } from "../http";
+import { HttpResponse, HttpBody, HttpStatus } from "../http";
+import { ResponseHttpHeaders, HttpHeaders } from "../http-headers";
 
 export class HttpResponseImpl implements HttpResponse {
   constructor(
     public readonly status: HttpStatus,
     public readonly body: HttpBody,
-    public readonly headers: HttpHeaders
+    public readonly headers: ResponseHttpHeaders
   ) {}
 
-  setHeaders(headers: HttpHeaders) {
+  setHeaders(headers: ResponseHttpHeaders) {
     return new HttpResponseImpl(this.status, this.body, headers);
   }
 
-  addHeader(header: string, value: string | string[]) {
+  addHeader(header: keyof ResponseHttpHeaders, value: string | string[]) {
     if (this.headers[header]) {
       throw `Trying to add an existing header with name ${header}. You can use HttpRequest.replaceHeader instead.`;
     }
@@ -22,7 +23,7 @@ export class HttpResponseImpl implements HttpResponse {
     return new HttpResponseImpl(this.status, this.body, newHeaders);
   }
 
-  replaceHeader(header: string, value: string | string[]) {
+  replaceHeader(header: keyof ResponseHttpHeaders, value: string | string[]) {
     if (!this.headers[header]) {
       throw `Trying to replace a non existing header with name ${header}. You can use HttpRequest.addHeader instead.`;
     }
@@ -33,7 +34,7 @@ export class HttpResponseImpl implements HttpResponse {
     return new HttpResponseImpl(this.status, this.body, newHeaders);
   }
 
-  removeHeader(headerToRemove: string) {
+  removeHeader(headerToRemove: keyof ResponseHttpHeaders) {
     if (!this.headers[headerToRemove]) {
       throw `Trying to remove a non existing header with name ${headerToRemove}.`;
     }

@@ -1,12 +1,13 @@
 import { HttpStatus } from "../http-status";
-import { HttpBody, HttpHeaders } from "../http";
+import { HttpBody } from "../http";
 import { stringBody } from "../http-body/helpers";
 import { HttpResponseImpl } from "./http-response-impl";
+import { ResponseHttpHeaders } from "../http-headers";
 
 type ResponeParams = {
   status: HttpStatus;
   body?: HttpBody;
-  headers?: HttpHeaders;
+  headers?: ResponseHttpHeaders;
 };
 
 /**
