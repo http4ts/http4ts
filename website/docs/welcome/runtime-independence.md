@@ -4,6 +4,10 @@ title: Runtime Independence
 sidebar_label: Runtime Independence
 ---
 
+> ⚠️ This section is a work in progress.
+
+* Add serverless environment
+
 http4ts' core functionality does not have any dependencies to node.js packages. All the code in the core of http4ts has written by standard javascript utilities. Here are some of the examples:
 
 * Core module doesn't use node.js' `IncomingMessage` or `ServerResponse` types as request and responses. Instead, it defines runtime independent request and response types.
