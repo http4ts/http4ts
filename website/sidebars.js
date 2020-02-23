@@ -11,10 +11,11 @@ module.exports = {
     Guides: [
       "guides/your-first-handler",
       "guides/binding-to-node-js-server",
-      "guides/routing",
+      "guides/request-and-response",
       "guides/filters",
-      "guides/unit-tests",
-      "guides/request-and-response"
+      "guides/routing",
+      "guides/async-iterators-instead-of-streams",
+      "guides/unit-tests"
     ],
     "API Reference": [
       "reference/http",
