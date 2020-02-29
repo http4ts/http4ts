@@ -14,14 +14,16 @@ async function runOnTestServer(
   const server = http.createServer(toNodeRequestListener(handler));
 
   return new Promise((resolve, reject) => {
-    server.listen(8080, "127.0.0.1", () => {
-      testBlock()
-        .then(resolve)
-        .catch(error => {
-          console.error(error.message);
-          reject(error);
-        })
-        .finally(() => server.close());
+    server.listen(8080, "127.0.0.1", async () => {
+      try {
+        const testResult = await testBlock();
+        resolve(testResult);
+      } catch (error) {
+        console.error(error.message);
+        reject(error);
+      } finally {
+        server.close();
+      }
     });
   });
 }
