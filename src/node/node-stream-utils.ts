@@ -2,7 +2,7 @@ import * as util from "util";
 import * as stream from "stream";
 import { once } from "events";
 
-const finished = util.promisify(stream.finished);
+export const waitToFinish = util.promisify(stream.finished);
 
 export async function writeIterableToStream(
   iterable: AsyncIterable<Uint8Array>,
@@ -14,7 +14,5 @@ export async function writeIterableToStream(
     }
   }
   target.end();
-  await finished(target);
+  await waitToFinish(target);
 }
-
-export const waitToFinish = util.promisify(stream.finished);
