@@ -1,12 +1,7 @@
 import { request as httpsRequest } from "https";
 import { request as httpRequest } from "http";
-import { once } from "events";
-import * as util from "util";
-import * as stream from "stream";
-
 import { HttpRequest, HttpResponse, res, BufferedBody } from "../core/mod";
-
-const finished = util.promisify(stream.finished);
+import { writeIterableToStream } from "./node-stream-utils";
 
 export async function send(req: HttpRequest): Promise<HttpResponse> {
   const url = new URL(req.url);
@@ -27,12 +22,6 @@ export async function send(req: HttpRequest): Promise<HttpResponse> {
         )
     );
 
-    for await (const chunk of req.body) {
-      if (!reqToSend.write(Buffer.from(chunk))) {
-        await once(reqToSend, "drain");
-      }
-    }
-    reqToSend.end();
-    await finished(reqToSend);
+    await writeIterableToStream(req.body, reqToSend);
   });
 }
