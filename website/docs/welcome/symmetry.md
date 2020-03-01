@@ -14,7 +14,7 @@ Http handlers in http4ts are symmetric. Meaning that http client follows the sam
 type HttpHandler = (req: HttpRequest) => HttpResponse | Promise<HttpResponse>;
 ```
 
-Providing symmetric interfaces for client and server improves the learning curve which helps onboarding new developers to the codebase.
+Providing symmetric interfaces for client and server improves the learning curve and helps onboarding new developers to your application's codebase.
 
 One of the benefits of this model is that you can easily mock the http clients in your application by replacing the implementation of them with a mocked http handler.
 
