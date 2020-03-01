@@ -12,14 +12,18 @@ export async function send(req: HttpRequest): Promise<HttpResponse> {
     const reqToSend = request(
       req.url,
       { method: req.method, headers: req.headers },
-      response =>
+      response => {
+        if (response.statusCode === undefined) {
+          throw new Error("Response statusCode cannot be undefined");
+        }
         resolve(
           res({
-            status: response.statusCode || 0, // 0? really?
+            status: response.statusCode,
             headers: response.headers,
             body: new BufferedBody(response)
           })
-        )
+        );
+      }
     );
 
     await writeIterableToStream(req.body, reqToSend);
