@@ -6,6 +6,8 @@ module.exports = {
   favicon: "img/favicon.ico",
   organizationName: "http4ts", // Usually your GitHub org/user name.
   projectName: "http4ts", // Usually your repo name.
+  url: "https://http4ts.github.io",
+  baseUrl: "/http4ts/",
   themeConfig: {
     navbar: {
       title: "http4ts",
