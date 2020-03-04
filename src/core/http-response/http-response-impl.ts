@@ -1,4 +1,5 @@
 import { HttpResponse, HttpBody, HttpHeaders, HttpStatus } from "../http";
+import { stringBody } from "../http-body/helpers";
 
 export class HttpResponseImpl implements HttpResponse {
   constructor(
@@ -49,8 +50,10 @@ export class HttpResponseImpl implements HttpResponse {
     return new HttpResponseImpl(this.status, this.body, newHeaders);
   }
 
-  setBody(body: HttpBody) {
-    return new HttpResponseImpl(this.status, body, this.headers);
+  setBody(body: HttpBody | string) {
+    const theBody = typeof body === "string" ? stringBody(body) : body;
+
+    return new HttpResponseImpl(this.status, theBody, this.headers);
   }
 
   setStatus(status: HttpStatus) {
