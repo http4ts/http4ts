@@ -1,30 +1,24 @@
-import { HttpRequest, HttpResponse, HttpMethod, HttpMethods } from "../../http";
+import { HttpRequest, HttpMethod, HttpMethods } from "../../http";
 import { routes, get, notFound, RoutedHttpRequest, post, all } from "../routes";
-import { stringBody } from "../../http-body/helpers";
 import { req } from "../../http-request/helpers";
 import { res } from "../../http-response/helpers";
-
-function resp(status = 200, body = ""): HttpResponse {
-  return res({
-    status,
-    body: stringBody(body),
-    headers: {}
-  });
-}
 
 function request(url: string, body: string, method: HttpMethod): HttpRequest {
   return req({ url, method, body });
 }
 
 describe("routes", () => {
-  const slash = () => resp(200, "slash");
-  const home = () => resp(200, "home");
-  const carriers = () => resp(200, "carriers");
-  const contacts = () => resp(200, "contacts");
-  const articles = (req: RoutedHttpRequest) => resp(200, req.routeParams["id"]);
-  const submitContact = () => resp(201, "received contact request");
-  const allMethods = (req: HttpRequest) => resp(200, req.method);
-  const nf = () => resp(400, "custom not found");
+  const slash = () => res({ status: 200, body: "slash" });
+  const home = () => res({ status: 200, body: "home" });
+  const carriers = () => res({ status: 200, body: "carriers" });
+  const contacts = () => res({ status: 200, body: "contacts" });
+  const articles = (req: RoutedHttpRequest) =>
+    res({ status: 200, body: req.routeParams["id"] });
+  const submitContact = () =>
+    res({ status: 201, body: "received contact request" });
+  const allMethods = (req: HttpRequest) =>
+    res({ status: 200, body: req.method });
+  const nf = () => res({ status: 400, body: "custom not found" });
 
   const routingHandler = routes(
     get("/", slash),
@@ -52,7 +46,7 @@ describe("routes", () => {
   test("GET /articles/1 should return articles handler", async () => {
     const req = request("/articles/1", "somebody", "GET");
 
-    expect(await routingHandler(req)).toEqual(resp(200, "1"));
+    expect(await routingHandler(req)).toEqual(res({ status: 200, body: "1" }));
   });
 
   test("GET /company should return not found", async () => {

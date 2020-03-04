@@ -24,7 +24,7 @@ interface RouteDefinition {
 
 function defaultNotFoundHandler(): HttpResponse {
   return res({
-    body: stringBody("Not Found"),
+    body: "Not Found",
     headers: {},
     status: HttpStatus.NOT_FOUND
   });

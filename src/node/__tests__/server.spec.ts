@@ -71,7 +71,7 @@ describe("node server binding", () => {
     const handler: HttpHandler = async () => {
       return new Promise<HttpResponse>(resolve => {
         const response = res({
-          body: stringBody("1 second passed!"),
+          body: "1 second passed!",
           status: 200,
           headers: {}
         });
@@ -162,7 +162,7 @@ describe("node server binding", () => {
     const handler: HttpHandler = async req => {
       expect(await req.body.asString()).toEqual("Hello 😌");
       return res({
-        body: stringBody("Bye 😌"),
+        body: "Bye 😌",
         headers: {},
         status: 200
       });
