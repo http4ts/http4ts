@@ -23,6 +23,10 @@ export enum HttpMethods {
 export type HttpMethod = HttpMethods | string;
 
 export interface HttpBody extends AsyncIterable<Uint8Array> {
+  /**
+   * Reads the body stream to end and decodes it as string.
+   * @param encoding
+   */
   asString: (encoding?: string) => Promise<string>;
 }
 
