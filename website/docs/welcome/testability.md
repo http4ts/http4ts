@@ -4,7 +4,7 @@ title: Testability
 sidebar_label: Testability
 ---
 
-http4ts abstracts the http related objects. Therefore, Request and response are just simple objects with some methods to manipulate themselves immutably. So, writing unit tests against handlers or filters is extremely simple. As an example, let's try to write some tests for the following handler:
+*Http4ts* abstracts the http related objects. Therefore, `Request` and `Response` are just simple objects with some methods that you can manipulate them safely in an immutable way. So, writing unit tests against handlers or filters is extremely simple. As an example, let's try to write some tests for the following handler:
 
 ```ts
 const exampleUserInfo = {

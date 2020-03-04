@@ -4,7 +4,7 @@ title: Core Concepts
 sidebar_label: Core Concepts
 ---
 
-http4ts consists of only two concepts. You can build everything you need for an http server by composing these two concepts.
+*Http4ts* consists of only two concepts. You can build everything you need for an http server by composing these two concepts.
 
 ## HttpHandler
 
@@ -20,11 +20,11 @@ For example, all of the following examples can be modelled as `HttpHandler`:
 - A router: receives the request and based on the url in the request, finds the handler associated with the url pattern of the request, then sends the request to that handler and returns the response returned from that handler.
 - A node.js server: receives the request and responds to it based on its defined behavior.
 
-In http4ts, all of the above examples are just functions with the same signature.
+In *http4ts*, all of the above examples are just functions with the same signature.
 
 ## HttpFilter
 
-A HttpFilter is a higer-order function which accepts a `HttpHandler` and returns another `HttpHandler`:
+A HttpFilter is a higher-order function which accepts a `HttpHandler` and returns another `HttpHandler`:
 
 ```ts
 type HttpFilter = (handler: HttpHandler) => HttpHandler | Promise<HttpHandler>;
