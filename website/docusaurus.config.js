@@ -13,7 +13,7 @@ module.exports = {
       title: "http4ts",
       logo: {
         alt: "http4ts Logo",
-        src: "img/logo.svg"
+        src: "img/http4ts-logo.png"
       },
       links: [
         { to: "docs/welcome/getting-started", label: "Docs", position: "left" },
