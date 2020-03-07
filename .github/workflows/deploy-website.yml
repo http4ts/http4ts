@@ -13,16 +13,13 @@ jobs:
       matrix:
         node-version: [12.x]
     steps:
-      - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.REPO_TOKEN }}
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: install
-        run: cd website && npm ci
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.REPO_TOKEN }}
+        run: cd website && npm ci && GIT_USER=alisabzevari USE_SSH=true npm run deploy
         env:
           CI: true
-      - name: deploy
-        run: cd website && GIT_USER=alisabzevari USE_SSH=true npm run deploy
