@@ -25,4 +25,4 @@ jobs:
         env:
           CI: true
       - name: deploy
-        run: cd website && GIT_USER=git USE_SSH=true npm run deploy
+        run: cd website && GIT_USER=alisabzevari USE_SSH=true npm run deploy
