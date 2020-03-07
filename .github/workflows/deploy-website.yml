@@ -14,6 +14,8 @@ jobs:
         node-version: [12.x]
     steps:
       - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.REPO_TOKEN }}
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -23,4 +25,4 @@ jobs:
         env:
           CI: true
       - name: deploy
-        run: cd website && GIT_USER=git USE_SSH=true npm run deploy          
+        run: cd website && GIT_USER=git USE_SSH=true npm run deploy
