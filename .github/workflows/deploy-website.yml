@@ -23,4 +23,4 @@ jobs:
         env:
           CI: true
       - name: deploy
-        run: npm run deploy          
+        run: cd website && npm run deploy          
