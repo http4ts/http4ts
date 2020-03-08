@@ -19,11 +19,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - uses: actions/checkout@v2
         with:
-          token: ${{ secrets.REPO_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - run: |
           git config --global user.name 'Ali Sabzevari'
           git config --global user.email 'alisabzevari@gmail.com'
-          git remote set-url --push origin https://alisabzevari:$REPO_TOKEN@github.com/http4ts/http4ts
+          git remote set-url --push origin https://alisabzevari:$GITHUB_TOKEN@github.com/http4ts/http4ts
           cd website
           npm ci
           GIT_USER=alisabzevari npm run deploy
