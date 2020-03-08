@@ -20,6 +20,10 @@ jobs:
       - uses: actions/checkout@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - run: cd website && npm ci && GIT_USER=alisabzevari USE_SSH=true npm run deploy
+      - run: |
+          git remote set-url --push origin https://alisabzevari:$GITHUB_TOKEN@github.com/http4ts/http4ts
+          cd website
+          npm ci
+          GIT_USER=alisabzevari USE_SSH=true npm run deploy
         env:
           CI: true
