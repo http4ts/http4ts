@@ -10,3 +10,4 @@ export * from "./http-request/helpers";
 export * from "./http-response/http-response-impl";
 export * from "./http-response/helpers";
 export * from "./routing/routes";
+export * from "./http-headers";
