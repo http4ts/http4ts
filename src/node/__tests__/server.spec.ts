@@ -1,30 +1,10 @@
-import * as http from "http";
 import { get, post } from "request-promise";
 import { HttpResponse } from "../../core/http";
-import { toNodeRequestListener } from "../server";
 import { HttpHandler } from "../../core/http4ts";
 import { BufferedBody } from "../../core/http-body/buffered-body";
-import { jsonBody, stringBody } from "../../core/http-body/helpers";
+import { jsonBody } from "../../core/http-body/helpers";
 import { res } from "../../core/http-response/helpers";
-
-async function runOnTestServer(
-  handler: HttpHandler,
-  testBlock: () => Promise<void>
-) {
-  const server = http.createServer(toNodeRequestListener(handler));
-
-  return new Promise((resolve, reject) => {
-    server.listen(8080, "127.0.0.1", () => {
-      testBlock()
-        .then(resolve)
-        .catch(error => {
-          console.error(error.message);
-          reject(error);
-        })
-        .finally(() => server.close());
-    });
-  });
-}
+import { runOnTestServer } from "../test-utils";
 
 describe("node server binding", () => {
   it("should respond correctly when handler throws", async () => {
@@ -32,7 +12,7 @@ describe("node server binding", () => {
       throw new Error("an error occured. (Don't worry. this is expected)");
     };
 
-    await runOnTestServer(handler, async () => {
+    await runOnTestServer(8080, handler, async () => {
       const res = await get("http://localhost:8080/", {
         simple: false,
         resolveWithFullResponse: true
@@ -55,7 +35,7 @@ describe("node server binding", () => {
       throw new Error("Should never happen!");
     };
 
-    await runOnTestServer(handler, async () => {
+    await runOnTestServer(8080, handler, async () => {
       const res = await get("http://localhost:8080/", {
         simple: false,
         resolveWithFullResponse: true
@@ -71,7 +51,7 @@ describe("node server binding", () => {
     const handler: HttpHandler = async () => {
       return new Promise<HttpResponse>(resolve => {
         const response = res({
-          body: stringBody("1 second passed!"),
+          body: "1 second passed!",
           status: 200,
           headers: {}
         });
@@ -79,7 +59,7 @@ describe("node server binding", () => {
       });
     };
 
-    await runOnTestServer(handler, async () => {
+    await runOnTestServer(8080, handler, async () => {
       const response = await get("http://localhost:8080/", {
         simple: false,
         resolveWithFullResponse: true
@@ -110,7 +90,7 @@ describe("node server binding", () => {
       });
     };
 
-    await runOnTestServer(handler, async () => {
+    await runOnTestServer(8080, handler, async () => {
       const response = await get("http://localhost:8080/", {
         simple: false,
         resolveWithFullResponse: true
@@ -146,7 +126,7 @@ describe("node server binding", () => {
       });
     };
 
-    await runOnTestServer(handler, async () => {
+    await runOnTestServer(8080, handler, async () => {
       const response = await get("http://localhost:8080/", {
         simple: false,
         resolveWithFullResponse: true
@@ -162,13 +142,13 @@ describe("node server binding", () => {
     const handler: HttpHandler = async req => {
       expect(await req.body.asString()).toEqual("Hello 😌");
       return res({
-        body: stringBody("Bye 😌"),
+        body: "Bye 😌",
         headers: {},
         status: 200
       });
     };
 
-    await runOnTestServer(handler, async () => {
+    await runOnTestServer(8080, handler, async () => {
       const response = await post("http://localhost:8080/", {
         body: "Hello 😌",
         simple: false,

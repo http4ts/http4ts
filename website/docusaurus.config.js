@@ -7,13 +7,13 @@ module.exports = {
   organizationName: "http4ts", // Usually your GitHub org/user name.
   projectName: "http4ts", // Usually your repo name.
   url: "https://http4ts.github.io",
-  baseUrl: "/http4ts/",
+  baseUrl: "/",
   themeConfig: {
     navbar: {
       title: "http4ts",
       logo: {
         alt: "http4ts Logo",
-        src: "img/logo.svg"
+        src: "img/http4ts-logo.png"
       },
       links: [
         { to: "docs/welcome/getting-started", label: "Docs", position: "left" },

@@ -1,5 +1,6 @@
 import { HttpResponse, HttpBody, HttpStatus } from "../http";
-import { ResponseHttpHeaders, HttpHeaders } from "../http-headers";
+import { stringBody } from "../http-body/helpers";
+import { ResponseHttpHeaders } from "../http-headers";
 
 export class HttpResponseImpl implements HttpResponse {
   constructor(
@@ -39,7 +40,7 @@ export class HttpResponseImpl implements HttpResponse {
       throw `Trying to remove a non existing header with name ${headerToRemove}.`;
     }
     const newHeaders = Object.keys(this.headers).reduce(
-      (headers: HttpHeaders, header) => {
+      (headers: ResponseHttpHeaders, header) => {
         if (header !== headerToRemove) {
           headers[header] = this.headers[header];
         }
@@ -50,8 +51,10 @@ export class HttpResponseImpl implements HttpResponse {
     return new HttpResponseImpl(this.status, this.body, newHeaders);
   }
 
-  setBody(body: HttpBody) {
-    return new HttpResponseImpl(this.status, body, this.headers);
+  setBody(body: HttpBody | string) {
+    const theBody = typeof body === "string" ? stringBody(body) : body;
+
+    return new HttpResponseImpl(this.status, theBody, this.headers);
   }
 
   setStatus(status: HttpStatus) {

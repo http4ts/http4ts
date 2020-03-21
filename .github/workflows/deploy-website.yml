@@ -1,0 +1,30 @@
+name: Deploy
+
+on:
+  push:
+    branches-ignore:
+      - "**"
+
+jobs:
+  build:
+    name: Deploy Website
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: actions/checkout@v2
+      - run: |
+          git config --global user.name 'Ali Sabzevari'
+          git config --global user.email 'alisabzevari@gmail.com'
+          git remote set-url --push origin https://alisabzevari:$REPO_TOKEN@github.com/http4ts/http4ts
+          cd website
+          npm ci
+          GIT_USER=alisabzevari npm run deploy
+        env:
+          CI: true
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}

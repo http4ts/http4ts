@@ -4,7 +4,7 @@ import { RequestHttpHeaders } from "../http-headers";
 
 export type RequestParams = {
   url: string;
-  method?: HttpMethod; // Method can also be optional in this function
+  method?: HttpMethod;
   body?: HttpBody | string;
   headers?: RequestHttpHeaders;
 };

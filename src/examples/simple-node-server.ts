@@ -1,17 +1,11 @@
 import * as http from "http";
 
-import {
-  HttpRequest,
-  HttpStatus,
-  toNodeRequestListener,
-  stringBody,
-  res
-} from "../node";
+import { HttpRequest, HttpStatus, toNodeRequestListener, res } from "../node";
 
 async function handler(req: HttpRequest) {
   await req.body.asString("UTF-8");
   return res({
-    body: stringBody("Hello world!"),
+    body: "Hello world!",
     status: HttpStatus.OK
   });
 }
