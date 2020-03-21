@@ -13,8 +13,6 @@
     "test": "jest",
     "tdd": "jest --watchAll",
     "test-ci": "jest --ci --coverage",
-    "prerelease-version": "npm version prerelease",
-    "publish-prerelease": "npm publish --tag next",
     "prepare": "npm run build"
   },
   "repository": {
