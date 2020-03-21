@@ -1,11 +1,12 @@
-import { HttpMethod, HttpBody, HttpHeaders, HttpMethods } from "../http";
+import { HttpMethod, HttpBody, HttpMethods } from "../http";
 import { stringBody, HttpRequestImpl } from "../../node";
+import { RequestHttpHeaders } from "../http-headers";
 
 export type RequestParams = {
   url: string;
   method?: HttpMethod;
   body?: HttpBody | string;
-  headers?: HttpHeaders;
+  headers?: RequestHttpHeaders;
 };
 
 /**

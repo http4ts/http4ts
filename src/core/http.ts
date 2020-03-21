@@ -1,9 +1,10 @@
 import { HttpStatus } from "./http-status";
+import {
+  HttpHeaders,
+  RequestHttpHeaders,
+  ResponseHttpHeaders
+} from "./http-headers";
 export { HttpStatus } from "./http-status";
-
-export interface HttpHeaders {
-  [header: string]: string | string[] | undefined;
-}
 
 export type HttpQuery = string | string[] | undefined | null;
 
@@ -35,13 +36,20 @@ export interface HttpMessage {
 }
 
 export interface HttpRequest extends HttpMessage {
+  headers: RequestHttpHeaders;
   method: HttpMethod;
   url: string;
 
-  setHeaders: (headers: HttpHeaders) => HttpRequest;
-  addHeader: (header: string, value: string | string[]) => HttpRequest;
-  replaceHeader: (header: string, value: string | string[]) => HttpRequest;
-  removeHeader: (header: string) => HttpRequest;
+  setHeaders: (headers: RequestHttpHeaders) => HttpRequest;
+  addHeader: (
+    header: keyof RequestHttpHeaders,
+    value: string | string[]
+  ) => HttpRequest;
+  replaceHeader: (
+    header: keyof RequestHttpHeaders,
+    value: string | string[]
+  ) => HttpRequest;
+  removeHeader: (header: keyof RequestHttpHeaders) => HttpRequest;
 
   setUrl: (url: string) => HttpRequest;
   query: (name: string) => HttpQuery;
@@ -56,14 +64,21 @@ export interface HttpRequest extends HttpMessage {
 }
 
 export interface HttpResponse extends HttpMessage {
+  headers: ResponseHttpHeaders;
   status: HttpStatus;
 
-  setHeaders: (headers: HttpHeaders) => HttpResponse;
-  addHeader: (header: string, value: string | string[]) => HttpResponse;
-  replaceHeader: (header: string, value: string | string[]) => HttpResponse;
-  removeHeader: (header: string) => HttpResponse;
+  setHeaders: (headers: ResponseHttpHeaders) => HttpResponse;
+  addHeader: (
+    header: keyof ResponseHttpHeaders,
+    value: string | string[]
+  ) => HttpResponse;
+  replaceHeader: (
+    header: keyof ResponseHttpHeaders,
+    value: string | string[]
+  ) => HttpResponse;
+  removeHeader: (header: keyof ResponseHttpHeaders) => HttpResponse;
 
-  setBody: (bod: HttpBody) => HttpResponse;
+  setBody: (body: HttpBody) => HttpResponse;
 
   setStatus: (status: HttpStatus) => HttpResponse;
 }

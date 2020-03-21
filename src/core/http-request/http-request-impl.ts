@@ -1,5 +1,6 @@
-import { HttpRequest, HttpMethod, HttpBody, HttpHeaders } from "../http";
+import { HttpRequest, HttpMethod, HttpBody } from "../http";
 import { stringBody } from "../http-body/helpers";
+import { RequestHttpHeaders, HttpHeaders } from "../http-headers";
 
 interface URI {
   queryString: URLSearchParams;
@@ -12,7 +13,7 @@ export class HttpRequestImpl implements HttpRequest {
     public readonly url: string,
     public readonly method: HttpMethod,
     public readonly body: HttpBody,
-    public readonly headers: HttpHeaders
+    public readonly headers: RequestHttpHeaders
   ) {
     const path = url.substring(0, url.indexOf("?"));
     const queryString = url.substring(url.indexOf("?"));
@@ -22,11 +23,11 @@ export class HttpRequestImpl implements HttpRequest {
     };
   }
 
-  setHeaders(headers: HttpHeaders) {
+  setHeaders(headers: RequestHttpHeaders) {
     return new HttpRequestImpl(this.url, this.method, this.body, headers);
   }
 
-  addHeader(header: string, value: string | string[]) {
+  addHeader(header: keyof RequestHttpHeaders, value: string | string[]) {
     if (this.headers[header]) {
       throw `Trying to add an existing header with name ${header}. You can use HttpRequest.replaceHeader instead.`;
     }
@@ -37,7 +38,7 @@ export class HttpRequestImpl implements HttpRequest {
     return new HttpRequestImpl(this.url, this.method, this.body, newHeaders);
   }
 
-  replaceHeader(header: string, value: string | string[]) {
+  replaceHeader(header: keyof RequestHttpHeaders, value: string | string[]) {
     if (!this.headers[header]) {
       throw `Trying to replace a non existing header with name ${header}. You can use HttpRequest.addHeader instead.`;
     }
@@ -48,7 +49,7 @@ export class HttpRequestImpl implements HttpRequest {
     return new HttpRequestImpl(this.url, this.method, this.body, newHeaders);
   }
 
-  removeHeader(headerToRemove: string) {
+  removeHeader(headerToRemove: keyof RequestHttpHeaders) {
     if (!this.headers[headerToRemove]) {
       throw `Trying to remove a non existing header with name ${headerToRemove}.`;
     }
