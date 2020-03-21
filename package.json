@@ -8,6 +8,7 @@
     "lint": "eslint --ext .ts src/**",
     "lint-fix": "eslint --ext .ts --fix src/**",
     "example": "nodemon",
+    "example-client": "ts-node --project tsconfig.json ./src/examples/simple-node-client.ts",
     "build": "rm -rf dist && tsc -p tsconfig.json",
     "test": "jest",
     "tdd": "jest --watchAll",

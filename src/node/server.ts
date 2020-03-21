@@ -1,7 +1,5 @@
 import { RequestListener, IncomingMessage, ServerResponse } from "http";
-import { once } from "events";
 import * as util from "util";
-import * as stream from "stream";
 
 import { HttpHandler } from "../core/http4ts";
 import { HttpRequest, HttpResponse } from "../core/http";
@@ -9,8 +7,7 @@ import { HttpStatus } from "../core/http-status";
 import { HttpRequestImpl } from "../core/http-request/http-request-impl";
 import { setupEnvironment } from "../core/env";
 import { BufferedBody } from "../core/http-body/buffered-body";
-
-const finished = util.promisify(stream.finished);
+import { writeIterableToStream, waitToFinish } from "./node-stream-utils";
 
 function toHttp4tsRequest(nodeReq: IncomingMessage): HttpRequest {
   return new HttpRequestImpl(
@@ -27,20 +24,14 @@ async function writeToNodeResponse(
 ) {
   nodeResponse.writeHead(http4tsResponse.status, http4tsResponse.headers);
 
-  for await (const chunk of http4tsResponse.body) {
-    if (!nodeResponse.write(Buffer.from(chunk))) {
-      await once(nodeResponse, "drain");
-    }
-  }
-  nodeResponse.end();
-  await finished(nodeResponse);
+  await writeIterableToStream(http4tsResponse.body, nodeResponse);
 }
 
 async function writeErrorResponse(nodeRes: ServerResponse) {
   nodeRes.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
   nodeRes.end();
-  await finished(nodeRes);
+  await waitToFinish(nodeRes);
 }
 
 /**
