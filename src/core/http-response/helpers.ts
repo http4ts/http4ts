@@ -5,7 +5,7 @@ import { HttpResponseImpl } from "./http-response-impl";
 
 type ResponeParams = {
   status: HttpStatus;
-  body?: HttpBody;
+  body?: HttpBody | string;
   headers?: HttpHeaders;
 };
 
@@ -18,5 +18,7 @@ export function res({
   body = stringBody(""),
   headers = {}
 }: ResponeParams) {
-  return new HttpResponseImpl(status, body, headers);
+  const theBody = typeof body === "string" ? stringBody(body) : body;
+
+  return new HttpResponseImpl(status, theBody, headers);
 }
