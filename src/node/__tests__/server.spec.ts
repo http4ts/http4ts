@@ -4,7 +4,7 @@ import { HttpResponse } from "../../core/http";
 import { toNodeRequestListener } from "../server";
 import { HttpHandler } from "../../core/http4ts";
 import { BufferedBody } from "../../core/http-body/buffered-body";
-import { jsonBody, stringBody } from "../../core/http-body/helpers";
+import { jsonBody } from "../../core/http-body/helpers";
 import { res } from "../../core/http-response/helpers";
 
 async function runOnTestServer(
@@ -71,7 +71,7 @@ describe("node server binding", () => {
     const handler: HttpHandler = async () => {
       return new Promise<HttpResponse>(resolve => {
         const response = res({
-          body: stringBody("1 second passed!"),
+          body: "1 second passed!",
           status: 200,
           headers: {}
         });
@@ -162,7 +162,7 @@ describe("node server binding", () => {
     const handler: HttpHandler = async req => {
       expect(await req.body.asString()).toEqual("Hello 😌");
       return res({
-        body: stringBody("Bye 😌"),
+        body: "Bye 😌",
         headers: {},
         status: 200
       });

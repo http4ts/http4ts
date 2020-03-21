@@ -76,6 +76,13 @@ describe("HttpResonseImpl", () => {
     );
   });
 
+  it("setBody should accept string", () => {
+    const request = res({ status: HttpStatus.OK, body: "body-1" });
+    const expectedRequest = res({ status: HttpStatus.OK, body: "body-2" });
+
+    expect(request.setBody("body-2")).toEqual(expectedRequest);
+  });
+
   it("should setStatus", () => {
     const response = res({ status });
 
