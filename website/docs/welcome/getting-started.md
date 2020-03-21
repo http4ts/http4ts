@@ -59,4 +59,4 @@ server.listen(port, hostname, () => {       // 3. Start your node server as you 
 
 ## Example Project
 
-We have implemented the [famous realworld backend](https://github.com/gothinkster/realworld) for you to compare the code with other http libraries in node.js. You can find this example [here](https://github.com/http4ts/http4ts-realworld-example-app).
+We have implemented the famous [realworld backend](https://github.com/gothinkster/realworld) for you to compare the code with other http libraries in node.js. You can find this example [here](https://github.com/http4ts/http4ts-realworld-example-app).
