@@ -1,7 +1,6 @@
 import { HttpMethod, HttpRequest, HttpResponse, HttpMethods } from "../http";
 import { HttpHandler } from "../http4ts";
 import { pathToRegexp, Key } from "./path-to-regexp";
-import { stringBody } from "../http-body/helpers";
 import { HttpStatus } from "../../node";
 import { res } from "../http-response/helpers";
 
@@ -24,7 +23,7 @@ interface RouteDefinition {
 
 function defaultNotFoundHandler(): HttpResponse {
   return res({
-    body: stringBody("Not Found"),
+    body: "Not Found",
     headers: {},
     status: HttpStatus.NOT_FOUND
   });
