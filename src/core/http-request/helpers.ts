@@ -3,7 +3,7 @@ import { stringBody, HttpRequestImpl } from "../../node";
 
 export type RequestParams = {
   url: string;
-  method?: HttpMethod; // Method can also be optional in this function
+  method?: HttpMethod;
   body?: HttpBody | string;
   headers?: HttpHeaders;
 };
