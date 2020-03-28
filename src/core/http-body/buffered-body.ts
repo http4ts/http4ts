@@ -12,4 +12,3 @@ export class BufferedBody implements HttpBody {
     return iterableToString(this.it, encoding);
   }
 }
-

@@ -9,11 +9,11 @@ export async function writeIterableToStream(
   target: stream.Writable
 ) {
   for await (const chunk of iterable) {
-    if(typeof chunk === 'string'){
+    if (typeof chunk === "string") {
       if (!target.write(chunk)) {
         await once(target, "drain");
       }
-    }else{
+    } else {
       if (!target.write(Buffer.from(chunk))) {
         await once(target, "drain");
       }
