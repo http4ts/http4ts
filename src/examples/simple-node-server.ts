@@ -1,12 +1,39 @@
 import * as http from "http";
+import { TextEncoder } from "util";
 
-import { HttpRequest, HttpStatus, toNodeRequestListener, res } from "../node";
+import {
+  HttpRequest,
+  HttpStatus,
+  toNodeRequestListener,
+  res,
+  BufferedBody,
+  TheTextDecoder
+} from "../node";
+
+function delay(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+const encoder = new TextEncoder();
+function encode(str: string) {
+  return encoder.encode(str);
+}
+
+async function* bodyGen() {
+  yield "Hello\n";
+  await delay(1000);
+  yield "World\n";
+  await delay(1000);
+  yield " 😌\n";
+}
 
 async function handler(req: HttpRequest) {
-  await req.body.asString("UTF-8");
+  const body = new BufferedBody(bodyGen());
+
   return res({
-    body: "Hello world!",
-    status: HttpStatus.OK
+    body,
+    status: HttpStatus.OK,
+    headers: { "Content-Type": "text/html; charset=UTF-8" }
   });
 }
 
