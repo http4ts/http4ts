@@ -14,8 +14,14 @@ async function* gen(strs: string[]) {
   }
 }
 
+async function* stringGen(strs: string[]) {
+  for (const el of strs) {
+    yield el;
+  }
+}
+
 describe("node-stream-utils", () => {
-  test("writeIterableToStream should pipe iterable to stream", async () => {
+  test("writeIterableToStream should pipe Uint8Array iterable to stream", async () => {
     const strs = ["Hello", "World", "😌"];
 
     const results: string[] = [];
@@ -32,6 +38,25 @@ describe("node-stream-utils", () => {
     });
 
     await writeIterableToStream(gen(strs), writer);
+  });
+
+  test("writeIterableToStream should pipe string iterable to stream", async () => {
+    const strs = ["Hello", "World", "😌"];
+
+    const results: string[] = [];
+
+    class TestWritable extends stream.Writable {
+      _write(c: any, enc: string, next: (error?: Error | null) => void) {
+        results.push(utfToString(c));
+        next();
+      }
+    }
+    const writer = new TestWritable();
+    writer.on("finish", () => {
+      expect(results).toEqual(strs);
+    });
+
+    await writeIterableToStream(stringGen(strs), writer);
   });
 
   test("writeIterableToStream should end stream after piping all data", done => {
