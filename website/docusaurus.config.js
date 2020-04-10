@@ -33,11 +33,11 @@ module.exports = {
           items: [
             {
               label: "Getting Started",
-              to: "docs/getting-started"
+              to: "docs/welcome/getting-started"
             },
             {
               label: "Philosophy",
-              to: "docs/philosophy"
+              to: "docs/welcome/philosophy"
             }
           ]
         },
@@ -51,10 +51,6 @@ module.exports = {
             {
               label: "GitHub",
               href: "https://github.com/http4ts/http4ts"
-            },
-            {
-              label: "Twitter",
-              href: "https://twitter.com/docusaurus"
             }
           ]
         },
