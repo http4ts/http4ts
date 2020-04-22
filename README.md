@@ -22,19 +22,27 @@ http4ts aims to obey the following rules as its base architectural mindset:
 * **Immutability**: Similar to http4k, all entities in the library are immutable unless, naturally, it is not possible.
 * **Testability**: Since the basic building blocks of this library are functions and the main entities are abstracted from the environment, it is extremely simple to write tests for the code built by http4ts.
 * **Minimal** The request and response contain only the necessary information to represent the HTTP message. Extra information such as session and cookies are not included because they don't belong to the HTTP protocol.
-* **Composable** All the building blocks are composable which is a great addition to code reusability, organisation and extension.
+* **Composable** All the building blocks are composable which is a great addition to code reusability, organization and extension.
 
 ***Http4ts data-flows***
 
 ![Https Data Flows](https://raw.githubusercontent.com/http4ts/http4ts/master/doc/asset/diagram.png)
 
-## Binding to Node.js
+## Using in Node.js
 
-### HTTP Server
+### Installation
 
-In order to use this library in Node.js, you have to bind the `HttpHandler` to the Node.js HTTP server. http4ts supplies a [`toNodeRequestListener`](https://github.com/http4ts/http4ts/blob/master/src/node/server.ts) to bind an `HttpHandler` to the Node.js server.
+*Http4ts* is available via npm. You can install it using the following command:
 
-``` ts
+```
+npm install http4ts
+```
+
+### Binding to Node.js
+
+In order to use this library in Node.js, you have to bind the `HttpHandler` to the Node.js HTTP server. *Http4ts* supplies a function called [`toNodeRequestListener`](https://github.com/http4ts/http4ts/blob/master/src/node/server.ts) to bind an `HttpHandler` to the Node.js server.
+
+```ts
 import * as http from "http";
 
 import {
@@ -45,22 +53,25 @@ import {
   res
 } from "http4ts";
 
-async function handler(req: HttpRequest) {
-  await req.body.asString("UTF-8");
+async function handler(req: HttpRequest) {  // 1. Write the handler as a function that returns response
   return res({
     body: stringBody("Hello world!"),
     status: HttpStatus.OK
   });
 }
 
-const server = http.createServer(toNodeRequestListener(handler));
+const server = http.createServer(
+  toNodeRequestListener(handler)            // 2. Connect the handler to the node.js server
+);
 
 const hostname = "127.0.0.1";
 const port = 3000;
 
-server.listen(port, hostname, () => {
+server.listen(port, hostname, () => {       // 3. Start your node server as you were before
   console.log(`Server running at http://${hostname}:${port}/`);
 });
 ```
 
-It is possible to bind http4ts to any Node.js server framework at any level. For example, you can bind it to expressjs after or before routing logic. This helps to gradually adapt your existing code to this architecture.
+## Example Project
+
+We have implemented the famous [realworld backend](https://github.com/gothinkster/realworld) for you to compare the code with other http libraries in node.js. You can find this example [here](https://github.com/http4ts/http4ts-realworld-example-app).
