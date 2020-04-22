@@ -37,8 +37,7 @@ import {
   res
 } from "http4ts";
 
-async function handler(req: HttpRequest) {  // 1. Write the hanlder as a function that returns response
-  await req.body.asString("UTF-8");
+async function handler(req: HttpRequest) {  // 1. Write the handler as a function that returns response
   return res({
     body: stringBody("Hello world!"),
     status: HttpStatus.OK

@@ -8,7 +8,7 @@ sidebar_label: Symmetry
 Contents:
 * Connecting different applications together
 
-Http handlers in http4ts are symmetric. Meaning that http client follows the same type definition as http server does. In other words, an http client is just a function that accepts an `HttpRequest` and returns an `HttpResponse`:
+Http handlers in http4ts are symmetric. Meaning that http client follows the same type definition as http server does. In other words, an http client (just like http server) is a function that accepts an `HttpRequest` and returns an `HttpResponse`:
 
 ```ts
 type HttpHandler = (req: HttpRequest) => HttpResponse | Promise<HttpResponse>;
