@@ -1,5 +1,5 @@
-import { req } from "./core/mod.ts";
-import { send } from "./client.ts";
+import { req } from "../core/mod.ts";
+import { send } from "../client.ts";
 
 const request = req({
   url: "https://api.github.com/users/http4ts/repos",
