@@ -19,7 +19,7 @@ async function scanFiles(dir: string, ignore: string[]) {
   for await (const file of files) {
     promises.push(
       (async (): Promise<Array<[string, string]>> => {
-        const path = resolve(dir, file.name!);
+        const path = resolve(dir, file.name);
         if (!ignore.includes(path)) {
           if (file.isFile) {
             return [[dir, path]];
