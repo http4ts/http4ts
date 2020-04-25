@@ -13,10 +13,7 @@ export async function iterableToString(
   let result = "";
 
   for await (const chunk of it) {
-    result +=
-      typeof chunk === "string"
-        ? chunk
-        : decoder.decode(chunk, { stream: true });
+    result += typeof chunk === "string" ? chunk : decoder.decode(chunk);
   }
 
   return result;

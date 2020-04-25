@@ -7,8 +7,11 @@
   "scripts": {
     "lint": "eslint --ext .ts src/**",
     "lint-fix": "eslint --ext .ts --fix src/**",
-    "example": "nodemon",
-    "example-client": "ts-node --project tsconfig.json ./src/examples/simple-node-client.ts",
+    "node-example": "nodemon",
+    "node-example-client": "ts-node --project tsconfig.json ./src/examples/simple-node-client.ts",
+    "deno-example":"npm run deno-prebuild-core && deno --allow-net src/deno/example.ts",
+    "deno-example-client":"npm run deno-prebuild-core && deno --allow-net src/deno/example-client.ts",
+    "deno-prebuild-core": "deno run --allow-read --allow-write src/deno/deno-prebuild.ts --in src/core --out src/deno/core",
     "build": "rm -rf dist && tsc -p tsconfig.json",
     "test": "jest",
     "tdd": "jest --watchAll",
@@ -49,6 +52,7 @@
   "jest": {
     "preset": "ts-jest",
     "rootDir": "./src",
+    "testPathIgnorePatterns": ["/node_modules/", "/deno/"],
     "coverageDirectory": "../coverage",
     "setupFiles": [
       "<rootDir>../jest/setup.ts"

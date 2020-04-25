@@ -1,7 +1,7 @@
 import { HttpMethod, HttpRequest, HttpResponse, HttpMethods } from "../http";
 import { HttpHandler } from "../http4ts";
 import { pathToRegexp, Key } from "./path-to-regexp";
-import { HttpStatus } from "../../node";
+import { HttpStatus } from "../http-status";
 import { res } from "../http-response/helpers";
 
 export interface RoutedHttpRequest extends HttpRequest {

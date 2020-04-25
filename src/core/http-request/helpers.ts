@@ -1,6 +1,7 @@
 import { HttpMethod, HttpBody, HttpMethods } from "../http";
-import { stringBody, HttpRequestImpl } from "../../node";
+import { HttpRequestImpl } from "./http-request-impl";
 import { RequestHttpHeaders } from "../http-headers";
+import { stringBody } from "../http-body/helpers";
 
 export type RequestParams = {
   url: string;
