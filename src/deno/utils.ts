@@ -29,3 +29,42 @@ export async function* toAsyncIterator(
     reader.releaseLock();
   }
 }
+
+export async function* readerToAsyncIterator(
+  reader: Deno.Reader,
+  chunkSize: number | null
+) {
+  while (true) {
+    const arr = new Uint8Array(chunkSize || 10); // TODO: How to find the right chunk amount?
+    const count = await reader.read(arr);
+
+    if (count === Deno.EOF) {
+      break;
+    } else {
+      yield arr;
+    }
+  }
+}
+
+const encoder = new TextEncoder();
+export function iterableToReadableStream(
+  iterable: AsyncIterable<Uint8Array | string>
+) {
+  const it = iterable[Symbol.asyncIterator]();
+  return {
+    async read(p: Uint8Array) {
+      const res = await it.next();
+      if (res.done) {
+        return Deno.EOF;
+      } else {
+        const v = res.value;
+        if (typeof v === "string") {
+          p.set(encoder.encode(v));
+        } else {
+          p.set(v);
+        }
+        return res.value.length;
+      }
+    }
+  };
+}
