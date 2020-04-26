@@ -1,4 +1,4 @@
-import { res, HttpStatus, stringBody, req, HttpRequest } from "../core/mod.ts";
+import { res, HttpStatus, stringBody, HttpRequest } from "../core/mod.ts";
 import { toDenoRequestListener } from "../server.ts";
 import { listenAndServe } from "../imports.ts";
 

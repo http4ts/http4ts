@@ -11,6 +11,7 @@ const request = req({
 async function main() {
   const response = await send(request);
   const body = JSON.parse(await response.body.asString());
+  console.log(body);
 
   console.log(response);
 }

@@ -393,7 +393,7 @@ export function regexpToFunction<P extends object = object>(
 ): MatchFunction<P> {
   const { decode = (x: string) => x } = options;
 
-  return function(pathname: string) {
+  return function (pathname: string) {
     const m = re.exec(pathname);
     if (!m) return false;
 
