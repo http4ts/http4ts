@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: install Deno
-        run: curl -fsSL https://deno.land/x/install/install.sh | sh -s $DENO_VERSION
+        run: curl -fsSL https://deno.land/x/install/install.sh | sh
         env:
           DENO_VERSION: 0.41.0
       - name: test
