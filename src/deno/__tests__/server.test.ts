@@ -116,7 +116,7 @@ test.skip("should handle iterator errors correctly", async () => {
     });
   };
 
-  await runOnTestServer(8080, handler, async (fetch) => {
+  await runOnTestServer(8080, handler, async fetch => {
     const response = await fetch("http://localhost:8080/");
 
     // Since the error happens after setting the response statusCode and headers, we don't see 500 in statusCode
