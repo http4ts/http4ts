@@ -16,7 +16,8 @@
     "prepare": "npm run build",
     "deno-example": "npm run deno-prebuild-core && deno --allow-net src/deno/examples/example.ts",
     "deno-example-client": "npm run deno-prebuild-core && deno --allow-net src/deno/examples/example-client.ts",
-    "deno-prebuild-core": "deno run --allow-read --allow-write src/deno/scripts/deno-prebuild.ts --in src/core --out src/deno/core"
+    "deno-prebuild-core": "deno run --allow-read --allow-write src/deno/scripts/deno-prebuild.ts --in src/core --out src/deno/core",
+    "deno-test": "deno test --allow-net src/deno/"
   },
   "repository": {
     "type": "git",
