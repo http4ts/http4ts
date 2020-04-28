@@ -13,5 +13,5 @@ jobs:
         env:
           DENO_VERSION: 0.41.0
       - name: test
-        run: $HOME/.deno/bin/deno test --allow-net src/deno/
+        run: $HOME/.deno/bin/deno run --allow-read --allow-write src/deno/scripts/deno-prebuild.ts --in src/core --out src/deno/core $HOME/.deno/bin/deno test --allow-net src/deno/
           
