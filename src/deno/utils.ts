@@ -47,6 +47,7 @@ export async function* readerToAsyncIterator(
 }
 
 const encoder = new TextEncoder();
+
 export function iterableToReadableStream(
   iterable: AsyncIterable<Uint8Array | string>
 ) {

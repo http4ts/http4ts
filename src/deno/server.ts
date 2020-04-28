@@ -5,7 +5,8 @@ import {
   HttpRequestImpl,
   BufferedBody,
   setupEnvironment,
-  HttpResponse
+  HttpResponse,
+  HttpStatus
 } from "./core/mod.ts";
 import {
   toHttp4tsHeader,
@@ -13,11 +14,9 @@ import {
   iterableToReadableStream
 } from "./utils.ts";
 
-type DenoRequestListener = (req: ServerRequest) => void;
+type DenoRequestListener = (req: ServerRequest) => Promise<void>;
 
-setupEnvironment(TextDecoder, TextEncoder);
-
-async function toHttp4tsRequest(denoReq: ServerRequest) {
+function toHttp4tsRequest(denoReq: ServerRequest) {
   const body = new BufferedBody(
     readerToAsyncIterator(denoReq.body, denoReq.contentLength)
   );
@@ -30,24 +29,44 @@ async function toHttp4tsRequest(denoReq: ServerRequest) {
   );
 }
 
-function toDenoResponse(response: HttpResponse) {
-  const headers = new Headers(response.headers as Record<string, string>);
+async function writeToDenoResponse(
+  http4tsResponse: HttpResponse,
+  denoRequest: ServerRequest
+) {
+  const headers = new Headers(
+    http4tsResponse.headers as Record<string, string>
+  );
 
-  return {
-    status: response.status,
+  await denoRequest.respond({
+    status: http4tsResponse.status,
     headers,
-    body: iterableToReadableStream(response.body)
-  };
+    body: iterableToReadableStream(http4tsResponse.body)
+  });
 }
 
+async function writeErrorResponse(denoRequest: ServerRequest) {
+  await denoRequest.respond({
+    status: HttpStatus.INTERNAL_SERVER_ERROR
+  });
+}
+
+/**
+ * Binds http4ts handler to Deno server request listener
+ * @param handler Root HttpHandler of the server application
+ */
 export function toDenoRequestListener(
   handler: HttpHandler
 ): DenoRequestListener {
-  return async (denoReq: ServerRequest) => {
-    const req = await toHttp4tsRequest(denoReq);
+  setupEnvironment(TextDecoder, TextEncoder);
 
-    const resp = await handler(req);
+  return async (req: ServerRequest) => {
+    try {
+      const http4tsResponse = await handler(toHttp4tsRequest(req));
 
-    denoReq.respond(toDenoResponse(resp));
+      await writeToDenoResponse(http4tsResponse, req);
+    } catch (error) {
+      console.log(error); // TODO: add proper logging or send the error to an error callback
+      await writeErrorResponse(req);
+    }
   };
 }
