@@ -1,0 +1,17 @@
+name: Deno
+
+on: [push]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: install Deno
+        run: curl -fsSL https://deno.land/x/install/install.sh | sh -s $DENO_VERSION
+        env:
+          DENO_VERSION: 0.41.0
+      - name: test
+        run: $HOME/.deno/bin/deno test --allow-net src/deno/
+          
