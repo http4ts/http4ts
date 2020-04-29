@@ -12,7 +12,7 @@ export async function runOnTestServer(
   const server = serve({ port });
   const h = toDenoRequestListener(handler);
 
-  let response: Promise<Response>;
+  let response: Promise<Response> | undefined;
   const ft = (
     input: string | Request | URL,
     init?: RequestInit | undefined
@@ -28,9 +28,11 @@ export async function runOnTestServer(
     break;
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  (await response).arrayBuffer(); // Should be called to close httpBody Resouce. See https://github.com/denoland/deno/issues/4735
+  if (response) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    (await response).arrayBuffer(); // Should be called to close httpBody Resouce. See https://github.com/denoland/deno/issues/4735
+  }
 
   server.close();
 

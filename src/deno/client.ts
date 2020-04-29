@@ -17,7 +17,7 @@ export async function send(req: HttpRequest): Promise<HttpResponse> {
 
   return res({
     status: response.status,
-    body: stringBody(await response.text()),
+    body: stringBody(await response.text()), // Should be replaced by `new BufferedBody(toAsyncIterator(response.body))` later. body.read is not impelemented yet
     headers: toHttp4tsHeader(response.headers)
   });
 }
