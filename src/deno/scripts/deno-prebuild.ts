@@ -1,21 +1,18 @@
 // Originally from https://s.luvies.io/node_prebuild.ts
-
-import { parse } from "https://deno.land/std@v0.40.0/flags/mod.ts";
-import { relative, resolve } from "https://deno.land/std@v0.40.0/path/mod.ts";
-
+import { parse, relative, resolve } from "../imports.ts";
 /*
   Transforms the content all files in a directory to remove `.ts` from
   the end of imports.
 */
 
-const { args, exit, mkdir, readdir, readFile, remove, stat, writeFile } = Deno;
+const { args, exit, mkdir, readDir, readFile, remove, stat, writeFile } = Deno;
 
 const newRegexp = /(import|export) ([^.]*) from "(.*)"/gm;
 
 async function scanFiles(dir: string, ignore: string[]) {
   const promises: Array<Promise<Array<[string, string]>>> = [];
 
-  const files = readdir(dir);
+  const files = readDir(dir);
   for await (const file of files) {
     promises.push(
       (async (): Promise<Array<[string, string]>> => {
@@ -98,7 +95,7 @@ async function main() {
   }
 
   await mkdir(outDir, { recursive: true });
-  for await (const found of readdir(outDir)) {
+  for await (const found of readDir(outDir)) {
     remove(resolve(outDir, found.name), { recursive: true });
   }
 
