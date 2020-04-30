@@ -8,10 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: install Deno
-        run: curl -fsSL https://deno.land/x/install/install.sh | sh
-        env:
-          DENO_VERSION: 0.41.0
+      - uses: denolib/setup-deno@master
+        with:
+            deno-version: 0.42.0
       - name: test
-        run: $HOME/.deno/bin/deno run --allow-read --allow-write src/deno/scripts/deno-prebuild.ts --in src/core --out src/deno/core $HOME/.deno/bin/deno test --allow-net src/deno/
+        run: deno run --allow-read --allow-write src/deno/scripts/deno-prebuild.ts --in src/core --out src/deno/core && deno test --allow-net src/deno/
           
