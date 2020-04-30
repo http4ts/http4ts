@@ -8,7 +8,7 @@ import {
   BufferedBody
 } from "../core/mod.ts";
 
-test("should respond correctly when handler throws", async () => {
+test("Deno http server - should respond correctly when handler throws", async () => {
   const handler: HttpHandler = () => {
     throw new Error("an error occured. (Don't worry. this is expected)");
   };
@@ -20,7 +20,7 @@ test("should respond correctly when handler throws", async () => {
   });
 });
 
-test("should handle more complext handlers", async () => {
+test("Deno http server - should handle more complext handlers", async () => {
   const handler: HttpHandler = req => {
     if (req.method == "GET") {
       return res({
@@ -42,7 +42,7 @@ test("should handle more complext handlers", async () => {
   });
 });
 
-test("should handle handers which return promises", async () => {
+test("Deno http server - should handle handers which return promises", async () => {
   const handler: HttpHandler = async () => {
     return new Promise<HttpResponse>(resolve => {
       const response = res({
@@ -62,7 +62,7 @@ test("should handle handers which return promises", async () => {
   });
 });
 
-test("should handle bodies as async iterator", async () => {
+test("Deno http server - should handle bodies as async iterator", async () => {
   async function* bodyGenerator() {
     const data = Array.from(Array(5)).map((v, i) => "Hello".charCodeAt(i));
 
@@ -125,7 +125,7 @@ test.skip("should handle iterator errors correctly", async () => {
   });
 });
 
-test("should handle requests with unicode body", async () => {
+test("Deno http server - should handle requests with unicode body", async () => {
   const handler: HttpHandler = async req => {
     asserts.equal(await req.body.asString(), "Hello 😌");
     return res({

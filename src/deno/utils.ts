@@ -6,7 +6,7 @@ export function toHttp4tsHeader(fetchHeaders: Headers): HttpHeaders {
   return entries.reduce((acc, [key, val]) => ({ ...acc, [key]: val }), {});
 }
 
-// Not implemented in Deno yet: https://github.com/denoland/deno/blob/0c47cd67850e4c195212c8edfcb3a62b8435ed3a/cli/js/web/fetch.ts#L242-L244
+// Not implemented for body in Deno yet: https://github.com/denoland/deno/blob/0c47cd67850e4c195212c8edfcb3a62b8435ed3a/cli/js/web/fetch.ts#L242-L244
 export async function* toAsyncIterator(
   stream: ReadableStream<Uint8Array> | null
 ) {
