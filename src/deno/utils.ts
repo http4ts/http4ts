@@ -38,7 +38,7 @@ export async function* readerToAsyncIterator(
     const arr = new Uint8Array(chunkSize || 10); // TODO: How to find the right chunk amount?
     const count = await reader.read(arr);
 
-    if (count === Deno.EOF) {
+    if (count === null) {
       break;
     } else {
       yield arr;
@@ -56,7 +56,7 @@ export function iterableToReadableStream(
     async read(p: Uint8Array) {
       const res = await it.next();
       if (res.done) {
-        return Deno.EOF;
+        return null;
       } else {
         const v = res.value;
         if (typeof v === "string") {
