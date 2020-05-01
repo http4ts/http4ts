@@ -1,5 +1,5 @@
 // Originally from https://s.luvies.io/node_prebuild.ts
-import { parse, relative, resolve } from "../imports.ts";
+import { parse, relative, resolve } from "../deps.ts";
 /*
   Transforms the content all files in a directory to remove `.ts` from
   the end of imports.

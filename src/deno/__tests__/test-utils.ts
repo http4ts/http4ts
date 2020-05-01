@@ -1,5 +1,5 @@
 import { HttpHandler } from "../core/mod.ts";
-import { serve } from "../imports.ts";
+import { serve } from "../deps.ts";
 import { toDenoRequestListener } from "../server.ts";
 
 type Fetch = typeof fetch;

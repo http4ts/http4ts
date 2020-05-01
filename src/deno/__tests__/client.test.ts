@@ -8,7 +8,7 @@ import {
 } from "../core/mod.ts";
 import { send } from "../client.ts";
 import { runOnTestServer, test } from "./test-utils.ts";
-import { asserts } from "../imports.ts";
+import { asserts } from "../deps.ts";
 
 test("Deno http client - should send the request to server", async () => {
   const expectedReq = req({

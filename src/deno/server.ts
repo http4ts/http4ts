@@ -1,4 +1,4 @@
-import { ServerRequest } from "./imports.ts";
+import { ServerRequest } from "./deps.ts";
 
 import {
   HttpHandler,

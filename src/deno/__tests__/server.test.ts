@@ -1,4 +1,4 @@
-import { asserts } from "../imports.ts";
+import { asserts } from "../deps.ts";
 import { test, runOnTestServer } from "./test-utils.ts";
 import {
   HttpHandler,

@@ -1,6 +1,6 @@
 import { res, HttpStatus, stringBody, HttpRequest } from "../core/mod.ts";
 import { toDenoRequestListener } from "../server.ts";
-import { listenAndServe } from "../imports.ts";
+import { listenAndServe } from "../deps.ts";
 
 async function main() {
   const handler = async (req: HttpRequest) => {
