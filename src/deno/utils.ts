@@ -30,22 +30,6 @@ export async function* toAsyncIterator(
   }
 }
 
-export async function* readerToAsyncIterator(
-  reader: Deno.Reader,
-  chunkSize: number | null
-) {
-  while (true) {
-    const arr = new Uint8Array(chunkSize || 10); // TODO: How to find the right chunk amount?
-    const count = await reader.read(arr);
-
-    if (count === null) {
-      break;
-    } else {
-      yield arr;
-    }
-  }
-}
-
 const encoder = new TextEncoder();
 
 export function iterableToReadableStream(

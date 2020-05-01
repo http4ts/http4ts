@@ -8,17 +8,13 @@ import {
   HttpResponse,
   HttpStatus
 } from "./core/mod.ts";
-import {
-  toHttp4tsHeader,
-  readerToAsyncIterator,
-  iterableToReadableStream
-} from "./utils.ts";
+import { toHttp4tsHeader, iterableToReadableStream } from "./utils.ts";
 
 type DenoRequestListener = (req: ServerRequest) => Promise<void>;
 
 function toHttp4tsRequest(denoReq: ServerRequest) {
   const body = new BufferedBody(
-    readerToAsyncIterator(denoReq.body, denoReq.contentLength)
+    Deno.iter(denoReq.body, { bufSize: denoReq.contentLength ?? undefined })
   );
 
   return new HttpRequestImpl(
