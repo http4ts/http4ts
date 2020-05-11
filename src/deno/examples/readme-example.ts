@@ -9,7 +9,8 @@ import {
 } from "https://raw.githubusercontent.com/http4ts/http4ts/master/src/deno/mod.ts";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function handler(req: HttpRequest) {  // 1. Write the handler as a function that returns response
+async function handler(req: HttpRequest) {
+  // 1. Write the handler as a function that returns response
   return res({
     body: stringBody("Hello world!"),
     status: HttpStatus.OK
