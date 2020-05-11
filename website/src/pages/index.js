@@ -8,76 +8,50 @@ import styles from "./styles.module.css";
 
 const features = [
   {
-    title: <>Server as a Function</>,
-    imageUrl: "img/battle-net-brands.svg",
+    title: <>Runtime Independence</>,
+    // imageUrl: "img/runtimes.png",
     description: (
       <>
-        Model your server application as a single function; Based on the Twitter
-        paper{" "}
-        <a href="https://monkey.org/~marius/funsrv.pdf">
-          Your Server as a Function
-        </a>{" "}
-        and inspired by the fantastic{" "}
-        <a href="https://github.com/http4k/http4k/">http4k</a> library.
+        Ready to to be used in both <a href="https://nodejs.org/">Node.js</a> and{" "}
+        <a href="https://deno.land/">Deno</a> runtimes.
+        <br />
+        <a href="/docs/welcome/runtime-independence">Learn more.</a>
       </>
     )
   },
   {
-    title: <>Runtime Independence</>,
-    imageUrl: "img/caravan-solid.svg",
+    title: <>Server as a Function</>,
+    // imageUrl: "img/functional.png",
     description: (
       <>
-        The core library does not have any dependency on the Node.js
-        environment. It should be possible to use it for both Node.js and Deno.
-        Node.js bindings are available out of the box.
+        Model your server as a single function.
+        <br />
+        <a href="/docs/welcome/core-concepts">Learn more.</a>
       </>
     )
   },
   {
     title: <>Symmetric</>,
-    imageUrl: "img/align-justify-solid.svg",
+    // imageUrl: "img/balance-scale-solid.svg",
     description: (
       <>
-        Symmetric interfaces for the HTTP client and HTTP server. It is possible
-        to reuse the same <code>HttpHandler</code> interface and all the filters
-        on both server- and client-side. There is an <code>HttpClient</code>{" "}
-        functionality available in the library which follows the{" "}
-        <code>fetch</code> interface and is independent of any runtime.
+        Symmetric interfaces for the HTTP client and HTTP server.
+        <br />
+        <a href="/docs/welcome/symmetry">Learn more.</a>
       </>
     )
   },
   {
     title: <>Type Safety</>,
-    imageUrl: "img/bullhorn-solid.svg",
-    description: <>built using the maximum type safety power of TypeScript</>
-  },
-  {
-    title: <>Immutability</>,
-    imageUrl: "img/check-double-solid.svg",
-    description: (
-      <>
-        all entities in the library are immutable unless, naturally, it is not
-        possible.
-      </>
-    )
-  },
-  {
-    title: <>Testability</>,
-    imageUrl: "img/cogs-solid.svg",
-    description: (
-      <>
-        The basic building blocks of this library are functions and the main
-        entities are abstracted from the environment, it is extremely simple to
-        write tests for the code built by http4ts.
-      </>
-    )
+    // imageUrl: "img/bullhorn-solid.svg",
+    description: <>Built using the maximum type safety power of TypeScript.</>
   }
 ];
 
 function Feature({ imageUrl, title, description }) {
   const imgUrl = useBaseUrl(imageUrl);
   return (
-    <div className={classnames("col col--4", styles.feature)}>
+    <div className={classnames("col col--3", styles.feature)}>
       {imgUrl && (
         <div className="text--center">
           <img className={styles.featureImage} src={imgUrl} alt={title} />
