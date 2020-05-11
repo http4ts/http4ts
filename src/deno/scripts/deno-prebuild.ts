@@ -105,6 +105,9 @@ async function main() {
 
   const promises: Array<Promise<void>> = [];
   for (const [idir, ifile] of files) {
+    if (ifile.endsWith(".spec.ts")) {
+      continue;
+    }
     promises.push(
       (async () => {
         const odir = resolve(opts.out, relative(opts.in, idir));
