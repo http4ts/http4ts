@@ -4,7 +4,8 @@ title: Binding To Node.Js Server
 sidebar_label: Binding To Node.Js Server
 ---
 
-Handlers contain the logic of your application, but you need to bind a handler to a server to be executed when a client sends a request. Http4ts is server independent. Meaning that it is possible to connect a handler to almost every library or platform which can listen to http requests. Http4ts supports binding to Node.Js out-of-the-box.
+
+Handlers contain the logic of your application. Handlers are executed when a client sends a request only after you bind them to a server. Http4ts is **server independent**, meaning that it is possible to connect a handler to almost every library or platform which can listen to http requests. Http4ts supports binding to Node.Js out-of-the-box.
 
 To bind your handler to Node.Js, create an http or https server and use `toNodeRequestListener` to bind it to an http4ts handler:
 
@@ -30,4 +31,4 @@ server.listen(port, hostname, () => {
 });
 ```
 
-If you want to create an https server, just import `https` module. If you want to configure your server differently, you just need to learn how to configure a Node.Js server. No library specific configuration needed!
+If you want to create an https server, just import the `https` module. If you want to configure your server differently, you just need to learn how to configure a Node.Js server. Http4ts requires no library-specific configuration!

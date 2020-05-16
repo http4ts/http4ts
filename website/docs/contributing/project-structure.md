@@ -7,5 +7,5 @@ sidebar_label: Project Structure
 
 Contents:
 
-* Describe projct structure for newcommers to be able to start contributing
+* Describe project structure for newcomers to be able to start contributing
 * Describe website project structure
