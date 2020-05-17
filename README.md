@@ -8,7 +8,7 @@ http4ts is a minimal HTTP library for JavaScript environments ([Node.js](https:/
 ``` ts
 type HttpHandler = (req: HttpRequest) => HttpResponse | Promise<HttpResponse>;
 ```
-A simple server application can be found in the [examples directory](https://github.com/http4ts/http4ts/tree/master/src/examples).
+See the simple server application examples, one for [deno](https://github.com/http4ts/http4ts/tree/master/src/deno/examples) and another for [Node.js](https://github.com/http4ts/http4ts/tree/master/src/node/examples).
 
 ## Philosophy
 

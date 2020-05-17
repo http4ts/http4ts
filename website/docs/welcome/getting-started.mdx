@@ -4,13 +4,13 @@ title: Getting Started
 sidebar_label: Getting Started
 ---
 
-_Http4ts_ is a minimal HTTP library for JavaScript environments ([Node.js](https://nodejs.org), [Deno](https://Deno.land/) etc.) implementing the pattern of server as a function. In _http4ts_, a server is just a function with the following signature:
+_Http4ts_ is a minimal HTTP library for JavaScript environments ([Node.js](https://nodejs.org), [Deno](https://Deno.land/) etc.) implementing the pattern of [server as a function](https://monkey.org/~marius/funsrv.pdf). In _http4ts_, a server is just a function with the following signature:
 
 ```ts
 type HttpHandler = (req: HttpRequest) => HttpResponse | Promise<HttpResponse>;
 ```
 
-A simple server application can be found in the [examples directory](https://github.com/http4ts/http4ts/tree/master/src/examples).
+See the simple server application examples, one for [deno](https://github.com/http4ts/http4ts/tree/master/src/deno/examples) and another for [Node.js](https://github.com/http4ts/http4ts/tree/master/src/node/examples).
 
 # Installation
 

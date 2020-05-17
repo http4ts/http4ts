@@ -4,7 +4,7 @@ title: Testability
 sidebar_label: Testability
 ---
 
-*Http4ts* abstracts the http related objects. Therefore, `Request` and `Response` are just simple objects with some methods that you can manipulate them safely in an immutable way. So, writing unit tests against handlers or filters is extremely simple. As an example, let's try to write some tests for the following handler:
+*Http4ts* abstracts the http related objects. Therefore, `Request` and `Response` are just simple objects with methods that can be safely manipulated in an immutable way. Writing unit tests against handlers or filters is extremely simple. As an example, let's try to write some tests for the following handler:
 
 ```ts
 const exampleUserInfo = {
@@ -12,7 +12,7 @@ const exampleUserInfo = {
   lastName: "Doe"
 };
 
-async function getUerProfileHandler(req: HttpRequest): Promise<HttpResponse> {
+async function getUserProfileHandler(req: HttpRequest): Promise<HttpResponse> {
   const authHeader = req.headers["authorization"] as string | undefined;
   if (!authHeader) {
     return res({ status: HttpStatus.UNAUTHORIZED });
@@ -30,7 +30,7 @@ async function getUerProfileHandler(req: HttpRequest): Promise<HttpResponse> {
 }
 ```
 
-This is an example handler that checks the validity of the token in `Authorization` header and returns `OK` with user info in the body when the token is valid. We can write the following tests for this handler (Tests are written in [Jest](https://jestjs.io/)):
+This is an example handler that checks the validity of the token in the `authorization` header and returns `OK` with user info in the body when the token is valid. We can write the following tests for this handler (Tests are written in [Jest](https://jestjs.io/)):
 
 ```ts
 describe("loginHandler tests", () => {
@@ -72,4 +72,4 @@ describe("loginHandler tests", () => {
 });
 ```
 
-As you can see in the tests, there is no special or framework specific preparation needed to write a tests. You can focus on the real business logic instead of writing lots of preparation code.
+As you can see in these tests, there is no special or framework-specific preparation needed to write tests. Your tests can focus on the real business logic instead of being littered with lots of noisy setup code.
