@@ -18,6 +18,7 @@ module.exports = {
       "guides/unit-tests"
     ],
     "API Reference": [
+      "api/index",
       "reference/http",
       "reference/body",
       "reference/router",

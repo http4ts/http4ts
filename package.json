@@ -17,7 +17,8 @@
     "deno-example": "npm run deno-prebuild-core && deno run --allow-net src/deno/examples/example.ts",
     "deno-example-client": "npm run deno-prebuild-core && deno run --allow-net src/deno/examples/example-client.ts",
     "deno-prebuild-core": "deno run --allow-read --allow-write src/deno/scripts/deno-prebuild.ts --in src/core --out src/deno/core",
-    "deno-test": "deno test --allow-net src/deno/"
+    "deno-test": "deno test --allow-net src/deno/",
+    "typedoc": "rm -Rf ./website/docs/api && typedoc && rm -Rf ./website/website/"
   },
   "repository": {
     "type": "git",
@@ -48,6 +49,8 @@
     "request-promise": "^4.2.5",
     "ts-jest": "^25.4.0",
     "ts-node": "^8.9.0",
+    "typedoc": "^0.17.7",
+    "typedoc-plugin-markdown": "^2.2.17",
     "typescript": "^3.8.3"
   },
   "jest": {
