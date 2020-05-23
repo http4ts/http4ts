@@ -6,7 +6,7 @@ import {
   toDenoRequestListener,
   stringBody,
   res
-} from "https://raw.githubusercontent.com/http4ts/http4ts/master/src/deno/mod.ts";
+} from "https://raw.githubusercontent.com/http4ts/http4ts/v0.1.0/src/deno/mod.ts";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function handler(req: HttpRequest) {
