@@ -1,7 +1,7 @@
 ---
 id: async-iterators-instead-of-streams
-title: Async Iterators Instad of Streams
-sidebar_label: Async Iterators Instad of Streams
+title: Async Iterators Instead of Streams
+sidebar_label: Async Iterators Instead of Streams
 ---
 > ⚠️ This section is a work in progress.
 
