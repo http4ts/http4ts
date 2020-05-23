@@ -2599,7 +2599,7 @@ const TESTS: Test[] = [
 /**
  * Dynamically generate the entire test suite.
  */
-describe("path-to-regexp", function() {
+describe("path-to-regexp", function () {
   const TEST_PATH = "/user/:id";
 
   const TEST_PARAM = {
@@ -2610,8 +2610,8 @@ describe("path-to-regexp", function() {
     pattern: "[^\\/#\\?]+?"
   };
 
-  describe("arguments", function() {
-    it("should work without different call combinations", function() {
+  describe("arguments", function () {
+    it("should work without different call combinations", function () {
       pathToRegexp.pathToRegexp("/test");
       pathToRegexp.pathToRegexp("/test", []);
       pathToRegexp.pathToRegexp("/test", undefined, {});
@@ -2625,7 +2625,7 @@ describe("path-to-regexp", function() {
       pathToRegexp.pathToRegexp(["/a", "/b"], undefined, {});
     });
 
-    it("should accept an array of keys as the second argument", function() {
+    it("should accept an array of keys as the second argument", function () {
       const keys: pathToRegexp.Key[] = [];
       const re = pathToRegexp.pathToRegexp(TEST_PATH, keys, { end: false });
 
@@ -2633,81 +2633,81 @@ describe("path-to-regexp", function() {
       expect(exec(re, "/user/123/show")).toEqual(["/user/123", "123"]);
     });
 
-    it("should throw on non-capturing pattern", function() {
-      expect(function() {
+    it("should throw on non-capturing pattern", function () {
+      expect(function () {
         pathToRegexp.pathToRegexp("/:foo(?:\\d+(\\.\\d+)?)");
       }).toThrow(new TypeError('Pattern cannot start with "?" at 6'));
     });
 
-    it("should throw on nested capturing group", function() {
-      expect(function() {
+    it("should throw on nested capturing group", function () {
+      expect(function () {
         pathToRegexp.pathToRegexp("/:foo(\\d+(\\.\\d+)?)");
       }).toThrow(new TypeError("Capturing groups are not allowed at 9"));
     });
 
-    it("should throw on unbalanced pattern", function() {
-      expect(function() {
+    it("should throw on unbalanced pattern", function () {
+      expect(function () {
         pathToRegexp.pathToRegexp("/:foo(abc");
       }).toThrow(new TypeError("Unbalanced pattern at 5"));
     });
 
-    it("should throw on missing pattern", function() {
-      expect(function() {
+    it("should throw on missing pattern", function () {
+      expect(function () {
         pathToRegexp.pathToRegexp("/:foo()");
       }).toThrow(new TypeError("Missing pattern at 5"));
     });
 
-    it("should throw on missing name", function() {
-      expect(function() {
+    it("should throw on missing name", function () {
+      expect(function () {
         pathToRegexp.pathToRegexp("/:(test)");
       }).toThrow(new TypeError("Missing parameter name at 1"));
     });
 
-    it("should throw on nested groups", function() {
-      expect(function() {
+    it("should throw on nested groups", function () {
+      expect(function () {
         pathToRegexp.pathToRegexp("/{a{b:foo}}");
       }).toThrow(new TypeError("Unexpected OPEN at 3, expected CLOSE"));
     });
 
-    it("should throw on misplaced modifier", function() {
-      expect(function() {
+    it("should throw on misplaced modifier", function () {
+      expect(function () {
         pathToRegexp.pathToRegexp("/foo?");
       }).toThrow(new TypeError("Unexpected MODIFIER at 4, expected END"));
     });
   });
 
-  describe("tokens", function() {
+  describe("tokens", function () {
     const tokens = pathToRegexp.parse(TEST_PATH);
 
-    it("should expose method to compile tokens to regexp", function() {
+    it("should expose method to compile tokens to regexp", function () {
       const re = pathToRegexp.tokensToRegexp(tokens);
 
       expect(exec(re, "/user/123")).toEqual(["/user/123", "123"]);
     });
 
-    it("should expose method to compile tokens to a path function", function() {
+    it("should expose method to compile tokens to a path function", function () {
       const fn = pathToRegexp.tokensToFunction(tokens);
 
       expect(fn({ id: 123 })).toEqual("/user/123");
     });
   });
 
-  describe("rules", function() {
-    TESTS.forEach(function(test) {
+  describe("rules", function () {
+    TESTS.forEach(function (test) {
       const [path, opts, tokens, matchCases, compileCases] = test;
 
-      describe(util.inspect(path), function() {
+      describe(util.inspect(path), function () {
         const keys: pathToRegexp.Key[] = [];
         const re = pathToRegexp.pathToRegexp(path, keys, opts);
 
         // Parsing and compiling is only supported with string input.
         if (typeof path === "string") {
-          it("should parse", function() {
+          it("should parse", function () {
             expect(pathToRegexp.parse(path, opts)).toEqual(tokens);
           });
 
-          describe("compile", function() {
-            compileCases.forEach(function(io) {
+          describe("compile", function () {
+            compileCases.forEach(function (io) {
               const [params, result, options] = io;
               const toPath = pathToRegexp.compile(path, {
                 ...opts,
@@ -2715,14 +2715,14 @@ describe("path-to-regexp", function() {
               });
 
               if (result !== null) {
-                it("should compile using " + util.inspect(params), function() {
+                it("should compile using " + util.inspect(params), function () {
                   expect(toPath(params)).toEqual(result);
                 });
               } else {
                 it(
                   "should not compile using " + util.inspect(params),
-                  function() {
-                    expect(function() {
+                  function () {
+                    expect(function () {
                       toPath(params);
                     }).toThrow(TypeError);
                   }
@@ -2731,9 +2731,9 @@ describe("path-to-regexp", function() {
             });
           });
         } else {
-          it("should parse keys", function() {
+          it("should parse keys", function () {
             expect(keys).toEqual(
-              tokens.filter(function(token) {
+              tokens.filter(function (token) {
                 return typeof token !== "string";
               })
             );
@@ -2742,21 +2742,21 @@ describe("path-to-regexp", function() {
 
         describe(
           "match" + (opts ? " using " + util.inspect(opts) : ""),
-          function() {
-            matchCases.forEach(function(io) {
+          function () {
+            matchCases.forEach(function (io) {
               const [pathname, matches, params, options] = io;
               const message = `should ${
                 matches ? "" : "not "
               }match ${util.inspect(pathname)}`;
 
-              it(message, function() {
+              it(message, function () {
                 expect(exec(re, pathname)).toEqual(matches);
               });
 
               if (typeof path === "string" && params !== undefined) {
                 const match = pathToRegexp.match(path, options);
 
-                it(message + " params", function() {
+                it(message + " params", function () {
                   expect(match(pathname)).toEqual(params);
                 });
               }
@@ -2767,47 +2767,47 @@ describe("path-to-regexp", function() {
     });
   });
 
-  describe("compile errors", function() {
-    it("should throw when a required param is undefined", function() {
+  describe("compile errors", function () {
+    it("should throw when a required param is undefined", function () {
       const toPath = pathToRegexp.compile("/a/:b/c");
 
-      expect(function() {
+      expect(function () {
         toPath();
       }).toThrow(new TypeError('Expected "b" to be a string'));
     });
 
-    it("should throw when it does not match the pattern", function() {
+    it("should throw when it does not match the pattern", function () {
       const toPath = pathToRegexp.compile("/:foo(\\d+)");
 
-      expect(function() {
+      expect(function () {
         toPath({ foo: "abc" });
       }).toThrow(
         new TypeError('Expected "foo" to match "\\d+", but got "abc"')
       );
     });
 
-    it("should throw when expecting a repeated value", function() {
+    it("should throw when expecting a repeated value", function () {
       const toPath = pathToRegexp.compile("/:foo+");
 
-      expect(function() {
+      expect(function () {
         toPath({ foo: [] });
       }).toThrow(new TypeError('Expected "foo" to not be empty'));
     });
 
-    it("should throw when not expecting a repeated value", function() {
+    it("should throw when not expecting a repeated value", function () {
       const toPath = pathToRegexp.compile("/:foo");
 
-      expect(function() {
+      expect(function () {
         toPath({ foo: [] });
       }).toThrow(
         new TypeError('Expected "foo" to not repeat, but got an array')
       );
     });
 
-    it("should throw when repeated value does not match", function() {
+    it("should throw when repeated value does not match", function () {
       const toPath = pathToRegexp.compile("/:foo(\\d+)+");
 
-      expect(function() {
+      expect(function () {
         toPath({ foo: [1, 2, 3, "a"] });
       }).toThrow(
         new TypeError('Expected all "foo" to match "\\d+", but got "a"')

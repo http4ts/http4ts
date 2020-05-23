@@ -1,0 +1,16 @@
+name: Deno
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: denolib/setup-deno@master
+        with:
+          deno-version: 0.42.0
+      - name: test
+        run: deno run --allow-read --allow-write src/deno/scripts/deno-prebuild.ts --in src/core --out src/deno/core && deno test --allow-net src/deno/
+          

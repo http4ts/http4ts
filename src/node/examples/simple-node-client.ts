@@ -1,4 +1,4 @@
-import { req, send } from "../node";
+import { req, send } from "..";
 
 async function main() {
   const request = req({

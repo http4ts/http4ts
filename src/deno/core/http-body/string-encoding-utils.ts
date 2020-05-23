@@ -1,4 +1,4 @@
-import { TheTextDecoder, TheTextEncoder } from "../env";
+import { TheTextDecoder, TheTextEncoder } from "../env.ts";
 
 export async function* stringToIterable(content: string) {
   const encoder = new TheTextEncoder();

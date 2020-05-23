@@ -7,7 +7,7 @@ import { res } from "../../core/http-response/helpers";
 import { runOnTestServer } from "../test-utils";
 
 describe("node server binding", () => {
-  it("should respond correctly when handler throws", async () => {
+  test("should respond correctly when handler throws", async () => {
     const handler: HttpHandler = () => {
       throw new Error("an error occured. (Don't worry. this is expected)");
     };
@@ -22,7 +22,7 @@ describe("node server binding", () => {
     });
   });
 
-  it("should handle more complext handlers", async () => {
+  test("should handle more complext handlers", async () => {
     const handler: HttpHandler = req => {
       if (req.method == "GET") {
         return res({
@@ -47,7 +47,7 @@ describe("node server binding", () => {
     });
   });
 
-  it("should handle handers which return promises", async () => {
+  test("should handle handers which return promises", async () => {
     const handler: HttpHandler = async () => {
       return new Promise<HttpResponse>(resolve => {
         const response = res({
@@ -70,7 +70,7 @@ describe("node server binding", () => {
     });
   });
 
-  it("should handle bodies as async iterator", async () => {
+  test("should handle bodies as async iterator", async () => {
     async function* bodyGenerator() {
       const data = Array.from(Array(5)).map((v, i) => "Hello".charCodeAt(i));
 
@@ -101,7 +101,7 @@ describe("node server binding", () => {
     });
   });
 
-  it("should handle iterator errors correctly", async () => {
+  test("should handle iterator errors correctly", async () => {
     async function* bodyGenerator() {
       const data = Array.from(Array(5)).map((v, i) => "Hello".charCodeAt(i));
 
@@ -138,7 +138,7 @@ describe("node server binding", () => {
     });
   });
 
-  it("should handle requests with unicode body", async () => {
+  test("should handle requests with unicode body", async () => {
     const handler: HttpHandler = async req => {
       expect(await req.body.asString()).toEqual("Hello 😌");
       return res({

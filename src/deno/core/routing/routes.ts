@@ -1,8 +1,8 @@
-import { HttpMethod, HttpRequest, HttpResponse, HttpMethods } from "../http";
-import { HttpHandler } from "../http4ts";
-import { pathToRegexp, Key } from "./path-to-regexp";
-import { HttpStatus } from "../http-status";
-import { res } from "../http-response/helpers";
+import { HttpMethod, HttpRequest, HttpResponse, HttpMethods } from "../http.ts";
+import { HttpHandler } from "../http4ts.ts";
+import { pathToRegexp, Key } from "./path-to-regexp.ts";
+import { HttpStatus } from "../http-status.ts";
+import { res } from "../http-response/helpers.ts";
 
 export interface RoutedHttpRequest extends HttpRequest {
   routeParams: Record<string, string>;

@@ -1,7 +1,7 @@
-import { HttpMethod, HttpBody, HttpMethods } from "../http";
-import { HttpRequestImpl } from "./http-request-impl";
-import { RequestHttpHeaders } from "../http-headers";
-import { stringBody } from "../http-body/helpers";
+import { HttpMethod, HttpBody, HttpMethods } from "../http.ts";
+import { HttpRequestImpl } from "./http-request-impl.ts";
+import { RequestHttpHeaders } from "../http-headers.ts";
+import { stringBody } from "../http-body/helpers.ts";
 
 export type RequestParams = {
   url: string;

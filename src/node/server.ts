@@ -35,7 +35,7 @@ async function writeErrorResponse(nodeRes: ServerResponse) {
 }
 
 /**
- * Binds http4ts application to Node.js server request listener
+ * Binds http4ts handler to Node.js server request listener
  * @param handler Root HttpHandler of the server application
  */
 export function toNodeRequestListener(handler: HttpHandler): RequestListener {
