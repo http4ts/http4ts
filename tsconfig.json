@@ -7,5 +7,26 @@
     "declaration": true,
     "strict": true
   },
-  "exclude": ["node_modules", "dist", "src/deno"]
+  "exclude": ["node_modules", "dist", "src/deno"],
+  "typedocOptions": {
+    "inputFiles": ["./src/core"],
+    "out": "./website/docs/api",
+    "mode": "file",
+    "plugin": "typedoc-plugin-markdown",
+    "theme": "docusaurus2",
+    "skipSidebar": "true",
+    "includeDeclarations": true,
+    "excludeExternals": true,
+    "excludeNotExported": true,
+    "excludePrivate": true,
+    "stripInternal": true,
+    "includeVersion": true,
+    "readme": "none",
+    "target": "ES6",
+    "exclude": [
+      "**/node_modules/**",
+      "**/__tests__/**",
+      "**/jest/**"
+    ]
+  }
 }
