@@ -28,12 +28,6 @@ export async function runOnTestServer(
     break;
   }
 
-  if (response) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    (await response).arrayBuffer(); // Should be called to close httpBody Resouce. See https://github.com/denoland/deno/issues/4735
-  }
-
   server.close();
 
   await test;

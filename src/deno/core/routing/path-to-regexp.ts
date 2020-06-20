@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 // Originally from https://github.com/pillarjs/path-to-regexp
 
 /**
