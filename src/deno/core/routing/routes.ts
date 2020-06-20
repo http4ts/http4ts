@@ -125,7 +125,7 @@ export function get(
   path: UriTemplate,
   handler: RoutedHttpHandler
 ): RouteDefinition {
-  return route("GET", path, handler);
+  return route(HttpMethods.GET, path, handler);
 }
 
 /**

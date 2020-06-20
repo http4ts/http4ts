@@ -8,7 +8,7 @@ export { HttpStatus } from "./http-status.ts";
 
 export type HttpQuery = string | string[] | undefined | null;
 
-export enum HttpMethods {
+export const enum HttpMethods {
   GET = "GET",
   POST = "POST",
   PUT = "PUT",

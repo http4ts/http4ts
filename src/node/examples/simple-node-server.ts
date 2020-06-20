@@ -1,12 +1,12 @@
 import * as http from "http";
 
-import { HttpRequest, HttpStatus, toNodeRequestListener, res } from "..";
+import { HttpRequest, toNodeRequestListener } from "..";
+import { OK } from "../../core/mod";
 
 async function handler(req: HttpRequest) {
   await req.body.asString("UTF-8");
-  return res({
-    body: "Hello world!",
-    status: HttpStatus.OK
+  return OK({
+    body: "Hello world!"
   });
 }
 

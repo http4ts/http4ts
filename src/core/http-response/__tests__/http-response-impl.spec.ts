@@ -1,11 +1,11 @@
-import { res } from "../helpers";
+import { res, OK } from "../helpers";
 import { HttpStatus, stringBody } from "../../../node";
 
 const status = HttpStatus.OK;
 
 describe("HttpResonseImpl", () => {
   it("should setHeaders", () => {
-    const response = res({ status });
+    const response = OK();
 
     expect(response.setHeaders({ Authorization: "Basic" })).toEqual(
       res({ status, headers: { Authorization: "Basic" } })
@@ -17,7 +17,7 @@ describe("HttpResonseImpl", () => {
       someHeader: "Some content",
       someOtherHeader: "Some other header content"
     };
-    const response = res({ status, headers });
+    const response = OK({ headers });
     const expectedResponse = res({
       status,
       headers: {
@@ -38,7 +38,7 @@ describe("HttpResonseImpl", () => {
       someHeader: "Some content",
       someOtherHeader: "Some other header content"
     };
-    const response = res({ status, headers });
+    const response = OK({ headers });
     const expectedResponse = res({
       status,
       headers: {
@@ -53,7 +53,7 @@ describe("HttpResonseImpl", () => {
       someHeader: "Some content",
       someOtherHeader: "Some other header content"
     };
-    const response = res({ status, headers });
+    const response = OK({ headers });
     const expectedHeaders = {
       someHeader: "Some new content",
       someOtherHeader: "Some other header content"
@@ -69,7 +69,7 @@ describe("HttpResonseImpl", () => {
   });
 
   it("should setBody", () => {
-    const response = res({ status });
+    const response = OK();
 
     expect(response.setBody(stringBody("somebody"))).toEqual(
       res({ status, body: stringBody("somebody") })
@@ -77,14 +77,14 @@ describe("HttpResonseImpl", () => {
   });
 
   it("setBody should accept string", () => {
-    const request = res({ status: HttpStatus.OK, body: "body-1" });
+    const request = OK({ body: "body-1" });
     const expectedRequest = res({ status: HttpStatus.OK, body: "body-2" });
 
     expect(request.setBody("body-2")).toEqual(expectedRequest);
   });
 
   it("should setStatus", () => {
-    const response = res({ status });
+    const response = OK();
 
     expect(response.setStatus(HttpStatus.ACCEPTED)).toEqual(
       res({ status: HttpStatus.ACCEPTED })

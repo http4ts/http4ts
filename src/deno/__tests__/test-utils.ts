@@ -24,6 +24,7 @@ export async function runOnTestServer(
   const test = testBlock(ft);
 
   for await (const req of server) {
+    // This await here, makes the server to process requests synchronously. It is fine for tests but not for realworld applications
     await h(req);
     break;
   }
@@ -31,7 +32,7 @@ export async function runOnTestServer(
   if (response) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
-    (await response).arrayBuffer(); // Should be called to close httpBody Resouce. See https://github.com/denoland/deno/issues/4735
+    (await response).arrayBuffer(); // Should be called to close httpBody Resource. See https://github.com/denoland/deno/issues/4735
   }
 
   server.close();
