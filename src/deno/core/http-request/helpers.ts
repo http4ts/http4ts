@@ -13,7 +13,7 @@ export type RequestParams = {
 export type RequestHelperFactoryParams = Omit<RequestParams, "method">;
 
 /**
- * Instantiates an HttpResponse based on the provided data
+ * Instantiates an HttpRequest based on the provided request information
  * @param obj Request representative object.
  */
 export function req({
@@ -27,16 +27,20 @@ export function req({
   return new HttpRequestImpl(url, method, theBody, headers);
 }
 
-export function GET({ url, body, headers }: RequestHelperFactoryParams) {
+export function GET(url: string, headers?: RequestHttpHeaders) {
   return req({
     url,
     method: HttpMethods.GET,
-    body,
+    body: undefined,
     headers
   });
 }
 
-export function POST({ url, body, headers }: RequestHelperFactoryParams) {
+export function POST(
+  url: string,
+  body: HttpBody | string,
+  headers?: RequestHttpHeaders
+) {
   return req({
     url,
     method: HttpMethods.POST,
@@ -45,7 +49,11 @@ export function POST({ url, body, headers }: RequestHelperFactoryParams) {
   });
 }
 
-export function PUT({ url, body, headers }: RequestHelperFactoryParams) {
+export function PUT(
+  url: string,
+  body: HttpBody | string,
+  headers?: RequestHttpHeaders
+) {
   return req({
     url,
     method: HttpMethods.PUT,
@@ -54,7 +62,11 @@ export function PUT({ url, body, headers }: RequestHelperFactoryParams) {
   });
 }
 
-export function PATCH({ url, body, headers }: RequestHelperFactoryParams) {
+export function PATCH(
+  url: string,
+  body: HttpBody | string,
+  headers?: RequestHttpHeaders
+) {
   return req({
     url,
     method: HttpMethods.PATCH,
@@ -63,7 +75,11 @@ export function PATCH({ url, body, headers }: RequestHelperFactoryParams) {
   });
 }
 
-export function DELETE({ url, body, headers }: RequestHelperFactoryParams) {
+export function DELETE(
+  url: string,
+  headers?: RequestHttpHeaders,
+  body?: HttpBody | string
+) {
   return req({
     url,
     method: HttpMethods.DELETE,
@@ -72,11 +88,11 @@ export function DELETE({ url, body, headers }: RequestHelperFactoryParams) {
   });
 }
 
-export function HEAD({ url, body, headers }: RequestHelperFactoryParams) {
+export function HEAD(url: string, headers: RequestHttpHeaders) {
   return req({
     url,
     method: HttpMethods.HEAD,
-    body,
+    body: undefined,
     headers
   });
 }

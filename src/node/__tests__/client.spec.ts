@@ -5,12 +5,8 @@ import { runOnTestServer } from "../test-utils";
 
 describe("node http client", () => {
   it("should send the request to server", async () => {
-    const expectedReq = POST({
-      url: "http://localhost:8181",
-      body: "Hello World 😌",
-      headers: {
-        authorizarion: "token my-token"
-      }
+    const expectedReq = POST("http://localhost:8181", "Hello World 😌", {
+      authorizarion: "token my-token"
     });
     const expectedRes = res({
       status: HttpStatus.ACCEPTED,

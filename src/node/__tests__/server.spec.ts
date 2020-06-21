@@ -3,7 +3,7 @@ import { HttpResponse } from "../../core/http";
 import { HttpHandler } from "../../core/http4ts";
 import { BufferedBody } from "../../core/http-body/buffered-body";
 import { jsonBody } from "../../core/http-body/helpers";
-import { res, OK } from "../../core/http-response/helpers";
+import { OK } from "../../core/http-response/helpers";
 import { runOnTestServer } from "../test-utils";
 
 describe("node server binding", () => {
