@@ -3,6 +3,7 @@ import { HttpHandler } from "../http4ts";
 import { pathToRegexp, Key } from "./path-to-regexp";
 import { HttpStatus } from "../http-status";
 import { res } from "../http-response/helpers";
+import { RoutedHttpRequestImpl } from "./routed-http-request-impl";
 
 export interface RoutedHttpRequest extends HttpRequest {
   routeParams: Record<string, string>;
@@ -70,9 +71,25 @@ export function routes(
         (prev, cur, i) => ({ ...prev, [cur.name]: result[i + 1] }),
         {}
       );
-      return foundRoute.handler({ ...req, routeParams });
+      return foundRoute.handler(
+        new RoutedHttpRequestImpl(
+          req.url,
+          req.method,
+          req.body,
+          req.headers,
+          routeParams
+        )
+      );
     } else {
-      return notFoundHandler({ ...req, routeParams: {} });
+      return notFoundHandler(
+        new RoutedHttpRequestImpl(
+          req.url,
+          req.method,
+          req.body,
+          req.headers,
+          {}
+        )
+      );
     }
   };
 }

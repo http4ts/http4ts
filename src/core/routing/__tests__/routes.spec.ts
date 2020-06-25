@@ -2,6 +2,8 @@ import { HttpRequest, HttpMethod, HttpMethods } from "../../http";
 import { routes, get, notFound, RoutedHttpRequest, post, all } from "../routes";
 import { req } from "../../http-request/helpers";
 import { res } from "../../http-response/helpers";
+import { HttpStatus } from "../../../node";
+import { RoutedHttpRequestImpl } from "../routed-http-request-impl";
 
 function request(url: string, body: string, method: HttpMethod): HttpRequest {
   return req({ url, method, body });
@@ -90,5 +92,20 @@ describe("routes", () => {
     });
 
     expect(await routingHandler(getReq)).toEqual(allMethods(getReq));
+  });
+
+  test("request object input of routing handler should be a RoutedHttpRequestImpl", async () => {
+    const postReq = request("/", "some form data", HttpMethods.POST);
+
+    const handler = routes(
+      post("/", req => {
+        expect(req).toBeInstanceOf(RoutedHttpRequestImpl);
+        return res({ status: HttpStatus.OK });
+      })
+    );
+
+    const resp = await handler(postReq);
+
+    expect(resp.status).toBe(HttpStatus.OK);
   });
 });
