@@ -2,8 +2,8 @@ import {
   HttpRequest,
   HttpResponse,
   res,
-  stringBody,
-  setupEnvironment
+  setupEnvironment,
+  BufferedBody
 } from "./core/mod.ts";
 
 import { toHttp4tsHeader } from "./utils.ts";
@@ -17,7 +17,7 @@ export async function send(req: HttpRequest): Promise<HttpResponse> {
 
   return res({
     status: response.status,
-    body: stringBody(await response.text()), // Should be replaced by `new BufferedBody(toAsyncIterator(response.body))` later. body.read is not impelemented yet
+    body: response.body ? new BufferedBody(response.body) : undefined,
     headers: toHttp4tsHeader(response.headers)
   });
 }
