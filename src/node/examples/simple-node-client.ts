@@ -1,11 +1,9 @@
-import { req, send } from "..";
+import { send } from "..";
+import { GET } from "../../core/mod";
 
 async function main() {
-  const request = req({
-    url: "https://api.github.com/users/http4ts/repos",
-    headers: {
-      "user-agent": "http4ts"
-    }
+  const request = GET("https://api.github.com/users/http4ts/repos", {
+    "user-agent": "http4ts"
   });
 
   const response = await send(request);

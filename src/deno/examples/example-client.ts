@@ -1,7 +1,7 @@
-import { req } from "../core/mod.ts";
+import { GET } from "../core/mod.ts";
 import { send } from "../client.ts";
 
-const request = req({
+const request = GET({
   url: "https://api.github.com/users/http4ts/repos",
   headers: {
     "user-agent": "http4ts"

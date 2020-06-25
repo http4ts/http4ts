@@ -1,5 +1,5 @@
 import { stringBody } from "../../http-body/helpers";
-import { res } from "../helpers";
+import { res, OK } from "../helpers";
 import { HttpStatus } from "../../../node";
 
 describe("HttpResponseImpl helpers", () => {
@@ -17,7 +17,7 @@ describe("HttpResponseImpl helpers", () => {
   });
 
   test("res should properly set default parameters", () => {
-    const request = res({ status: HttpStatus.OK });
+    const request = OK();
 
     expect(request.body).toEqual(stringBody(""));
     expect(request.headers).toEqual({});
@@ -26,11 +26,8 @@ describe("HttpResponseImpl helpers", () => {
   test("res should instantiate a StringBody when a string is passed as body", () => {
     const expectedBody = stringBody("some-body");
 
-    const resp1 = res({ status: HttpStatus.OK, body: "some-body" });
-    const resp2 = res({
-      status: HttpStatus.OK,
-      body: stringBody("some-body")
-    });
+    const resp1 = OK({ body: "some-body" });
+    const resp2 = OK({ body: stringBody("some-body") });
 
     expect(resp1.body).toEqual(expectedBody);
     expect(resp2.body).toEqual(expectedBody);

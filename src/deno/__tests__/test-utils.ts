@@ -24,6 +24,7 @@ export async function runOnTestServer(
   const test = testBlock(ft);
 
   for await (const req of server) {
+    // This await here, makes the server to process requests synchronously. It is fine for tests but not for realworld applications
     await h(req);
     break;
   }
