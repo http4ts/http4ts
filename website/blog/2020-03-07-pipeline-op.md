@@ -1,5 +1,5 @@
 ---
-id: pipeline-op
+slug: pipeline-op
 title: Javascript Pipeline Operator and http4ts Filters
 author: Ali Sabzevari
 author_title: http4ts Core Team
