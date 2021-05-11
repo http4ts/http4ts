@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>http4ts Blog</title>
+        <link>https://http4ts.github.io/blog</link>
+        <description>http4ts Blog</description>
+        <lastBuildDate>Sat, 07 Mar 2020 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <item>
+            <title><![CDATA[Javascript Pipeline Operator and http4ts Filters]]></title>
+            <link>https://http4ts.github.io/blog/pipeline-op</link>
+            <guid>pipeline-op</guid>
+            <pubDate>Sat, 07 Mar 2020 00:00:00 GMT</pubDate>
+            <description><![CDATA[One of the unique features of http4s is its composability. You can componse multiple filters together and build reusable pieces of funtionality.]]></description>
+        </item>
+    </channel>
+</rss>
