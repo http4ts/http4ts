@@ -3,8 +3,10 @@ import { RoutedHttpRequest } from "./routes";
 import { HttpMethod, HttpBody } from "../http";
 import { RequestHttpHeaders } from "../http-headers";
 
-export class RoutedHttpRequestImpl extends HttpRequestImpl
-  implements RoutedHttpRequest {
+export class RoutedHttpRequestImpl
+  extends HttpRequestImpl
+  implements RoutedHttpRequest
+{
   constructor(
     public readonly url: string,
     public readonly method: HttpMethod,
