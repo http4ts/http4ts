@@ -32,6 +32,12 @@ export async function runOnTestServer(
   server.close();
 
   await test;
+
+  // Make sure to cancel the body to not leak any resources. Follow https://github.com/denoland/deno/issues/4735 to remove this hack. 
+  const body = (await response)?.body;
+  if (!body?.locked) {
+    body?.cancel();
+  }
 }
 
 export function test(name: string, fn: () => Promise<any>) {
@@ -40,4 +46,8 @@ export function test(name: string, fn: () => Promise<any>) {
 
 test.skip = (name: string, fn: () => Promise<any>) => {
   Deno.test({ name, ignore: true, fn });
+};
+
+test.only = (name: string, fn: () => Promise<any>) => {
+  Deno.test({ name, only: true, fn });
 };
