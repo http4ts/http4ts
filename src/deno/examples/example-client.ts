@@ -1,11 +1,8 @@
 import { GET } from "../core/mod.ts";
 import { send } from "../client.ts";
 
-const request = GET({
-  url: "https://api.github.com/users/http4ts/repos",
-  headers: {
-    "user-agent": "http4ts"
-  }
+const request = GET("https://api.github.com/users/http4ts/repos", {
+  "user-agent": "http4ts"
 });
 
 async function main() {
