@@ -4,7 +4,6 @@ import {
   HttpHandler,
   HttpRequestImpl,
   BufferedBody,
-  setupEnvironment,
   HttpResponse,
   HttpStatus
 } from "./core/mod.ts";
@@ -53,8 +52,6 @@ async function writeErrorResponse(denoRequest: ServerRequest) {
 export function toDenoRequestListener(
   handler: HttpHandler
 ): DenoRequestListener {
-  setupEnvironment(TextDecoder, TextEncoder);
-
   return async (req: ServerRequest) => {
     try {
       const http4tsResponse = await handler(toHttp4tsRequest(req));

@@ -1,4 +1,3 @@
-export * from "./env.ts";
 export * from "./http-status.ts";
 export * from "./http.ts";
 export * from "./http4ts.ts";
