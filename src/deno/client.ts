@@ -1,14 +1,6 @@
-import {
-  HttpRequest,
-  HttpResponse,
-  res,
-  setupEnvironment,
-  BufferedBody
-} from "./core/mod.ts";
+import { HttpRequest, HttpResponse, res, BufferedBody } from "./core/mod.ts";
 
 import { toHttp4tsHeader } from "./utils.ts";
-
-setupEnvironment(TextDecoder, TextEncoder);
 
 export async function send(req: HttpRequest): Promise<HttpResponse> {
   const response = await fetch(req.url, {

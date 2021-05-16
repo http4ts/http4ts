@@ -1,5 +1,3 @@
-import { TextEncoder } from "util";
-
 import { stringToIterable, iterableToString } from "../string-encoding-utils";
 
 const encoder = new TextEncoder();
