@@ -1,9 +1,4 @@
-import {
-  HttpRequest,
-  HttpResponse,
-  res,
-  BufferedBody
-} from "./core/mod.ts";
+import { HttpRequest, HttpResponse, res, BufferedBody } from "./core/mod.ts";
 
 import { toHttp4tsHeader } from "./utils.ts";
 
