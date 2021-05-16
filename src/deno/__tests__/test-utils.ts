@@ -33,7 +33,7 @@ export async function runOnTestServer(
 
   await test;
 
-  // Make sure to cancel the body to not leak any resources. Follow https://github.com/denoland/deno/issues/4735 to remove this hack. 
+  // Make sure to cancel the body to not leak any resources. Follow https://github.com/denoland/deno/issues/4735 to remove this hack.
   const body = (await response)?.body;
   if (!body?.locked) {
     body?.cancel();
