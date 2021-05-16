@@ -1,11 +1,9 @@
 import { RequestListener, IncomingMessage, ServerResponse } from "http";
-import * as util from "util";
 
 import { HttpHandler } from "../core/http4ts";
 import { HttpRequest, HttpResponse } from "../core/http";
 import { HttpStatus } from "../core/http-status";
 import { HttpRequestImpl } from "../core/http-request/http-request-impl";
-import { setupEnvironment } from "../core/env";
 import { BufferedBody } from "../core/http-body/buffered-body";
 import { writeIterableToStream, waitToFinish } from "./node-stream-utils";
 
@@ -39,8 +37,6 @@ async function writeErrorResponse(nodeRes: ServerResponse) {
  * @param handler Root HttpHandler of the server application
  */
 export function toNodeRequestListener(handler: HttpHandler): RequestListener {
-  setupEnvironment(util.TextDecoder as any, util.TextEncoder as any);
-
   return async (req, res) => {
     try {
       const http4tsResponse = await handler(toHttp4tsRequest(req));

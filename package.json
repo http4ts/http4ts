@@ -58,9 +58,7 @@
       "/deno/"
     ],
     "coverageDirectory": "../coverage",
-    "setupFiles": [
-      "<rootDir>../jest/setup.ts"
-    ]
+    "testEnvironment": "node"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",

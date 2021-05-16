@@ -1,4 +1,3 @@
-export * from "./env";
 export * from "./http-status";
 export * from "./http";
 export * from "./http4ts";
