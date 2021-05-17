@@ -25,7 +25,9 @@ module.exports = {
         { to: "/blog", label: "Blog", position: "left" },
         {
           href: "https://github.com/http4ts/http4ts",
-          label: "GitHub",
+          // label: "GitHub",
+          className: 'header-github-link',
+          'aria-label': 'GitHub repository',
           position: "right"
         }
       ]
