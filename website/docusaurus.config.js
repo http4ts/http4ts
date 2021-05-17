@@ -1,13 +1,14 @@
+/** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: "http4ts",
   tagline: "Server as a Function http toolkit for TypeScript & JavaScript",
-  url: "https://your-docusaurus-test-site.com",
+  url: "https://http4ts.github.io",
   baseUrl: "/",
+  onBrokenLinks: "throw",
+  onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
   organizationName: "http4ts", // Usually your GitHub org/user name.
   projectName: "http4ts", // Usually your repo name.
-  url: "https://http4ts.github.io",
-  baseUrl: "/",
   themeConfig: {
     navbar: {
       title: "http4ts",
@@ -16,8 +17,12 @@ module.exports = {
         src: "img/http4ts-logo.png"
       },
       items: [
-        { to: "docs/welcome/getting-started", label: "Docs", position: "left" },
-        { to: "blog", label: "Blog", position: "left" },
+        {
+          to: "docs/welcome/getting-started",
+          label: "Docs",
+          position: "left"
+        },
+        { to: "/blog", label: "Blog", position: "left" },
         {
           href: "https://github.com/http4ts/http4ts",
           label: "GitHub",
@@ -73,6 +78,10 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
+          editUrl: "https://github.com/http4ts/http4ts/edit/master/website/"
+        },
+        blog: {
+          showReadingTime: true,
           editUrl: "https://github.com/http4ts/http4ts/edit/master/website/"
         },
         theme: {
