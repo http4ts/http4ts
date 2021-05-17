@@ -13,5 +13,5 @@ sidebar_label: Philosophy
 * **Type Safety**: *Http4ts* is built using the maximum type safety power of [TypeScript](https://www.typescriptlang.org/) and, in order to use its maximum power, you should do the same.
 * **Immutability**: Similar to http4k, all entities in the library are immutable unless, naturally, it is not possible.
 * **Testability**: Since the basic building blocks of this library are functions and the main entities are abstracted from the environment, it is extremely simple to write tests for the code built by *http4ts*.
-* **Minimal** The request and response contain only the necessary information to represent the HTTP message. Extra information such as session and cookies are not included because they don't belong to the HTTP protocol.
-* **Composable** All the building blocks are composable which is a great addition to code reusability, organization and extension.
+* **Minimal**: The request and response contain only the necessary information to represent the HTTP message. Extra information such as session and cookies are not included because they don't belong to the HTTP protocol.
+* **Composable**: All the building blocks are composable which is a great addition to code reusability, organization and extension.
