@@ -1,0 +1,1 @@
+(self.webpackChunkbilbilak=self.webpackChunkbilbilak||[]).push([[276],{272:function(l){"use strict";l.exports=JSON.parse('{"allTagsPath":"/blog/tags","slug":"filters","name":"filters","count":1,"permalink":"/blog/tags/filters"}')}}]);
