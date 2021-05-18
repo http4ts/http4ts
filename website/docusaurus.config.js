@@ -26,8 +26,8 @@ module.exports = {
         {
           href: "https://github.com/http4ts/http4ts",
           // label: "GitHub",
-          className: 'header-github-link',
-          'aria-label': 'GitHub repository',
+          className: "header-github-link",
+          "aria-label": "GitHub repository",
           position: "right"
         }
       ]
@@ -72,6 +72,10 @@ module.exports = {
         }
       ],
       copyright: `Built with Docusaurus.`
+    },
+    algolia: {
+      apiKey: "2ee35b60276202f17f282561edf77f0a",
+      indexName: "http4ts",
     }
   },
   presets: [
