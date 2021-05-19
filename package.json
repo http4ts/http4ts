@@ -1,6 +1,6 @@
 {
   "name": "http4ts",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Server as a Function http toolkit for Typescript",
   "main": "dist/src/node/index.js",
   "types": "dist/src/node/index.d.ts",
