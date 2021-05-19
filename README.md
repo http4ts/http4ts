@@ -61,7 +61,7 @@ server.listen(port, hostname, () => {       // 3. Start your node server as you 
 
 In Deno, it is possible to import the library via its url. You can use *Http4ts* by importing the following url:
 ```
-https://raw.githubusercontent.com/http4ts/http4ts/v0.1.1/src/deno/mod.ts
+https://deno.land/x/http4ts@v0.1.2/mod.ts
 ```
 
 ### Binding to Deno
@@ -77,7 +77,7 @@ import {
   toDenoRequestListener,
   stringBody,
   res
-} from "https://raw.githubusercontent.com/http4ts/http4ts/v0.1.1/src/deno/mod.ts";
+} from "https://deno.land/x/http4ts@v0.1.2/mod.ts";
 
 async function handler(req: HttpRequest) {  // 1. Write the handler as a function that returns response
   return res({
@@ -93,7 +93,7 @@ await listenAndServe({ port: 8000 }, toDenoRequestListener(handler));
 You can also run this example by executing the following command in your shell environment:
 
 ```
-deno run --allow-net https://raw.githubusercontent.com/http4ts/http4ts/v0.1.1/src/deno/examples/readme-example.ts
+deno run --allow-net https://deno.land/x/http4ts@v0.1.2/examples/readme-example.ts
 ```
 
 ## Philosophy

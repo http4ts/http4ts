@@ -1,4 +1,4 @@
-import { listenAndServe } from "https://deno.land/std@v0.42.0/http/server.ts";
+import { listenAndServe } from "https://deno.land/std/http/server.ts";
 
 import {
   HttpRequest,
@@ -6,7 +6,7 @@ import {
   toDenoRequestListener,
   stringBody,
   res
-} from "https://raw.githubusercontent.com/http4ts/http4ts/v0.1.1/src/deno/mod.ts";
+} from "https://deno.land/x/http4ts@v0.1.2/mod.ts";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function handler(req: HttpRequest) {
