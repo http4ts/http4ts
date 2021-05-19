@@ -1,1 +1,0 @@
-(self.webpackChunkbilbilak=self.webpackChunkbilbilak||[]).push([[226],{6353:function(e){"use strict";e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Javascript Pipeline Operator and http4ts Filters","permalink":"/blog/pipeline-op"}]}')}}]);
