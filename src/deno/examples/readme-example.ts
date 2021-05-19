@@ -2,19 +2,14 @@ import { listenAndServe } from "https://deno.land/std/http/server.ts";
 
 import {
   HttpRequest,
-  HttpStatus,
   toDenoRequestListener,
-  stringBody,
-  res
+  OK
 } from "https://deno.land/x/http4ts@v0.1.2/mod.ts";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function handler(req: HttpRequest) {
   // 1. Write the handler as a function that returns response
-  return res({
-    body: stringBody("Hello world!"),
-    status: HttpStatus.OK
-  });
+  return OK({ body: "Hello world!" });
 }
 
 console.log("Listening on http://localhost:8000");
