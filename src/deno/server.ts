@@ -25,7 +25,7 @@ function toHttp4tsRequest(denoReq: Request) {
 
 function toDenoResponse(http4tsResponse: HttpResponse) {
   const body = iteratorToStream(http4tsResponse.body[Symbol.asyncIterator]());
-  const headers = toHeaders(http4tsResponse.headers)
+  const headers = toHeaders(http4tsResponse.headers);
 
   return new Response(body, { headers, status: http4tsResponse.status });
 }
@@ -35,12 +35,17 @@ function toDenoResponse(http4tsResponse: HttpResponse) {
  * @param handler Root HttpHandler of the server application
  * @param requests Deno HttpConn
  */
-export async function handleDenoRequest(handler: HttpHandler, request: Deno.RequestEvent) {
+export async function handleDenoRequest(
+  handler: HttpHandler,
+  request: Deno.RequestEvent
+) {
   try {
     const http4tsResponse = await handler(toHttp4tsRequest(request.request));
     request.respondWith(toDenoResponse(http4tsResponse));
   } catch (error) {
     console.log(error);
-    request.respondWith(new Response(null, { status: HttpStatus.INTERNAL_SERVER_ERROR }));
+    request.respondWith(
+      new Response(null, { status: HttpStatus.INTERNAL_SERVER_ERROR })
+    );
   }
 }

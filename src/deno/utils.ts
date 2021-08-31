@@ -10,15 +10,17 @@ export function toHeaders(http4tsHeaders: HttpHeaders): HeadersInit {
   return Object.entries(http4tsHeaders).map(h => {
     let value: string[];
     if (Array.isArray(h[1])) {
-      value = h[1]
+      value = h[1];
     } else {
-      value = [h[1] ?? ""]
+      value = [h[1] ?? ""];
     }
     return [h[0], ...value];
-  })
+  });
 }
 
-export function iteratorToStream(iterator: AsyncIterator<Uint8Array | string>): ReadableStream<any> {
+export function iteratorToStream(
+  iterator: AsyncIterator<Uint8Array | string>
+): ReadableStream<any> {
   return new ReadableStream({
     async pull(controller) {
       const { value, done } = await iterator.next();
@@ -28,6 +30,6 @@ export function iteratorToStream(iterator: AsyncIterator<Uint8Array | string>): 
       } else {
         controller.enqueue(value);
       }
-    },
+    }
   });
 }

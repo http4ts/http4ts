@@ -9,7 +9,7 @@ async function handler(req: HttpRequest) {
     headers: { "accept-language": "de-DE" },
     body: stringBody("Hello world! 😌" + b)
   });
-};
+}
 
 async function serve(conn: Deno.Conn) {
   const requests = Deno.serveHttp(conn);
@@ -23,7 +23,7 @@ async function main() {
 
   const listener = Deno.listen({ port: 8000 });
   for await (const conn of listener) {
-    serve(conn)
+    serve(conn);
   }
 }
 
