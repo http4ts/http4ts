@@ -15,6 +15,7 @@ export async function runOnTestServer(
   (async () => {
     requests = Deno.serveHttp(await conn);
     const req = await requests.nextRequest();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     await handleDenoRequest(handler, req!);
   })();
 
