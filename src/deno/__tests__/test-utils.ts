@@ -1,6 +1,5 @@
 import { HttpHandler } from "../core/mod.ts";
-import { serve } from "../deps.ts";
-import { toDenoRequestListener } from "../server.ts";
+import { handleDenoRequest } from "../server.ts";
 
 type Fetch = typeof fetch;
 
@@ -9,8 +8,16 @@ export async function runOnTestServer(
   handler: HttpHandler,
   testBlock: (f: Fetch) => Promise<void>
 ) {
-  const server = serve({ port });
-  const h = toDenoRequestListener(handler);
+  const listener = Deno.listen({ port });
+  const conn = listener.accept();
+  let requests: any;
+
+  (async () => {
+    requests = Deno.serveHttp(await conn);
+    const req = await requests.nextRequest();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    await handleDenoRequest(handler, req!);
+  })();
 
   let response: Promise<Response> | undefined;
   const ft = (
@@ -21,23 +28,14 @@ export async function runOnTestServer(
     return response;
   };
 
-  const test = testBlock(ft);
+  await testBlock(ft);
 
-  for await (const req of server) {
-    // This await here, makes the server to process requests synchronously. It is fine for tests but not for realworld applications
-    await h(req);
-    break;
+  const r = await response;
+  if (!r?.body?.locked) {
+    r?.body?.cancel();
   }
-
-  server.close();
-
-  await test;
-
-  // Make sure to cancel the body to not leak any resources. Follow https://github.com/denoland/deno/issues/4735 to remove this hack.
-  const body = (await response)?.body;
-  if (!body?.locked) {
-    body?.cancel();
-  }
+  requests.close();
+  listener.close();
 }
 
 export function test(name: string, fn: () => Promise<any>) {
